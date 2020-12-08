@@ -11,6 +11,10 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+}
+
 sourceSets.main.resources.srcDirs = ["src/resources"]
 
 dependencies {
@@ -22,4 +26,5 @@ dependencies {
 
     implementation 'org.mapstruct:mapstruct:1.4.1.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
+    compile 'org.springframework.boot:spring-boot-starter-test:2.4.0'
 }
