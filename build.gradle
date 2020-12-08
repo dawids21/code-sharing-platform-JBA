@@ -17,6 +17,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    implementation 'org.assertj:assertj-core:3.18.1'
     compile("org.springframework.boot:spring-boot-starter-web")
 
     implementation 'org.mapstruct:mapstruct:1.4.1.Final'
