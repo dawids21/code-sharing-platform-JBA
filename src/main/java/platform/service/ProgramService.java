@@ -1,4 +1,4 @@
-package platform.services;
+package platform.service;
 
 import platform.model.ProgramDto;
 
