@@ -2,21 +2,12 @@ package platform.model;
 
 import java.util.Objects;
 
-public class Code {
-
-    private long id;
+public class ProgramDto {
 
     private String code;
 
-    public Code() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public ProgramDto(String code) {
+        this.code = code;
     }
 
     public String getCode() {
@@ -35,17 +26,17 @@ public class Code {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Code code1 = (Code) o;
-        return getId() == code1.getId() && Objects.equals(getCode(), code1.getCode());
+        ProgramDto programDto = (ProgramDto) o;
+        return Objects.equals(getCode(), programDto.getCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode());
+        return Objects.hash(getCode());
     }
 
     @Override
     public String toString() {
-        return "Code{" + "id=" + id + ", code='" + code + '\'' + '}';
+        return "CodeDto{" + "code='" + code + '\'' + '}';
     }
 }
