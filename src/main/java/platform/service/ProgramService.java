@@ -9,6 +9,6 @@ public class ProgramService {
 
     public ProgramDto getProgram() {
         return new ProgramDto(
-                 "public class Main { public static void main(String[] args) { System.out.println(\"Hello World\"); } }");
+                 "public class Main {\n public static void main(String[] args) {\n  System.out.println(\"Hello World\");\n }\n}");
     }
 }
