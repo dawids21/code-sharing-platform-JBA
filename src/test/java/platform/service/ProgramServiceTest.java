@@ -24,19 +24,10 @@ class ProgramServiceTest {
     }
 
     @Test
-    void set_date_in_program_to_local_date_time_now() {
+    void use_yyyy_mm_dd_hh_mm_ss_format_for_date() {
         ProgramDto programDto = new ProgramDto("", null);
         programService.setProgram(programDto);
         assertThat(programService.getProgram()
-                                 .getDate()).isEqualTo(DATE_TIME);
-    }
-
-    @Test
-    void use_rrrr_mm_dd_hh_mm_ss_format_for_date() {
-        ProgramDto programDto = new ProgramDto("", null);
-        programService.setProgram(programDto);
-        assertThat(programService.getProgram()
-                                 .getDate()
-                                 .toString()).isEqualTo("2020-12-12 10:32:21");
+                                 .getDate()).isEqualTo("2020-12-12 10:32:21");
     }
 }
