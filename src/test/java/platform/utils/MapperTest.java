@@ -12,19 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MapperTest {
 
     @Test
-    void directly_invoked_mapper_should_map_code_to_code_dto() {
-        MapstructMapper mapper = new TestUtilsConfig().testMapstructMapper();
-        Program program = new Program();
-        program.setCode("main()");
-
-        ProgramDto programDto = mapper.programToProgramDto(program);
-
-        assertThat(programDto).isNotNull();
-        assertThat(programDto.getCode()).isEqualTo("main()");
-    }
-
-    @Test
-    void my_mapper_wrapper_should_work_as_mapstruct_mapper() {
+    void should_map_program_to_program_dto() {
         MyMapper myMapper = new TestUtilsConfig().testMyMapper();
         Program program = new Program();
         program.setCode("main()");
