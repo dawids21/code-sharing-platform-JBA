@@ -14,4 +14,8 @@ public class ProgramService {
     public ProgramDto getProgram() {
         return programDto;
     }
+
+    public void setProgram(ProgramDto program) {
+        programDto = program;
+    }
 }
