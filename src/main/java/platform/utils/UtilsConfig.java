@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Configuration;
 public class UtilsConfig {
 
     @Bean
+    public HtmlCreator htmlCreator() {
+        return new HtmlCreator();
+    }
+
+    @Bean
     public MapstructMapper mapstructMapper() {
         return Mappers.getMapper(MapstructMapper.class);
     }
