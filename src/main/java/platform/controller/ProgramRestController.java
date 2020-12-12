@@ -1,9 +1,7 @@
 package platform.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import platform.model.ProgramDto;
 import platform.service.ProgramService;
 
@@ -21,5 +19,10 @@ public class ProgramRestController {
     @GetMapping(path = "/code")
     public ProgramDto getProgram() {
         return programService.getProgram();
+    }
+
+    @PostMapping(path = "/code/new", consumes = "application/json")
+    public void saveProgram(@RequestBody ProgramDto programDto) {
+        programService.setProgram(programDto);
     }
 }
