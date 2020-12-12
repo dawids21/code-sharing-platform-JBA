@@ -19,6 +19,7 @@ public class ProgramService {
     }
 
     public void setProgram(ProgramDto program) {
+        program.setDate(LocalDateTime.now());
         programDto = program;
     }
 }
