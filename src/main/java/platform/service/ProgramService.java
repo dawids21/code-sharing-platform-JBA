@@ -4,9 +4,12 @@ import platform.model.ProgramDto;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ProgramService {
 
+    public static final DateTimeFormatter DATE_TIME_FORMATTER =
+             DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
     private final Clock clock;
     private ProgramDto programDto;
 
@@ -14,7 +17,8 @@ public class ProgramService {
         this.clock = clock;
         programDto = new ProgramDto(
                  "public class Main {\n public static void main(String[] args) {\n  System.out.println(\"Hello World\");\n }\n}",
-                 LocalDateTime.now());
+                 LocalDateTime.now(clock)
+                              .format(DATE_TIME_FORMATTER));
     }
 
     public ProgramDto getProgram() {
@@ -22,7 +26,8 @@ public class ProgramService {
     }
 
     public void setProgram(ProgramDto program) {
-        program.setDate(LocalDateTime.now(clock));
+        LocalDateTime now = LocalDateTime.now(clock);
+        program.setDate(now.format(DATE_TIME_FORMATTER));
         programDto = program;
     }
 }
