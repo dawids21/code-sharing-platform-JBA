@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import platform.model.Program;
 import platform.model.ProgramDto;
 
-import java.time.LocalDateTime;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -23,6 +21,6 @@ class MapperTest {
 
         assertThat(programDto).isNotNull();
         assertThat(programDto.getCode()).isEqualTo("main()");
-        assertThat(programDto.getDate()).isEqualTo(LocalDateTime.now());
+        assertThat(programDto.getDate()).isEqualTo(program.getCreated());
     }
 }
