@@ -1,5 +1,7 @@
 package platform.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -7,6 +9,7 @@ public class ProgramDto {
 
     private String code;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime date;
 
     public ProgramDto(String code, LocalDateTime date) {
