@@ -2,13 +2,16 @@ package platform.service;
 
 import platform.model.ProgramDto;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 public class ProgramService {
 
+    private final Clock clock;
     private ProgramDto programDto;
 
-    public ProgramService() {
+    public ProgramService(Clock clock) {
+        this.clock = clock;
         programDto = new ProgramDto(
                  "public class Main {\n public static void main(String[] args) {\n  System.out.println(\"Hello World\");\n }\n}",
                  LocalDateTime.now());
