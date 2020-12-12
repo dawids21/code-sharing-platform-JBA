@@ -9,10 +9,9 @@ public class Program {
 
     private String code;
 
-    private final LocalDateTime created;
+    private LocalDateTime created;
 
     public Program() {
-        created = LocalDateTime.now();
     }
 
     public long getId() {
@@ -33,6 +32,10 @@ public class Program {
 
     public LocalDateTime getCreated() {
         return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     @Override
