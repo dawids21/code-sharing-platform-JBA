@@ -1,5 +1,6 @@
 package platform.model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Program {
@@ -8,7 +9,10 @@ public class Program {
 
     private String code;
 
+    private final LocalDateTime created;
+
     public Program() {
+        created = LocalDateTime.now();
     }
 
     public long getId() {
@@ -27,6 +31,10 @@ public class Program {
         this.code = code;
     }
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -36,16 +44,19 @@ public class Program {
             return false;
         }
         Program program = (Program) o;
-        return getId() == program.getId() && Objects.equals(getCode(), program.getCode());
+        return getId() == program.getId() &&
+               Objects.equals(getCode(), program.getCode()) &&
+               Objects.equals(getCreated(), program.getCreated());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode());
+        return Objects.hash(getId(), getCode(), getCreated());
     }
 
     @Override
     public String toString() {
-        return "Code{" + "id=" + id + ", code='" + code + '\'' + '}';
+        return "Program{" + "id=" + id + ", code='" + code + '\'' + ", created=" +
+               created + '}';
     }
 }
