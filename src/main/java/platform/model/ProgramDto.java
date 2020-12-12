@@ -1,13 +1,17 @@
 package platform.model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ProgramDto {
 
     private String code;
 
-    public ProgramDto(String code) {
+    private LocalDateTime date;
+
+    public ProgramDto(String code, LocalDateTime date) {
         this.code = code;
+        this.date = date;
     }
 
     public String getCode() {
@@ -18,6 +22,14 @@ public class ProgramDto {
         this.code = code;
     }
 
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -26,17 +38,18 @@ public class ProgramDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ProgramDto programDto = (ProgramDto) o;
-        return Objects.equals(getCode(), programDto.getCode());
+        ProgramDto that = (ProgramDto) o;
+        return Objects.equals(getCode(), that.getCode()) &&
+               Objects.equals(getDate(), that.getDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCode());
+        return Objects.hash(getCode(), getDate());
     }
 
     @Override
     public String toString() {
-        return "CodeDto{" + "code='" + code + '\'' + '}';
+        return "ProgramDto{" + "code='" + code + '\'' + ", date=" + date + '}';
     }
 }
