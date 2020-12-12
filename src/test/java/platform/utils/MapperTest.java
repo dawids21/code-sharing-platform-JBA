@@ -7,6 +7,7 @@ import platform.model.Program;
 import platform.model.ProgramDto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,6 +25,8 @@ class MapperTest {
 
         assertThat(programDto).isNotNull();
         assertThat(programDto.getCode()).isEqualTo(program.getCode());
-        assertThat(programDto.getDate()).isEqualTo(program.getCreated());
+        assertThat(programDto.getDate()).isEqualTo(program.getCreated()
+                                                          .format(DateTimeFormatter.ofPattern(
+                                                                   "yyyy-MM-dd hh:mm:ss")));
     }
 }
