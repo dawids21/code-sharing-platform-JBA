@@ -22,7 +22,7 @@ public class ProgramService {
     }
 
     public void setProgram(ProgramDto program) {
-        program.setDate(LocalDateTime.now());
+        program.setDate(LocalDateTime.now(clock));
         programDto = program;
     }
 }
