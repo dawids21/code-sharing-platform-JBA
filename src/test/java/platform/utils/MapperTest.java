@@ -6,32 +6,27 @@ import org.junit.jupiter.api.Test;
 import platform.model.Program;
 import platform.model.ProgramDto;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MapperTest {
 
     @Test
-    void directly_invoked_mapper_should_map_code_to_code_dto() {
-        MapstructMapper mapper = new TestUtilsConfig().testMapstructMapper();
-        Program program = new Program();
-        program.setCode("main()");
-
-        ProgramDto programDto = mapper.programToProgramDto(program);
-
-        assertThat(programDto).isNotNull();
-        assertThat(programDto.getCode()).isEqualTo("main()");
-    }
-
-    @Test
-    void my_mapper_wrapper_should_work_as_mapstruct_mapper() {
+    void should_map_program_to_program_dto() {
         MyMapper myMapper = new TestUtilsConfig().testMyMapper();
         Program program = new Program();
         program.setCode("main()");
+        program.setCreated(LocalDateTime.now());
 
         ProgramDto programDto = myMapper.programToProgramDto(program);
 
         assertThat(programDto).isNotNull();
-        assertThat(programDto.getCode()).isEqualTo("main()");
+        assertThat(programDto.getCode()).isEqualTo(program.getCode());
+        assertThat(programDto.getDate()).isEqualTo(program.getCreated()
+                                                          .format(DateTimeFormatter.ofPattern(
+                                                                   "yyyy-MM-dd hh:mm:ss")));
     }
 }
