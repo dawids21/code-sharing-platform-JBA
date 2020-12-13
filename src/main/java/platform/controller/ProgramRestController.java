@@ -22,7 +22,8 @@ public class ProgramRestController {
     }
 
     @PostMapping(path = "/code/new", consumes = "application/json")
-    public void saveProgram(@RequestBody ProgramDto programDto) {
+    public String saveProgram(@RequestBody ProgramDto programDto) {
         programService.setProgram(programDto);
+        return "{}";
     }
 }
