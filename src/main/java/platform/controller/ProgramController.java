@@ -23,4 +23,9 @@ public class ProgramController {
     public ResponseEntity<String> getProgram() {
         return ResponseEntity.ok(htmlCreator.programPage(programService.getProgram()));
     }
+
+    @GetMapping(path = "/code/new", produces = "text/html")
+    public ResponseEntity<String> sendNewProgram() {
+        return ResponseEntity.ok(htmlCreator.sendProgramPage());
+    }
 }
