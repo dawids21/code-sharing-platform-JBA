@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class ProgramService {
 
     public static final DateTimeFormatter DATE_TIME_FORMATTER =
-             DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final Clock clock;
     private ProgramDto programDto;
 
