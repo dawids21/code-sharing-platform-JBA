@@ -21,8 +21,6 @@ public class ProgramController {
 
     @GetMapping(path = "/code", produces = "text/html")
     public ResponseEntity<String> getProgram() {
-        return ResponseEntity.ok("<html><head><title>Code</title></head><body><pre>" +
-                                 programService.getProgram()
-                                               .getCode() + "</pre></body></html>");
+        return ResponseEntity.ok(htmlCreator.programPage(programService.getProgram()));
     }
 }
