@@ -16,7 +16,6 @@ public class HtmlCreator {
         return "<html><head>" + STYLE +
                "<title>Code</title></head><body><span id=\"load_date\">" +
                programDto.getDate() + "</span><pre id=\"code_snippet\">" +
-               programDto.getCode() + "</pre></body><script>" + SEND_FUNCTION +
-               "</script></html>";
+               programDto.getCode() + "</pre></body></html>";
     }
 }
