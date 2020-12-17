@@ -8,6 +8,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProgramService {
@@ -38,7 +39,15 @@ public class ProgramService {
     }
 
     public List<ProgramDto> getLastPrograms(int n) {
-        return programDtos.subList(programDtos.size() - Math.min(programDtos.size(), n),
-                                   programDtos.size());
+        List<ProgramDto> result = new ArrayList<>();
+        for (int i = programDtos.size() - Math.min(programDtos.size(), n);
+                 i < programDtos.size(); i++) {
+            result.add(programDtos.get(i));
+        }
+        result.sort(Comparator.comparing(
+                 o -> LocalDateTime.parse(((ProgramDto) o).getDate(),
+                                          DATE_TIME_FORMATTER))
+                              .reversed());
+        return result;
     }
 }
