@@ -24,10 +24,19 @@ class ProgramServiceTest {
     }
 
     @Test
+    void add_program_should_return_corresponding_id() {
+        ProgramDto programDto = new ProgramDto("main()", null);
+        int id = programService.addProgram(programDto);
+        assertThat(id).isEqualTo(0);
+        assertThat(programService.getProgram(id)
+                                 .getCode()).isEqualTo("main()");
+    }
+
+    @Test
     void use_yyyy_mm_dd_hh_mm_ss_format_for_date() {
         ProgramDto programDto = new ProgramDto("", null);
-        programService.setProgram(programDto);
-        assertThat(programService.getProgram()
+        int id = programService.addProgram(programDto);
+        assertThat(programService.getProgram(id)
                                  .getDate()).isEqualTo("2020-12-12 10:32:21");
     }
 }
