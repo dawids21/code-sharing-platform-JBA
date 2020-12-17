@@ -7,6 +7,7 @@ import platform.model.ProgramDto;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,5 +39,33 @@ class ProgramServiceTest {
         int id = programService.addProgram(programDto);
         assertThat(programService.getProgram(id)
                                  .getDate()).isEqualTo("2020-12-12 10:32:21");
+    }
+
+    @Test
+    void should_return_requested_num_of_programs_when_there_is_enough_in_memory() {
+        addNPrograms(11);
+        List<ProgramDto> programs = programService.getLastPrograms(10);
+        assertThat(programs).hasSize(10);
+    }
+
+    @Test
+    void should_return_max_num_of_programs_when_there_is_less_in_memory() {
+        int numOfRequested = 6;
+        addNPrograms(numOfRequested);
+        List<ProgramDto> programs = programService.getLastPrograms(10);
+        assertThat(programs).hasSize(6);
+    }
+
+    @Test
+    void should_return_empty_list_when_no_programs_in_memory() {
+        List<ProgramDto> programs = programService.getLastPrograms(10);
+        assertThat(programs).hasSize(0);
+    }
+
+    private void addNPrograms(int n) {
+        for (int i = 0; i < n; i++) {
+            ProgramDto programDto = new ProgramDto("1 + " + n, null);
+            programService.addProgram(programDto);
+        }
     }
 }

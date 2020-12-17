@@ -15,7 +15,7 @@ public class ProgramService {
     public static final DateTimeFormatter DATE_TIME_FORMATTER =
              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final Clock clock;
-    private List<ProgramDto> programDtos;
+    private final List<ProgramDto> programDtos;
 
     public ProgramService(Clock clock) {
         this.clock = clock;
@@ -35,5 +35,10 @@ public class ProgramService {
         program.setDate(now.format(DATE_TIME_FORMATTER));
         programDtos.add(program);
         return programDtos.size() - 1;
+    }
+
+    public List<ProgramDto> getLastPrograms(int n) {
+        return programDtos.subList(programDtos.size() - Math.min(programDtos.size(), n),
+                                   programDtos.size());
     }
 }
