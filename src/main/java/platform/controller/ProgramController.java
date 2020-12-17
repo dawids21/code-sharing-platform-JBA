@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import platform.service.ProgramService;
-import platform.utils.HtmlCreator;
 
 import java.util.List;
 
@@ -13,12 +12,10 @@ import java.util.List;
 public class ProgramController {
 
     private final ProgramService programService;
-    private final HtmlCreator htmlCreator;
 
     @Autowired
-    public ProgramController(ProgramService programService, HtmlCreator htmlCreator) {
+    public ProgramController(ProgramService programService) {
         this.programService = programService;
-        this.htmlCreator = htmlCreator;
     }
 
     @GetMapping(path = "/code", produces = "text/html")
