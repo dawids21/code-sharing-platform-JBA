@@ -16,14 +16,14 @@ public class ProgramRestController {
         this.programService = programService;
     }
 
-    @GetMapping(path = "/code")
-    public ProgramDto getProgram() {
-        return programService.getProgram();
+    @GetMapping(path = "/code/{id}")
+    public ProgramDto getProgram(@PathVariable int id) {
+        return programService.getProgram(id);
     }
 
     @PostMapping(path = "/code/new", consumes = "application/json")
     public String saveProgram(@RequestBody ProgramDto programDto) {
-        programService.setProgram(programDto);
+        programService.addProgram(programDto);
         return "{}";
     }
 }

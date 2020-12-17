@@ -3,6 +3,7 @@ package platform.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import platform.service.ProgramService;
 
@@ -18,10 +19,10 @@ public class ProgramController {
         this.programService = programService;
     }
 
-    @GetMapping(path = "/code", produces = "text/html")
-    public ModelAndView getProgram() {
+    @GetMapping(path = "/code/{id}", produces = "text/html")
+    public ModelAndView getProgram(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("programs", List.of(programService.getProgram()));
+        modelAndView.addObject("programs", List.of(programService.getProgram(id)));
         return modelAndView;
     }
 
