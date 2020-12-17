@@ -26,6 +26,13 @@ public class ProgramController {
         return modelAndView;
     }
 
+    @GetMapping(path = "/code/latest")
+    public ModelAndView getLatestPrograms() {
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("programs", programService.getLastPrograms(10));
+        return modelAndView;
+    }
+
     @GetMapping(path = "/code/new", produces = "text/html")
     public ModelAndView sendNewProgram() {
         return new ModelAndView("new_code");
