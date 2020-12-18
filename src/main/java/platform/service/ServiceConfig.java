@@ -14,8 +14,13 @@ public class ServiceConfig {
     }
 
     @Bean
-    public ProgramService programService(Clock clock) {
-        return new ProgramService(clock);
+    public ProgramService programService(ProgramDateSetter programDateSetter) {
+        return new ProgramService(programDateSetter);
+    }
+
+    @Bean
+    public ProgramDateSetter programDateSetter(Clock clock) {
+        return new ProgramDateSetterImpl(clock);
     }
 
 }
