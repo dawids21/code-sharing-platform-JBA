@@ -14,6 +14,12 @@ public class Program {
     public Program() {
     }
 
+    public Program(long id, String code, LocalDateTime created) {
+        this.id = id;
+        this.code = code;
+        this.created = created;
+    }
+
     public long getId() {
         return id;
     }
