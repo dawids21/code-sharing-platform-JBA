@@ -27,6 +27,6 @@ class MapperTest {
         assertThat(programDto.getCode()).isEqualTo(program.getCode());
         assertThat(programDto.getDate()).isEqualTo(program.getCreated()
                                                           .format(DateTimeFormatter.ofPattern(
-                                                                   "yyyy-MM-dd hh:mm:ss")));
+                                                                   "yyyy-MM-dd HH:mm:ss")));
     }
 }

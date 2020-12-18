@@ -2,10 +2,14 @@ package platform.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Pageable;
 import platform.model.Program;
 import platform.model.ProgramDto;
 import platform.model.ProgramRepository;
+import platform.utils.MapstructMapper;
+import platform.utils.MyMapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,7 +32,9 @@ class ProgramServiceTest {
         testProgramDateSetter = new TestProgramDateSetter();
         programs = new ArrayList<>();
         ProgramRepository programRepository = configureDatabaseMock();
-        programService = new ProgramService(testProgramDateSetter, programRepository);
+        programService = new ProgramService(testProgramDateSetter, programRepository,
+                                            new MyMapper(Mappers.getMapper(
+                                                     MapstructMapper.class)));
     }
 
     @Test
@@ -60,7 +66,7 @@ class ProgramServiceTest {
         int numOfRequested = 6;
         addNPrograms(numOfRequested);
         List<ProgramDto> programs = programService.getLastPrograms(10);
-        assertThat(programs).hasSize(6);
+        assertThat(programs).hasSize(numOfRequested);
     }
 
     @Test
@@ -99,10 +105,13 @@ class ProgramServiceTest {
             }
             return Optional.of(programs.get((int) id));
         });
-        when(programRepository.findAllOrderByCreatedDesc()).then(invocation -> {
+        when(programRepository.findAllByOrderByCreatedDesc(
+                 Mockito.any(Pageable.class))).then(invocation -> {
             List<Program> result = new ArrayList<>(programs);
-            result.sort(Comparator.comparing(Program::getCreated));
-            return result;
+            result.sort(Comparator.comparing(Program::getCreated)
+                                  .reversed());
+            return result.subList(0, Math.min(invocation.getArgument(0, Pageable.class)
+                                                        .getPageSize(), result.size()));
         });
         return programRepository;
     }
