@@ -4,24 +4,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import platform.model.ProgramDto;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProgramServiceTest {
 
-    private final static LocalDateTime DATE_TIME =
-             LocalDateTime.of(2020, 12, 12, 10, 32, 21);
+    private TestProgramDateSetter testProgramDateSetter;
     private ProgramService programService;
 
     @BeforeEach
     void setUp() {
-        Clock fixedClock = Clock.fixed(DATE_TIME.atZone(ZoneId.systemDefault())
-                                                .toInstant(), ZoneId.systemDefault());
-        programService = new ProgramService(fixedClock);
+        testProgramDateSetter = new TestProgramDateSetter();
+        programService = new ProgramService(testProgramDateSetter);
     }
 
     @Test
@@ -37,8 +33,9 @@ class ProgramServiceTest {
     void use_yyyy_mm_dd_hh_mm_ss_format_for_date() {
         ProgramDto programDto = new ProgramDto("", null);
         int id = programService.addProgram(programDto);
+        String expectedDate = testProgramDateSetter.getPreviousDate();
         assertThat(programService.getProgram(id)
-                                 .getDate()).isEqualTo("2020-12-12 10:32:21");
+                                 .getDate()).isEqualTo(expectedDate);
     }
 
     @Test
@@ -60,6 +57,26 @@ class ProgramServiceTest {
     void should_return_empty_list_when_no_programs_in_memory() {
         List<ProgramDto> programs = programService.getLastPrograms(10);
         assertThat(programs).hasSize(0);
+    }
+
+    private static class TestProgramDateSetter implements ProgramDateSetter {
+
+        private LocalDateTime previousDate;
+
+        private TestProgramDateSetter() {
+            this.previousDate = LocalDateTime.of(2020, 12, 12, 10, 32, 21);
+        }
+
+        @Override
+        public void setDate(ProgramDto program) {
+            previousDate = previousDate.plusMinutes(1);
+            program.setDate(
+                     previousDate.format(ProgramDateSetterImpl.DATE_TIME_FORMATTER));
+        }
+
+        public String getPreviousDate() {
+            return previousDate.format(ProgramDateSetterImpl.DATE_TIME_FORMATTER);
+        }
     }
 
     private void addNPrograms(int n) {
