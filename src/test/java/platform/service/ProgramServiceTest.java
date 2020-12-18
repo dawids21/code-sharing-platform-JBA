@@ -2,22 +2,33 @@ package platform.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import platform.model.Program;
 import platform.model.ProgramDto;
+import platform.model.ProgramRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProgramServiceTest {
 
     private TestProgramDateSetter testProgramDateSetter;
     private ProgramService programService;
+    private List<Program> programs;
 
     @BeforeEach
     void setUp() {
         testProgramDateSetter = new TestProgramDateSetter();
-        programService = new ProgramService(testProgramDateSetter, null);
+        programs = new ArrayList<>();
+        ProgramRepository programRepository = configureDatabaseMock();
+        programService = new ProgramService(testProgramDateSetter, programRepository);
     }
 
     @Test
@@ -72,6 +83,29 @@ class ProgramServiceTest {
                                    .getCode()).isGreaterThan(lastPrograms.get(i + 1)
                                                                          .getCode());
         }
+    }
+
+    private ProgramRepository configureDatabaseMock() {
+        ProgramRepository programRepository = mock(ProgramRepository.class);
+        when(programRepository.save(Mockito.any(Program.class))).then(invocation -> {
+            Program program = invocation.getArgument(0, Program.class);
+            program.setId(programs.size());
+            programs.add(invocation.getArgument(0, Program.class));
+            return program;
+        });
+        when(programRepository.findById(Mockito.anyLong())).then(invocation -> {
+            long id = invocation.getArgument(0);
+            if (id < 0 || id >= programs.size()) {
+                return Optional.empty();
+            }
+            return Optional.of(programs.get((int) id));
+        });
+        when(programRepository.findAllOrderByCreatedDesc()).then(invocation -> {
+            List<Program> result = new ArrayList<>(programs);
+            result.sort(Comparator.comparing(Program::getCreated));
+            return result;
+        });
+        return programRepository;
     }
 
     private static class TestProgramDateSetter implements ProgramDateSetter {
