@@ -4,23 +4,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import platform.model.ProgramDto;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class ProgramService {
 
-    public static final DateTimeFormatter DATE_TIME_FORMATTER =
-             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private final Clock clock;
     private final List<ProgramDto> programDtos;
+    private final ProgramDateSetter programDateSetter;
 
-    public ProgramService(Clock clock) {
-        this.clock = clock;
+    public ProgramService(ProgramDateSetter programDateSetter) {
         programDtos = new ArrayList<>();
+        this.programDateSetter = programDateSetter;
     }
 
     public ProgramDto getProgram(int n) {
@@ -32,8 +28,7 @@ public class ProgramService {
     }
 
     public int addProgram(ProgramDto program) {
-        LocalDateTime now = LocalDateTime.now(clock);
-        program.setDate(now.format(DATE_TIME_FORMATTER));
+        programDateSetter.setDate(program);
         programDtos.add(program);
         return programDtos.size() - 1;
     }
@@ -46,7 +41,7 @@ public class ProgramService {
         }
         result.sort(Comparator.comparing(
                  o -> LocalDateTime.parse(((ProgramDto) o).getDate(),
-                                          DATE_TIME_FORMATTER))
+                                          ProgramDateSetterImpl.DATE_TIME_FORMATTER))
                               .reversed());
         return result;
     }
