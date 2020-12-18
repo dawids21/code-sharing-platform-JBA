@@ -59,6 +59,21 @@ class ProgramServiceTest {
         assertThat(programs).hasSize(0);
     }
 
+    @Test
+    void should_sort_programs_by_date() {
+        for (int i = 0; i < 4; i++) {
+            programService.addProgram(new ProgramDto(String.valueOf(i), null));
+        }
+
+        List<ProgramDto> lastPrograms = programService.getLastPrograms(4);
+
+        for (int i = 0; i < 3; i++) {
+            assertThat(lastPrograms.get(i)
+                                   .getCode()).isGreaterThan(lastPrograms.get(i + 1)
+                                                                         .getCode());
+        }
+    }
+
     private static class TestProgramDateSetter implements ProgramDateSetter {
 
         private LocalDateTime previousDate;
