@@ -34,8 +34,7 @@ class ProgramServiceTest {
     @Test
     void add_program_should_return_corresponding_id() {
         ProgramDto programDto = new ProgramDto("main()", null);
-        int id = programService.addProgram(programDto);
-        assertThat(id).isEqualTo(0);
+        long id = programService.addProgram(programDto);
         assertThat(programService.getProgram(id)
                                  .getCode()).isEqualTo("main()");
     }
@@ -43,7 +42,7 @@ class ProgramServiceTest {
     @Test
     void use_yyyy_mm_dd_hh_mm_ss_format_for_date() {
         ProgramDto programDto = new ProgramDto("", null);
-        int id = programService.addProgram(programDto);
+        long id = programService.addProgram(programDto);
         String expectedDate = testProgramDateSetter.getPreviousDate();
         assertThat(programService.getProgram(id)
                                  .getDate()).isEqualTo(expectedDate);

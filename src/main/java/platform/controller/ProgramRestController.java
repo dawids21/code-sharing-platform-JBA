@@ -32,7 +32,7 @@ public class ProgramRestController {
 
     @PostMapping(path = "/code/new", consumes = "application/json")
     public Map<String, String> saveProgram(@RequestBody ProgramDto programDto) {
-        int id = programService.addProgram(programDto);
+        long id = programService.addProgram(programDto);
         Map<String, String> map = new HashMap<>();
         map.put("id", String.valueOf(id));
         return map;
