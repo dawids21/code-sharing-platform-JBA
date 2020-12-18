@@ -3,6 +3,7 @@ package platform.service;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import platform.model.ProgramDto;
+import platform.model.ProgramRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,8 +17,11 @@ public class ProgramService {
              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final List<ProgramDto> programDtos;
     private final ProgramDateSetter programDateSetter;
+    private final ProgramRepository programRepository;
 
-    public ProgramService(ProgramDateSetter programDateSetter) {
+    public ProgramService(ProgramDateSetter programDateSetter,
+                          ProgramRepository programRepository) {
+        this.programRepository = programRepository;
         programDtos = new ArrayList<>();
         this.programDateSetter = programDateSetter;
     }

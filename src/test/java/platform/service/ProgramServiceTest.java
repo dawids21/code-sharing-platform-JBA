@@ -17,7 +17,7 @@ class ProgramServiceTest {
     @BeforeEach
     void setUp() {
         testProgramDateSetter = new TestProgramDateSetter();
-        programService = new ProgramService(testProgramDateSetter);
+        programService = new ProgramService(testProgramDateSetter, null);
     }
 
     @Test
