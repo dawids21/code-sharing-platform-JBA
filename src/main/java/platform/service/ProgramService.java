@@ -1,16 +1,18 @@
 package platform.service;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import platform.model.Program;
 import platform.model.ProgramDto;
 import platform.model.ProgramRepository;
 import platform.utils.MyMapper;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProgramService {
 
@@ -29,30 +31,24 @@ public class ProgramService {
         this.mapper = mapper;
     }
 
-    public ProgramDto getProgram(int n) {
-        if (n >= programDtos.size()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                                              "Id does not exits");
-        }
-        return programDtos.get(n);
+    public ProgramDto getProgram(long id) {
+        return programRepository.findById(id)
+                                .map(mapper::programToProgramDto)
+                                .orElseThrow(() -> new ResponseStatusException(
+                                         HttpStatus.BAD_REQUEST, "Id does not exists"));
     }
 
-    public int addProgram(ProgramDto program) {
-        programDateSetter.setDate(program);
-        programDtos.add(program);
-        return programDtos.size() - 1;
+    public long addProgram(ProgramDto programDto) {
+        programDateSetter.setDate(programDto);
+        Program program = programRepository.save(mapper.programDtoToProgram(programDto));
+        return program.getId();
     }
 
     public List<ProgramDto> getLastPrograms(int n) {
-        List<ProgramDto> result = new ArrayList<>();
-        for (int i = programDtos.size() - Math.min(programDtos.size(), n);
-                 i < programDtos.size(); i++) {
-            result.add(programDtos.get(i));
-        }
-        result.sort(Comparator.comparing(
-                 o -> LocalDateTime.parse(((ProgramDto) o).getDate(),
-                                          DATE_TIME_FORMATTER))
-                              .reversed());
-        return result;
+        Pageable pageable = PageRequest.of(0, n);
+        return programRepository.findAllByOrderByCreatedDesc(pageable)
+                                .stream()
+                                .map(mapper::programToProgramDto)
+                                .collect(Collectors.toList());
     }
 }
