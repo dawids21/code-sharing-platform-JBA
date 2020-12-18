@@ -5,12 +5,15 @@ import org.springframework.web.server.ResponseStatusException;
 import platform.model.ProgramDto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class ProgramService {
 
+    public static final DateTimeFormatter DATE_TIME_FORMATTER =
+             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final List<ProgramDto> programDtos;
     private final ProgramDateSetter programDateSetter;
 
@@ -41,7 +44,7 @@ public class ProgramService {
         }
         result.sort(Comparator.comparing(
                  o -> LocalDateTime.parse(((ProgramDto) o).getDate(),
-                                          ProgramDateSetterImpl.DATE_TIME_FORMATTER))
+                                          DATE_TIME_FORMATTER))
                               .reversed());
         return result;
     }

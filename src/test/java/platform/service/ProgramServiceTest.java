@@ -85,12 +85,11 @@ class ProgramServiceTest {
         @Override
         public void setDate(ProgramDto program) {
             previousDate = previousDate.plusMinutes(1);
-            program.setDate(
-                     previousDate.format(ProgramDateSetterImpl.DATE_TIME_FORMATTER));
+            program.setDate(previousDate.format(ProgramService.DATE_TIME_FORMATTER));
         }
 
         public String getPreviousDate() {
-            return previousDate.format(ProgramDateSetterImpl.DATE_TIME_FORMATTER);
+            return previousDate.format(ProgramService.DATE_TIME_FORMATTER);
         }
     }
 
