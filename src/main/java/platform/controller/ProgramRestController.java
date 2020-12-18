@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import platform.model.ProgramDto;
 import platform.service.ProgramService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -29,8 +31,10 @@ public class ProgramRestController {
     }
 
     @PostMapping(path = "/code/new", consumes = "application/json")
-    public String saveProgram(@RequestBody ProgramDto programDto) {
-        programService.addProgram(programDto);
-        return "{}";
+    public Map<String, String> saveProgram(@RequestBody ProgramDto programDto) {
+        int id = programService.addProgram(programDto);
+        Map<String, String> map = new HashMap<>();
+        map.put("id", String.valueOf(id));
+        return map;
     }
 }
