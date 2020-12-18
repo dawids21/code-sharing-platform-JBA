@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import platform.model.ProgramDto;
 import platform.model.ProgramRepository;
+import platform.utils.MyMapper;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,12 +19,14 @@ public class ProgramService {
     private final List<ProgramDto> programDtos;
     private final ProgramDateSetter programDateSetter;
     private final ProgramRepository programRepository;
+    private final MyMapper mapper;
 
     public ProgramService(ProgramDateSetter programDateSetter,
-                          ProgramRepository programRepository) {
+                          ProgramRepository programRepository, MyMapper mapper) {
         this.programRepository = programRepository;
         programDtos = new ArrayList<>();
         this.programDateSetter = programDateSetter;
+        this.mapper = mapper;
     }
 
     public ProgramDto getProgram(int n) {
