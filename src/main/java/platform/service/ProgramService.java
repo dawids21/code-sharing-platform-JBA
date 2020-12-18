@@ -10,7 +10,6 @@ import platform.model.ProgramRepository;
 import platform.utils.MyMapper;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,6 @@ public class ProgramService {
 
     public static final DateTimeFormatter DATE_TIME_FORMATTER =
              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private final List<ProgramDto> programDtos;
     private final ProgramDateSetter programDateSetter;
     private final ProgramRepository programRepository;
     private final MyMapper mapper;
@@ -26,7 +24,6 @@ public class ProgramService {
     public ProgramService(ProgramDateSetter programDateSetter,
                           ProgramRepository programRepository, MyMapper mapper) {
         this.programRepository = programRepository;
-        programDtos = new ArrayList<>();
         this.programDateSetter = programDateSetter;
         this.mapper = mapper;
     }
