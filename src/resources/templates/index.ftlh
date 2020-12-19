@@ -5,11 +5,15 @@
     <meta charset="utf-8">
     <title>Code</title>
     <link href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 <#list programs as program>
     <span id="load_date">${program.date}</span>
-    <pre id="code_snippet">${program.code}</pre>
+    <pre id="code_snippet"><code>${program.code}</code></pre>
 </#list>
 </body>
 </html>
