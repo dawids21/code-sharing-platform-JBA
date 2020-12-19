@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Code</title>
+    <title><#if springMacroRequestContext.getRequestUri()?contains("/latest")>Latest<#else>Code</#if></title>
     <link href="/css/style.css" rel="stylesheet">
     <link rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css">
