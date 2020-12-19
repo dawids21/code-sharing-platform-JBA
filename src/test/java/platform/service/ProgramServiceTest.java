@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import platform.model.Program;
 import platform.model.ProgramDto;
@@ -107,11 +108,13 @@ class ProgramServiceTest {
         });
         when(programRepository.findAllByOrderByCreatedDesc(
                  Mockito.any(Pageable.class))).then(invocation -> {
+            Pageable pageable = invocation.getArgument(0, Pageable.class);
             List<Program> result = new ArrayList<>(programs);
             result.sort(Comparator.comparing(Program::getCreated)
                                   .reversed());
-            return result.subList(0, Math.min(invocation.getArgument(0, Pageable.class)
-                                                        .getPageSize(), result.size()));
+            int start = (int) pageable.getOffset();
+            int end = (Math.min(start + pageable.getPageSize(), programs.size()));
+            return new PageImpl<>(result.subList(start, end));
         });
         return programRepository;
     }
