@@ -14,4 +14,8 @@ public class MyMapper {
     public ProgramDto programToProgramDto(Program program) {
         return mapper.programToProgramDto(program);
     }
+
+    public Program programDtoToProgram(ProgramDto programDto) {
+        return mapper.programDtoToProgram(programDto);
+    }
 }

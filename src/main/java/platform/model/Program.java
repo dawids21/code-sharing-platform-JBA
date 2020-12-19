@@ -1,17 +1,28 @@
 package platform.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Programs")
 public class Program {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+   
     private String code;
 
     private LocalDateTime created;
 
     public Program() {
+    }
+
+    public Program(long id, String code, LocalDateTime created) {
+        this.id = id;
+        this.code = code;
+        this.created = created;
     }
 
     public long getId() {
