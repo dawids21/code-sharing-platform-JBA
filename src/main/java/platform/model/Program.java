@@ -18,15 +18,18 @@ public class Program {
 
     private LocalDateTime validUntil;
 
+    private boolean restricted;
+
     public Program() {
     }
 
-    public Program(long id, String code, LocalDateTime created,
-                   LocalDateTime validUntil) {
+    public Program(long id, String code, LocalDateTime created, LocalDateTime validUntil,
+                   boolean restricted) {
         this.id = id;
         this.code = code;
         this.created = created;
         this.validUntil = validUntil;
+        this.restricted = restricted;
     }
 
     public long getId() {
@@ -61,6 +64,14 @@ public class Program {
         this.validUntil = validUntil;
     }
 
+    public boolean isRestricted() {
+        return restricted;
+    }
+
+    public void setRestricted(boolean restricted) {
+        this.restricted = restricted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -70,7 +81,7 @@ public class Program {
             return false;
         }
         Program program = (Program) o;
-        return getId() == program.getId() &&
+        return getId() == program.getId() && isRestricted() == program.isRestricted() &&
                Objects.equals(getCode(), program.getCode()) &&
                Objects.equals(getCreated(), program.getCreated()) &&
                Objects.equals(getValidUntil(), program.getValidUntil());
@@ -78,12 +89,14 @@ public class Program {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode(), getCreated(), getValidUntil());
+        return Objects.hash(getId(), getCode(), getCreated(), getValidUntil(),
+                            isRestricted());
     }
 
     @Override
     public String toString() {
         return "Program{" + "id=" + id + ", code='" + code + '\'' + ", created=" +
-               created + ", validUntil=" + validUntil + '}';
+               created + ", validUntil=" + validUntil + ", restricted=" + restricted +
+               '}';
     }
 }
