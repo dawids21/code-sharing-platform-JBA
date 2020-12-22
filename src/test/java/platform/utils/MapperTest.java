@@ -29,7 +29,7 @@ class MapperTest {
         assertThat(programDto.getDate()).isEqualTo(program.getCreated()
                                                           .format(DateTimeFormatter.ofPattern(
                                                                    "yyyy-MM-dd HH:mm:ss")));
-        assertThat(programDto.getRemainingSeconds()).isEqualTo(
+        assertThat(programDto.getTime()).isEqualTo(
                  SECONDS.between(TestUtilsConfig.DATE, TestUtilsConfig.DATE));
     }
 

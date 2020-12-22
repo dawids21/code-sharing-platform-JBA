@@ -15,9 +15,9 @@ public interface MapstructMapper {
         String code = program.getCode();
         String date = program.getCreated()
                              .format(ProgramService.DATE_TIME_FORMATTER);
-        int remainingSeconds = calculator.secondsRemain(program.getValidUntil());
+        int time = calculator.secondsRemain(program.getValidUntil());
 
-        return new ProgramDto(code, date, remainingSeconds);
+        return new ProgramDto(code, date, time);
     }
 
     default Program programDtoToProgram(ProgramDto programDto,
@@ -25,8 +25,7 @@ public interface MapstructMapper {
         String code = programDto.getCode();
         LocalDateTime created = LocalDateTime.parse(programDto.getDate(),
                                                     ProgramService.DATE_TIME_FORMATTER);
-        LocalDateTime validUntil =
-                 calculator.dateAfterSeconds(programDto.getRemainingSeconds());
+        LocalDateTime validUntil = calculator.dateAfterSeconds(programDto.getTime());
 
         Program target = new Program();
         target.setCode(code);
