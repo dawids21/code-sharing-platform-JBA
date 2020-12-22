@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import platform.model.Program;
 import platform.model.ProgramDto;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
@@ -37,20 +36,14 @@ class MapperTest {
     @Test
     void should_map_program_dto_to_program() {
         MyMapper myMapper = new TestUtilsConfig().testMyMapper();
-        ProgramDto programDto = new ProgramDto("main()", LocalDateTime.now()
-                                                                      .format(DateTimeFormatter.ofPattern(
-                                                                               "yyyy-MM-dd HH:mm:ss")),
-                                               0);
+        ProgramDto programDto = new ProgramDto("main()", TestUtilsConfig.DATE.format(
+                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0);
         Program program = myMapper.programDtoToProgram(programDto);
 
         assertThat(program).isNotNull();
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
-        assertThat(program.getCreated()).isEqualTo(
-                 LocalDateTime.parse(programDto.getDate(),
-                                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        assertThat(program.getCreated()).isEqualTo(TestUtilsConfig.DATE);
         assertThat(program.getValidUntil()).isEqualTo(
-                 LocalDateTime.parse(programDto.getDate(),
-                                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                              .plusSeconds(0));
+                 TestUtilsConfig.DATE.plusSeconds(0));
     }
 }
