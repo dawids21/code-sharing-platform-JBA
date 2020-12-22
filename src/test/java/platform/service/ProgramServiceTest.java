@@ -43,7 +43,7 @@ class ProgramServiceTest {
 
     @Test
     void add_program_should_return_corresponding_id() {
-        ProgramDto programDto = new ProgramDto("main()", null);
+        ProgramDto programDto = new ProgramDto("main()", null, 0);
         long id = programService.addProgram(programDto);
         assertThat(programService.getProgram(id)
                                  .getCode()).isEqualTo("main()");
@@ -51,7 +51,7 @@ class ProgramServiceTest {
 
     @Test
     void use_yyyy_mm_dd_hh_mm_ss_format_for_date() {
-        ProgramDto programDto = new ProgramDto("", null);
+        ProgramDto programDto = new ProgramDto("", null, 0);
         long id = programService.addProgram(programDto);
         String expectedDate = testProgramDateSetter.getPreviousDate();
         assertThat(programService.getProgram(id)
@@ -82,7 +82,7 @@ class ProgramServiceTest {
     @Test
     void should_sort_programs_by_date() {
         for (int i = 0; i < 4; i++) {
-            programService.addProgram(new ProgramDto(String.valueOf(i), null));
+            programService.addProgram(new ProgramDto(String.valueOf(i), null, 0));
         }
 
         List<ProgramDto> lastPrograms = programService.getLastPrograms(4);
@@ -143,7 +143,7 @@ class ProgramServiceTest {
 
     private void addNPrograms(int n) {
         for (int i = 0; i < n; i++) {
-            ProgramDto programDto = new ProgramDto("1 + " + n, null);
+            ProgramDto programDto = new ProgramDto("1 + " + n, null, 0);
             programService.addProgram(programDto);
         }
     }

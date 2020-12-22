@@ -9,6 +9,7 @@ import platform.model.ProgramDto;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -28,6 +29,8 @@ class MapperTest {
         assertThat(programDto.getDate()).isEqualTo(program.getCreated()
                                                           .format(DateTimeFormatter.ofPattern(
                                                                    "yyyy-MM-dd HH:mm:ss")));
+        assertThat(programDto.getRemainingSeconds()).isEqualTo(
+                 SECONDS.between(program.getCreated(), program.getValidUntil()));
     }
 
     @Test
@@ -35,7 +38,8 @@ class MapperTest {
         MyMapper myMapper = new TestUtilsConfig().testMyMapper();
         ProgramDto programDto = new ProgramDto("main()", LocalDateTime.now()
                                                                       .format(DateTimeFormatter.ofPattern(
-                                                                               "yyyy-MM-dd HH:mm:ss")));
+                                                                               "yyyy-MM-dd HH:mm:ss")),
+                                               0);
         Program program = myMapper.programDtoToProgram(programDto);
 
         assertThat(program).isNotNull();
@@ -43,5 +47,9 @@ class MapperTest {
         assertThat(program.getCreated()).isEqualTo(
                  LocalDateTime.parse(programDto.getDate(),
                                      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        assertThat(program.getValidUntil()).isEqualTo(
+                 LocalDateTime.parse(programDto.getDate(),
+                                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                              .plusSeconds(0));
     }
 }

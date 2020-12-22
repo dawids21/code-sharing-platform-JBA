@@ -13,5 +13,6 @@ public interface MapstructMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "date", target = "created", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Mapping(target = "restricted", ignore = true)
     Program programDtoToProgram(ProgramDto programDto);
 }

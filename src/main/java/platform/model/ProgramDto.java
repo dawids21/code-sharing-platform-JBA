@@ -11,9 +11,12 @@ public class ProgramDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String date;
 
-    public ProgramDto(String code, String date) {
+    private int remainingSeconds;
+
+    public ProgramDto(String code, String date, int remainingSeconds) {
         this.code = code;
         this.date = date;
+        this.remainingSeconds = remainingSeconds;
     }
 
     public String getCode() {
@@ -32,6 +35,14 @@ public class ProgramDto {
         this.date = date;
     }
 
+    public int getRemainingSeconds() {
+        return remainingSeconds;
+    }
+
+    public void setRemainingSeconds(int remainingSeconds) {
+        this.remainingSeconds = remainingSeconds;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -41,17 +52,19 @@ public class ProgramDto {
             return false;
         }
         ProgramDto that = (ProgramDto) o;
-        return Objects.equals(getCode(), that.getCode()) &&
+        return getRemainingSeconds() == that.getRemainingSeconds() &&
+               Objects.equals(getCode(), that.getCode()) &&
                Objects.equals(getDate(), that.getDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCode(), getDate());
+        return Objects.hash(getCode(), getDate(), getRemainingSeconds());
     }
 
     @Override
     public String toString() {
-        return "ProgramDto{" + "code='" + code + '\'' + ", date=" + date + '}';
+        return "ProgramDto{" + "code='" + code + '\'' + ", date='" + date + '\'' +
+               ", remainingSeconds=" + remainingSeconds + '}';
     }
 }
