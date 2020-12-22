@@ -4,16 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import platform.model.Program;
 import platform.model.ProgramDto;
 import platform.model.ProgramRepository;
-import platform.utils.MapstructMapper;
-import platform.utils.MyMapper;
-import platform.utils.ProgramExpireTimeCalculator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,12 +31,9 @@ class ProgramServiceTest {
     @BeforeEach
     void setUp() {
         testProgramDateSetter = new TestProgramDateSetter();
-        ProgramExpireTimeCalculator calculator = mock(ProgramExpireTimeCalculator.class);
         programs = new ArrayList<>();
-        ProgramRepository programRepository = configureDatabaseMock();
-        programService = new ProgramService(testProgramDateSetter, programRepository,
-                                            new MyMapper(Mappers.getMapper(
-                                                     MapstructMapper.class), calculator));
+        programService = new TestServiceConfig().testProgramService(testProgramDateSetter,
+                                                                    programs);
     }
 
     @Test
