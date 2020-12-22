@@ -13,6 +13,7 @@ import platform.model.ProgramDto;
 import platform.model.ProgramRepository;
 import platform.utils.MapstructMapper;
 import platform.utils.MyMapper;
+import platform.utils.ProgramExpireTimeCalculator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,11 +35,12 @@ class ProgramServiceTest {
     @BeforeEach
     void setUp() {
         testProgramDateSetter = new TestProgramDateSetter();
+        ProgramExpireTimeCalculator calculator = mock(ProgramExpireTimeCalculator.class);
         programs = new ArrayList<>();
         ProgramRepository programRepository = configureDatabaseMock();
         programService = new ProgramService(testProgramDateSetter, programRepository,
                                             new MyMapper(Mappers.getMapper(
-                                                     MapstructMapper.class)));
+                                                     MapstructMapper.class), calculator));
     }
 
     @Test

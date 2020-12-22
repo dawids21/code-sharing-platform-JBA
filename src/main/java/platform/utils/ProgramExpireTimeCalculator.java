@@ -1,4 +1,4 @@
-package platform.model;
+package platform.utils;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
