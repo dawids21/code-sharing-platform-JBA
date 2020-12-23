@@ -4,22 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import platform.model.Program;
 import platform.model.ProgramDto;
-import platform.model.ProgramRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ProgramServiceTest {
@@ -87,34 +79,6 @@ class ProgramServiceTest {
                                    .getCode()).isGreaterThan(lastPrograms.get(i + 1)
                                                                          .getCode());
         }
-    }
-
-    private ProgramRepository configureDatabaseMock() {
-        ProgramRepository programRepository = mock(ProgramRepository.class);
-        when(programRepository.save(Mockito.any(Program.class))).then(invocation -> {
-            Program program = invocation.getArgument(0, Program.class);
-            program.setId(programs.size());
-            programs.add(invocation.getArgument(0, Program.class));
-            return program;
-        });
-        when(programRepository.findById(Mockito.anyLong())).then(invocation -> {
-            long id = invocation.getArgument(0);
-            if (id < 0 || id >= programs.size()) {
-                return Optional.empty();
-            }
-            return Optional.of(programs.get((int) id));
-        });
-        when(programRepository.findAllByOrderByCreatedDesc(
-                 Mockito.any(Pageable.class))).then(invocation -> {
-            Pageable pageable = invocation.getArgument(0, Pageable.class);
-            List<Program> result = new ArrayList<>(programs);
-            result.sort(Comparator.comparing(Program::getCreated)
-                                  .reversed());
-            int start = (int) pageable.getOffset();
-            int end = (Math.min(start + pageable.getPageSize(), programs.size()));
-            return new PageImpl<>(result.subList(start, end));
-        });
-        return programRepository;
     }
 
     private static class TestProgramDateSetter implements ProgramDateSetter {

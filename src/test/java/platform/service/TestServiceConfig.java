@@ -54,7 +54,7 @@ public class TestServiceConfig extends ServiceConfig {
             }
             return Optional.of(programs.get((int) id));
         });
-        when(programRepository.findAllByOrderByCreatedDesc(
+        when(programRepository.findAllByRestrictedFalseOrderByCreatedDesc(
                  Mockito.any(Pageable.class))).then(invocation -> {
             Pageable pageable = invocation.getArgument(0, Pageable.class);
             List<Program> result = new ArrayList<>(programs);

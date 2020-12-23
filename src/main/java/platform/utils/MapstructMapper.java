@@ -25,9 +25,13 @@ public interface MapstructMapper {
         String code = programDto.getCode();
         LocalDateTime created = LocalDateTime.parse(programDto.getDate(),
                                                     ProgramService.DATE_TIME_FORMATTER);
-        LocalDateTime validUntil = calculator.dateAfterSeconds(programDto.getTime())
-                                             .withNano(0);
-        boolean restricted = programDto.getTime() > 0;
+        LocalDateTime validUntil = null;
+        boolean restricted = false;
+        if (programDto.getTime() > 0) {
+            validUntil = calculator.dateAfterSeconds(programDto.getTime())
+                                   .withNano(0);
+            restricted = true;
+        }
 
         Program target = new Program();
         target.setCode(code);

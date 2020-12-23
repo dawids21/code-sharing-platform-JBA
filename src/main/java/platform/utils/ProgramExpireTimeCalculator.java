@@ -14,6 +14,9 @@ public class ProgramExpireTimeCalculator {
     }
 
     public int secondsRemain(LocalDateTime date) {
+        if (date == null) {
+            return 0;
+        }
         LocalDateTime now = LocalDateTime.now(clock);
         return (int) SECONDS.between(now, date);
     }

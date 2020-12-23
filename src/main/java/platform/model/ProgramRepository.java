@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProgramRepository extends JpaRepository<Program, Long> {
 
-    Page<Program> findAllByOrderByCreatedDesc(Pageable pageable);
+    Page<Program> findAllByRestrictedFalseOrderByCreatedDesc(Pageable pageable);
 }

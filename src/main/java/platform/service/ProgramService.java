@@ -43,7 +43,7 @@ public class ProgramService {
 
     public List<ProgramDto> getLastPrograms(int n) {
         Pageable pageable = PageRequest.of(0, n);
-        return programRepository.findAllByOrderByCreatedDesc(pageable)
+        return programRepository.findAllByRestrictedFalseOrderByCreatedDesc(pageable)
                                 .stream()
                                 .map(mapper::programToProgramDto)
                                 .collect(Collectors.toList());
