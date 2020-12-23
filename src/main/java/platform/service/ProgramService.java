@@ -32,7 +32,7 @@ public class ProgramService {
         return programRepository.findById(id)
                                 .map(mapper::programToProgramDto)
                                 .orElseThrow(() -> new ResponseStatusException(
-                                         HttpStatus.BAD_REQUEST, "Id does not exists"));
+                                         HttpStatus.NOT_FOUND, "Id does not exists"));
     }
 
     public long addProgram(ProgramDto programDto) {
