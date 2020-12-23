@@ -42,8 +42,7 @@ class MapperTest {
         assertThat(program).isNotNull();
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
         assertThat(program.getCreated()).isEqualTo(TestUtilsConfig.DATE);
-        assertThat(program.getValidUntil()).isEqualTo(
-                 TestUtilsConfig.DATE.plusSeconds(0));
+        assertThat(program.getValidUntil()).isNull();
     }
 
     @Test
