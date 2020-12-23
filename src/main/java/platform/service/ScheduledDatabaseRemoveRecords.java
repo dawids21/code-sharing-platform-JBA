@@ -1,8 +1,8 @@
 package platform.service;
 
 import org.springframework.scheduling.annotation.Scheduled;
-import platform.model.Program;
 import platform.model.ProgramRepository;
+import platform.service.model.Program;
 
 import java.time.Clock;
 import java.time.LocalDateTime;

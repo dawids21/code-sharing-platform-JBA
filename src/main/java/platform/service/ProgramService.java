@@ -4,9 +4,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-import platform.model.Program;
-import platform.model.ProgramDto;
 import platform.model.ProgramRepository;
+import platform.service.model.Program;
+import platform.service.model.ProgramDto;
 import platform.utils.MyMapper;
 
 import java.time.format.DateTimeFormatter;

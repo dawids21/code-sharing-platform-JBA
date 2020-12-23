@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="programs" type="java.util.List<platform.model.ProgramDto>" -->
+<#-- @ftlvariable name="programs" type="java.util.List<platform.service.model.ProgramDto>" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

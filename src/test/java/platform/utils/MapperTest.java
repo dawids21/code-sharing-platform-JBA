@@ -3,8 +3,8 @@ package platform.utils;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import platform.model.Program;
-import platform.model.ProgramDto;
+import platform.service.model.Program;
+import platform.service.model.ProgramDto;
 
 import java.time.format.DateTimeFormatter;
 

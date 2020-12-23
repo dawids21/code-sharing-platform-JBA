@@ -1,7 +1,7 @@
 package platform.utils;
 
-import platform.model.Program;
-import platform.model.ProgramDto;
+import platform.service.model.Program;
+import platform.service.model.ProgramDto;
 
 public class MyMapper {
 

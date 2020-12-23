@@ -1,4 +1,4 @@
-package platform.model;
+package platform.service.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

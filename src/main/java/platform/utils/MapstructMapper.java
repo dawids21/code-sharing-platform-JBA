@@ -1,9 +1,9 @@
 package platform.utils;
 
 import org.mapstruct.Mapper;
-import platform.model.Program;
-import platform.model.ProgramDto;
 import platform.service.ProgramService;
+import platform.service.model.Program;
+import platform.service.model.ProgramDto;
 
 import java.time.LocalDateTime;
 

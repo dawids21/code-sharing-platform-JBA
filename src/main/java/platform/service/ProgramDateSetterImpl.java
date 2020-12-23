@@ -1,6 +1,6 @@
 package platform.service;
 
-import platform.model.ProgramDto;
+import platform.service.model.ProgramDto;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
