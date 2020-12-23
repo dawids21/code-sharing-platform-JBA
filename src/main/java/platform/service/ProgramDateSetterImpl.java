@@ -10,7 +10,6 @@ class ProgramDateSetterImpl implements ProgramDateSetter {
     private final Clock clock;
 
     ProgramDateSetterImpl(Clock clock) {
-
         this.clock = clock;
     }
 

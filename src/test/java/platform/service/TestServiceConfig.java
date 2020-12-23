@@ -7,7 +7,9 @@ import platform.service.model.Program;
 import platform.service.model.ProgramExpireTimeCalculator;
 import platform.service.model.ProgramMapper;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -16,15 +18,19 @@ import java.util.Optional;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TestServiceConfig extends ServiceConfig {
+class TestServiceConfig extends ServiceConfig {
 
     static final LocalDateTime DATE = LocalDateTime.of(2020, 12, 22, 8, 20, 21);
 
-    public ProgramService testProgramService(ProgramDateSetter programDateSetter,
-                                             List<Program> programs) {
+    ProgramService testProgramService(ProgramDateSetter programDateSetter,
+                                      List<Program> programs) {
         ProgramRepository programRepository = configureDatabaseMock(programs);
         ProgramMapper mapper = new ProgramMapper(testCalculator());
         return programService(programDateSetter, programRepository, mapper);
+    }
+
+    ProgramDateSetter testProgramDateSetter() {
+        return programDateSetter(testClock());
     }
 
     private ProgramExpireTimeCalculator testCalculator() {
@@ -33,6 +39,11 @@ public class TestServiceConfig extends ServiceConfig {
                  DATE.plusSeconds(10));
         when(calculator.secondsRemain(Mockito.any(LocalDateTime.class))).thenReturn(10);
         return calculator;
+    }
+
+    public Clock testClock() {
+        return Clock.fixed(DATE.atZone(ZoneId.systemDefault())
+                               .toInstant(), ZoneId.systemDefault());
     }
 
     private ProgramRepository configureDatabaseMock(List<Program> programs) {

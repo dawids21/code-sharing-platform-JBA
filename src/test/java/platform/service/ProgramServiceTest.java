@@ -36,14 +36,6 @@ class ProgramServiceTest {
                                  .getCode()).isEqualTo("main()");
     }
 
-    @Test
-    void use_yyyy_mm_dd_hh_mm_ss_format_for_date() {
-        ProgramDto programDto = new ProgramDto("", null, 0);
-        long id = programService.addProgram(programDto);
-        String expectedDate = testProgramDateSetter.getPreviousDate();
-        assertThat(programService.getProgram(id)
-                                 .getDate()).isEqualTo(expectedDate);
-    }
 
     @Test
     void should_return_requested_num_of_programs_when_there_is_enough_in_memory() {
