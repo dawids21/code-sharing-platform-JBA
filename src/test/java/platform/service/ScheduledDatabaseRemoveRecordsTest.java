@@ -1,7 +1,6 @@
 package platform.service;
 
 import org.junit.jupiter.api.*;
-import platform.model.ProgramRepository;
 import platform.service.model.Program;
 
 import java.time.Clock;

@@ -3,7 +3,6 @@ package platform.service;
 import org.mockito.Mockito;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import platform.model.ProgramRepository;
 import platform.service.model.Program;
 import platform.service.model.ProgramMapper;
 import platform.utils.ProgramExpireTimeCalculator;

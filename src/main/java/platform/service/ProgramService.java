@@ -4,7 +4,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-import platform.model.ProgramRepository;
 import platform.service.model.Program;
 import platform.service.model.ProgramDto;
 import platform.service.model.ProgramMapper;

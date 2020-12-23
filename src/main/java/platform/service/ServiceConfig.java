@@ -2,7 +2,6 @@ package platform.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import platform.model.ProgramRepository;
 import platform.service.model.ProgramMapper;
 
 import java.time.Clock;

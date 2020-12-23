@@ -19,8 +19,8 @@ import platform.utils.UtilsConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringJUnitConfig({ServiceConfig.class, UtilsConfig.class})
-@EnableJpaRepositories("platform.model")
-@EntityScan("platform.model")
+@EnableJpaRepositories("platform.service")
+@EntityScan("platform.service.model")
 @DataJpaTest
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DiTest {
