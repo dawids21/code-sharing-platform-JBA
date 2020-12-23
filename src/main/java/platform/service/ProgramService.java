@@ -8,14 +8,11 @@ import platform.service.model.Program;
 import platform.service.model.ProgramDto;
 import platform.service.model.ProgramMapper;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProgramService {
 
-    public static final DateTimeFormatter DATE_TIME_FORMATTER =
-             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final ProgramDateSetter programDateSetter;
     private final ProgramRepository programRepository;
     private final ProgramMapper mapper;

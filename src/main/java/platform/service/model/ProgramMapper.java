@@ -1,6 +1,6 @@
 package platform.service.model;
 
-import platform.service.ProgramService;
+import platform.service.ProgramDateSetter;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,7 @@ public class ProgramMapper {
     public ProgramDto programToProgramDto(Program program) {
         String code = program.getCode();
         String date = program.getCreated()
-                             .format(ProgramService.DATE_TIME_FORMATTER);
+                             .format(ProgramDateSetter.DATE_TIME_FORMATTER);
         int time = calculator.secondsRemain(program.getValidUntil());
 
         return new ProgramDto(code, date, time);
@@ -24,7 +24,7 @@ public class ProgramMapper {
     public Program programDtoToProgram(ProgramDto programDto) {
         String code = programDto.getCode();
         LocalDateTime created = LocalDateTime.parse(programDto.getDate(),
-                                                    ProgramService.DATE_TIME_FORMATTER);
+                                                    ProgramDateSetter.DATE_TIME_FORMATTER);
         LocalDateTime validUntil = null;
         boolean restricted = false;
         if (programDto.getTime() > 0) {

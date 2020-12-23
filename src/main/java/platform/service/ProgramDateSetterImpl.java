@@ -16,6 +16,6 @@ class ProgramDateSetterImpl implements ProgramDateSetter {
     @Override
     public void setDate(ProgramDto program) {
         LocalDateTime now = LocalDateTime.now(clock);
-        program.setDate(now.format(ProgramService.DATE_TIME_FORMATTER));
+        program.setDate(now.format(ProgramDateSetter.DATE_TIME_FORMATTER));
     }
 }
