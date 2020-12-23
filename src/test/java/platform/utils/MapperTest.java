@@ -14,9 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MapperTest {
 
+    private final MyMapper myMapper = new TestUtilsConfig().testMyMapper();
+
     @Test
     void should_map_program_to_program_dto() {
-        MyMapper myMapper = new TestUtilsConfig().testMyMapper();
         Program program = new Program();
         program.setCode("main()");
         program.setCreated(TestUtilsConfig.DATE);
@@ -35,9 +36,7 @@ class MapperTest {
 
     @Test
     void should_map_program_dto_to_program() {
-        MyMapper myMapper = new TestUtilsConfig().testMyMapper();
-        ProgramDto programDto = new ProgramDto("main()", TestUtilsConfig.DATE.format(
-                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0);
+        ProgramDto programDto = testProgramDto();
         Program program = myMapper.programDtoToProgram(programDto);
 
         assertThat(program).isNotNull();
@@ -46,4 +45,34 @@ class MapperTest {
         assertThat(program.getValidUntil()).isEqualTo(
                  TestUtilsConfig.DATE.plusSeconds(0));
     }
+
+    @Test
+    void should_mark_the_program_as_not_restricted_when_dto_has_zero_in_time_field() {
+        ProgramDto programDto = testProgramDto();
+        programDto.setTime(0);
+        Program program = myMapper.programDtoToProgram(programDto);
+        assertThat(program.isRestricted()).isFalse();
+    }
+
+    @Test
+    void should_mark_the_program_as_not_restricted_when_dto_has_negative_number_in_time_field() {
+        ProgramDto programDto = testProgramDto();
+        programDto.setTime(-4);
+        Program program = myMapper.programDtoToProgram(programDto);
+        assertThat(program.isRestricted()).isFalse();
+    }
+
+    @Test
+    void should_mark_the_program_as_restricted_when_dto_has_positive_number_in_time_field() {
+        ProgramDto programDto = testProgramDto();
+        programDto.setTime(23);
+        Program program = myMapper.programDtoToProgram(programDto);
+        assertThat(program.isRestricted()).isTrue();
+    }
+
+    private ProgramDto testProgramDto() {
+        return new ProgramDto("main()", TestUtilsConfig.DATE.format(
+                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0);
+    }
+
 }

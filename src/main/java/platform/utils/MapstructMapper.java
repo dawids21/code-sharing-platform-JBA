@@ -27,11 +27,13 @@ public interface MapstructMapper {
                                                     ProgramService.DATE_TIME_FORMATTER);
         LocalDateTime validUntil = calculator.dateAfterSeconds(programDto.getTime())
                                              .withNano(0);
+        boolean restricted = programDto.getTime() > 0;
 
         Program target = new Program();
         target.setCode(code);
         target.setCreated(created);
         target.setValidUntil(validUntil);
+        target.setRestricted(restricted);
         return target;
     }
 }
