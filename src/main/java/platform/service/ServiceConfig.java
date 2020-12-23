@@ -10,11 +10,6 @@ import java.time.Clock;
 public class ServiceConfig {
 
     @Bean
-    public Clock clock() {
-        return Clock.systemDefaultZone();
-    }
-
-    @Bean
     public ProgramService programService(ProgramDateSetter programDateSetter,
                                          ProgramRepository programRepository,
                                          ProgramMapper mapper) {
@@ -22,14 +17,19 @@ public class ServiceConfig {
     }
 
     @Bean
-    public ProgramDateSetter programDateSetter(Clock clock) {
-        return new ProgramDateSetterImpl(clock);
+    public CurrentDateGetter currentDateGetter() {
+        return new CurrentDateGetter(Clock.systemDefaultZone());
+    }
+
+    @Bean
+    public ProgramDateSetter programDateSetter(CurrentDateGetter currentDateGetter) {
+        return new ProgramDateSetterImpl(currentDateGetter);
     }
 
     @Bean
     public ScheduledDatabaseRemoveRecords scheduledDatabaseRemoveRecords(
-             ProgramRepository programRepository, Clock clock) {
-        return new ScheduledDatabaseRemoveRecords(programRepository, clock);
+             ProgramRepository programRepository, CurrentDateGetter currentDateGetter) {
+        return new ScheduledDatabaseRemoveRecords(programRepository, currentDateGetter);
     }
 
 }

@@ -1,21 +1,19 @@
 package platform.service;
 
+import platform.service.model.ProgramDateFormatter;
 import platform.service.model.ProgramDto;
-
-import java.time.Clock;
-import java.time.LocalDateTime;
 
 class ProgramDateSetterImpl implements ProgramDateSetter {
 
-    private final Clock clock;
+    private final CurrentDateGetter currentDateGetter;
+    private final ProgramDateFormatter programDateFormatter;
 
-    ProgramDateSetterImpl(Clock clock) {
-        this.clock = clock;
+    public ProgramDateSetterImpl(CurrentDateGetter currentDateGetter) {
+        this.currentDateGetter = currentDateGetter;
+        programDateFormatter = new ProgramDateFormatter();
     }
 
-    @Override
     public void setDate(ProgramDto program) {
-        LocalDateTime now = LocalDateTime.now(clock);
-        program.setDate(now.format(ProgramDateSetter.DATE_TIME_FORMATTER));
+        program.setDate(programDateFormatter.toString(currentDateGetter.now()));
     }
 }

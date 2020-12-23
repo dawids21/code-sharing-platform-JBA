@@ -3,24 +3,23 @@ package platform.service;
 import org.springframework.scheduling.annotation.Scheduled;
 import platform.service.model.Program;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class ScheduledDatabaseRemoveRecords {
 
     private final ProgramRepository programRepository;
-    private final Clock clock;
+    private final CurrentDateGetter currentDateGetter;
 
     public ScheduledDatabaseRemoveRecords(ProgramRepository programRepository,
-                                          Clock clock) {
+                                          CurrentDateGetter currentDateGetter) {
         this.programRepository = programRepository;
-        this.clock = clock;
+        this.currentDateGetter = currentDateGetter;
     }
 
     @Scheduled(fixedRate = 60000)
     public void removeRecords() {
-        LocalDateTime now = LocalDateTime.now(clock);
+        LocalDateTime now = currentDateGetter.now();
         List<Program> programs = programRepository.findAll();
         programs.stream()
                 .filter(Program::isRestricted)
