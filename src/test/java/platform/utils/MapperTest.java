@@ -3,6 +3,7 @@ package platform.utils;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import platform.service.model.MyMapper;
 import platform.service.model.Program;
 import platform.service.model.ProgramDto;
 

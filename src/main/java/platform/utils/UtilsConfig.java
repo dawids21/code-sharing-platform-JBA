@@ -3,6 +3,8 @@ package platform.utils;
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import platform.service.model.MapstructMapper;
+import platform.service.model.MyMapper;
 
 import java.time.Clock;
 

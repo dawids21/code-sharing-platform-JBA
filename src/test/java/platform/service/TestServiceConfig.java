@@ -5,9 +5,9 @@ import org.mockito.Mockito;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import platform.model.ProgramRepository;
+import platform.service.model.MapstructMapper;
+import platform.service.model.MyMapper;
 import platform.service.model.Program;
-import platform.utils.MapstructMapper;
-import platform.utils.MyMapper;
 import platform.utils.ProgramExpireTimeCalculator;
 
 import java.time.LocalDateTime;

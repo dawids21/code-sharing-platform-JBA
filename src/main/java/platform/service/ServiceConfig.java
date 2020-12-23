@@ -3,7 +3,7 @@ package platform.service;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import platform.model.ProgramRepository;
-import platform.utils.MyMapper;
+import platform.service.model.MyMapper;
 
 import java.time.Clock;
 

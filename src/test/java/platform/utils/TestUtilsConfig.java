@@ -3,6 +3,8 @@ package platform.utils;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.mapstruct.factory.Mappers;
+import platform.service.model.MapstructMapper;
+import platform.service.model.MyMapper;
 
 import java.time.Clock;
 import java.time.LocalDateTime;

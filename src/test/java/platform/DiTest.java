@@ -12,8 +12,8 @@ import platform.service.ProgramDateSetter;
 import platform.service.ProgramService;
 import platform.service.ScheduledDatabaseRemoveRecords;
 import platform.service.ServiceConfig;
-import platform.utils.MapstructMapper;
-import platform.utils.MyMapper;
+import platform.service.model.MapstructMapper;
+import platform.service.model.MyMapper;
 import platform.utils.ProgramExpireTimeCalculator;
 import platform.utils.UtilsConfig;
 

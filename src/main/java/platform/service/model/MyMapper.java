@@ -1,7 +1,6 @@
-package platform.utils;
+package platform.service.model;
 
-import platform.service.model.Program;
-import platform.service.model.ProgramDto;
+import platform.utils.ProgramExpireTimeCalculator;
 
 public class MyMapper {
 

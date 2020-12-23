@@ -1,9 +1,8 @@
-package platform.utils;
+package platform.service.model;
 
 import org.mapstruct.Mapper;
 import platform.service.ProgramService;
-import platform.service.model.Program;
-import platform.service.model.ProgramDto;
+import platform.utils.ProgramExpireTimeCalculator;
 
 import java.time.LocalDateTime;
 
