@@ -45,6 +45,30 @@ class ProgramServiceTest {
     }
 
     @Test
+    void should_mark_the_program_as_not_restricted_when_dto_has_zero_in_time_field() {
+        ProgramDto programDto = new ProgramDto("main()", null, 0);
+        long id = programService.addProgram(programDto);
+        assertThat(programs.get((int) id)
+                           .isRestricted()).isFalse();
+    }
+
+    @Test
+    void should_mark_the_program_as_not_restricted_when_dto_has_negative_number_in_time_field() {
+        ProgramDto programDto = new ProgramDto("main()", null, -4);
+        long id = programService.addProgram(programDto);
+        assertThat(programs.get((int) id)
+                           .isRestricted()).isFalse();
+    }
+
+    @Test
+    void should_mark_the_program_as_restricted_when_dto_has_positive_number_in_time_field() {
+        ProgramDto programDto = new ProgramDto("main()", null, 23);
+        long id = programService.addProgram(programDto);
+        assertThat(programs.get((int) id)
+                           .isRestricted()).isTrue();
+    }
+
+    @Test
     void use_yyyy_mm_dd_hh_mm_ss_format_for_date() {
         ProgramDto programDto = new ProgramDto("", null, 0);
         long id = programService.addProgram(programDto);
