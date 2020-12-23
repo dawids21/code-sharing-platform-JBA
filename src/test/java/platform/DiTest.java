@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import platform.service.ProgramDateSetter;
 import platform.service.ProgramService;
+import platform.service.ScheduledDatabaseRemoveRecords;
 import platform.service.ServiceConfig;
 import platform.utils.MapstructMapper;
 import platform.utils.MyMapper;
@@ -50,5 +51,11 @@ class DiTest {
     void should_autowire_programExpireTimeCalculator(
              @Autowired ProgramExpireTimeCalculator calculator) {
         assertThat(calculator).isNotNull();
+    }
+
+    @Test
+    void should_autowire_scheduledDatabaseRemoveRecords(
+             @Autowired ScheduledDatabaseRemoveRecords scheduledDatabaseRemoveRecords) {
+        assertThat(scheduledDatabaseRemoveRecords).isNotNull();
     }
 }
