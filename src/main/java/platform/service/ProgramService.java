@@ -32,7 +32,7 @@ public class ProgramService {
         return programRepository.findById(id)
                                 .map(mapper::programToProgramDto)
                                 .orElseThrow(() -> new ResponseStatusException(
-                                         HttpStatus.BAD_REQUEST, "Id does not exists"));
+                                         HttpStatus.NOT_FOUND, "Id does not exists"));
     }
 
     public long addProgram(ProgramDto programDto) {
@@ -43,7 +43,7 @@ public class ProgramService {
 
     public List<ProgramDto> getLastPrograms(int n) {
         Pageable pageable = PageRequest.of(0, n);
-        return programRepository.findAllByOrderByCreatedDesc(pageable)
+        return programRepository.findAllByRestrictedFalseOrderByCreatedDesc(pageable)
                                 .stream()
                                 .map(mapper::programToProgramDto)
                                 .collect(Collectors.toList());

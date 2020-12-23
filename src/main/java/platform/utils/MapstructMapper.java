@@ -1,17 +1,43 @@
 package platform.utils;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import platform.model.Program;
 import platform.model.ProgramDto;
+import platform.service.ProgramService;
+
+import java.time.LocalDateTime;
 
 @Mapper
 public interface MapstructMapper {
 
-    @Mapping(source = "created", target = "date", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    ProgramDto programToProgramDto(Program program);
+    default ProgramDto programToProgramDto(Program program,
+                                           ProgramExpireTimeCalculator calculator) {
+        String code = program.getCode();
+        String date = program.getCreated()
+                             .format(ProgramService.DATE_TIME_FORMATTER);
+        int time = calculator.secondsRemain(program.getValidUntil());
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(source = "date", target = "created", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    Program programDtoToProgram(ProgramDto programDto);
+        return new ProgramDto(code, date, time);
+    }
+
+    default Program programDtoToProgram(ProgramDto programDto,
+                                        ProgramExpireTimeCalculator calculator) {
+        String code = programDto.getCode();
+        LocalDateTime created = LocalDateTime.parse(programDto.getDate(),
+                                                    ProgramService.DATE_TIME_FORMATTER);
+        LocalDateTime validUntil = null;
+        boolean restricted = false;
+        if (programDto.getTime() > 0) {
+            validUntil = calculator.dateAfterSeconds(programDto.getTime())
+                                   .withNano(0);
+            restricted = true;
+        }
+
+        Program target = new Program();
+        target.setCode(code);
+        target.setCreated(created);
+        target.setValidUntil(validUntil);
+        target.setRestricted(restricted);
+        return target;
+    }
 }

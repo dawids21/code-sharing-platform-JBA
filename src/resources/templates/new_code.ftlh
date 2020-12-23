@@ -10,6 +10,10 @@
     <textarea id="code_snippet"></textarea>
 </div>
 <div>
+    <label for="time_restriction">Time restriction: </label>
+    <input id="time_restriction" type="text"/>
+</div>
+<div>
     <button id="send_snippet" type="submit" onClick="send()">Submit</button>
 </div>
 </body>

@@ -27,4 +27,10 @@ public class ServiceConfig {
         return new ProgramDateSetterImpl(clock);
     }
 
+    @Bean
+    public ScheduledDatabaseRemoveRecords scheduledDatabaseRemoveRecords(
+             ProgramRepository programRepository, Clock clock) {
+        return new ScheduledDatabaseRemoveRecords(programRepository, clock);
+    }
+
 }
