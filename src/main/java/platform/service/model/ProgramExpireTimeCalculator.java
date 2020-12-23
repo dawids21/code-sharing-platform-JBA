@@ -1,28 +1,29 @@
 package platform.service.model;
 
-import java.time.Clock;
+import platform.service.CurrentDateGetter;
+
 import java.time.LocalDateTime;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class ProgramExpireTimeCalculator {
 
-    private final Clock clock;
+    private final CurrentDateGetter currentDateGetter;
 
-    public ProgramExpireTimeCalculator(Clock clock) {
-        this.clock = clock;
+    public ProgramExpireTimeCalculator(CurrentDateGetter currentDateGetter) {
+        this.currentDateGetter = currentDateGetter;
     }
 
     public int secondsRemain(LocalDateTime date) {
         if (date == null) {
             return 0;
         }
-        LocalDateTime now = LocalDateTime.now(clock);
+        LocalDateTime now = currentDateGetter.now();
         return (int) SECONDS.between(now, date);
     }
 
     public LocalDateTime dateAfterSeconds(int toAdd) {
-        return LocalDateTime.now(clock)
-                            .plusSeconds(toAdd);
+        return currentDateGetter.now()
+                                .plusSeconds(toAdd);
     }
 }

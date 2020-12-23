@@ -2,8 +2,7 @@ package platform.service.model;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.time.Clock;
+import platform.service.CurrentDateGetter;
 
 @Configuration
 public class ModelConfig {
@@ -14,7 +13,8 @@ public class ModelConfig {
     }
 
     @Bean
-    public ProgramExpireTimeCalculator programExpireTimeCalculator(Clock clock) {
+    public ProgramExpireTimeCalculator programExpireTimeCalculator(
+             CurrentDateGetter clock) {
         return new ProgramExpireTimeCalculator(clock);
     }
 }

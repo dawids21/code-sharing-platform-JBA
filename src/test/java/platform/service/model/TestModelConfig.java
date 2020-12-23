@@ -1,20 +1,23 @@
 package platform.service.model;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import platform.service.CurrentDateGetter;
 
-public class TestModelConfig extends ModelConfig {
+import java.time.LocalDateTime;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+class TestModelConfig extends ModelConfig {
 
     static final LocalDateTime DATE = LocalDateTime.of(2020, 12, 22, 8, 20, 21);
 
     ProgramMapper testMyMapper() {
-        return myMapper(programExpireTimeCalculator(testClock()));
+        return myMapper(testProgramExpireTimeCalculator());
     }
 
-    public Clock testClock() {
-        return Clock.fixed(DATE.atZone(ZoneId.systemDefault())
-                               .toInstant(), ZoneId.systemDefault());
+    ProgramExpireTimeCalculator testProgramExpireTimeCalculator() {
+        CurrentDateGetter mock = mock(CurrentDateGetter.class);
+        when(mock.now()).thenReturn(DATE);
+        return programExpireTimeCalculator(mock);
     }
-
 }

@@ -30,7 +30,7 @@ class ProgramDateFormatterTest {
     }
 
     @ParameterizedTest
-    @MethodSource({"provideStringDates", "provideDatesForFormatTests"})
+    @MethodSource("provideStringDates")
     void should_convert_string_dates_to_local_date_time(String stringDate,
                                                         LocalDateTime expected) {
         LocalDateTime date = programDateFormatter.toLocalDateTime(stringDate);
@@ -45,9 +45,13 @@ class ProgramDateFormatterTest {
     }
 
     private static Stream<Arguments> provideStringDates() {
-        return Stream.of(Arguments.of("2020-12-12 12:12:12"),
-                         Arguments.of("0022-02-01 01:01:01"),
-                         Arguments.of("0002-1-1 1:1:1"),
-                         Arguments.of("0220-01-01 01:01:01"));
+        return Stream.of(Arguments.of("2020-12-12 12:12:12",
+                                      LocalDateTime.of(2020, 12, 12, 12, 12, 12)),
+                         Arguments.of("0022-01-01 01:01:01",
+                                      LocalDateTime.of(22, 1, 1, 1, 1, 1)),
+                         Arguments.of("0002-01-01 01:01:01",
+                                      LocalDateTime.of(2, 1, 1, 1, 1, 1)),
+                         Arguments.of("0220-01-01 01:01:01",
+                                      LocalDateTime.of(220, 1, 1, 1, 1, 1)));
     }
 }
