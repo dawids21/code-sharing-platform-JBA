@@ -2,8 +2,7 @@ package platform.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import platform.model.ProgramRepository;
-import platform.utils.MyMapper;
+import platform.service.model.ProgramMapper;
 
 import java.time.Clock;
 
@@ -11,26 +10,26 @@ import java.time.Clock;
 public class ServiceConfig {
 
     @Bean
-    public Clock clock() {
-        return Clock.systemDefaultZone();
-    }
-
-    @Bean
     public ProgramService programService(ProgramDateSetter programDateSetter,
                                          ProgramRepository programRepository,
-                                         MyMapper mapper) {
+                                         ProgramMapper mapper) {
         return new ProgramService(programDateSetter, programRepository, mapper);
     }
 
     @Bean
-    public ProgramDateSetter programDateSetter(Clock clock) {
-        return new ProgramDateSetterImpl(clock);
+    public CurrentDateGetter currentDateGetter() {
+        return new CurrentDateGetter(Clock.systemDefaultZone());
+    }
+
+    @Bean
+    public ProgramDateSetter programDateSetter(CurrentDateGetter currentDateGetter) {
+        return new ProgramDateSetterImpl(currentDateGetter);
     }
 
     @Bean
     public ScheduledDatabaseRemoveRecords scheduledDatabaseRemoveRecords(
-             ProgramRepository programRepository, Clock clock) {
-        return new ScheduledDatabaseRemoveRecords(programRepository, clock);
+             ProgramRepository programRepository, CurrentDateGetter currentDateGetter) {
+        return new ScheduledDatabaseRemoveRecords(programRepository, currentDateGetter);
     }
 
 }

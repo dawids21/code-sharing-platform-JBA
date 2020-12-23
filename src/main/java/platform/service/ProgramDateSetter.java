@@ -1,6 +1,6 @@
 package platform.service;
 
-import platform.model.ProgramDto;
+import platform.service.model.ProgramDto;
 
 public interface ProgramDateSetter {
 

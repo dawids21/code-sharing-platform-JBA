@@ -2,8 +2,8 @@ package platform.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import platform.model.ProgramDto;
 import platform.service.ProgramService;
+import platform.service.model.ProgramDto;
 
 import java.util.HashMap;
 import java.util.List;

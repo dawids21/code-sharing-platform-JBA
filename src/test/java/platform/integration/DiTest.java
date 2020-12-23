@@ -1,4 +1,4 @@
-package platform;
+package platform.integration;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -12,16 +12,15 @@ import platform.service.ProgramDateSetter;
 import platform.service.ProgramService;
 import platform.service.ScheduledDatabaseRemoveRecords;
 import platform.service.ServiceConfig;
-import platform.utils.MapstructMapper;
-import platform.utils.MyMapper;
-import platform.utils.ProgramExpireTimeCalculator;
-import platform.utils.UtilsConfig;
+import platform.service.model.ModelConfig;
+import platform.service.model.ProgramExpireTimeCalculator;
+import platform.service.model.ProgramMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringJUnitConfig({ServiceConfig.class, UtilsConfig.class})
-@EnableJpaRepositories("platform.model")
-@EntityScan("platform.model")
+@SpringJUnitConfig({ServiceConfig.class, ModelConfig.class})
+@EnableJpaRepositories("platform.service")
+@EntityScan("platform.service.model")
 @DataJpaTest
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DiTest {
@@ -38,13 +37,8 @@ class DiTest {
     }
 
     @Test
-    void should_autowire_mapstruct_mapper(@Autowired MapstructMapper mapstructMapper) {
-        assertThat(mapstructMapper).isNotNull();
-    }
-
-    @Test
-    void should_autowire_myMapper(@Autowired MyMapper myMapper) {
-        assertThat(myMapper).isNotNull();
+    void should_autowire_myMapper(@Autowired ProgramMapper programMapper) {
+        assertThat(programMapper).isNotNull();
     }
 
     @Test
