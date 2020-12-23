@@ -12,7 +12,6 @@ import platform.service.ProgramDateSetter;
 import platform.service.ProgramService;
 import platform.service.ScheduledDatabaseRemoveRecords;
 import platform.service.ServiceConfig;
-import platform.service.model.MapstructMapper;
 import platform.service.model.ProgramMapper;
 import platform.utils.ProgramExpireTimeCalculator;
 import platform.utils.UtilsConfig;
@@ -35,11 +34,6 @@ class DiTest {
     void should_autowire_programDateSetter(
              @Autowired ProgramDateSetter programDateSetter) {
         assertThat(programDateSetter).isNotNull();
-    }
-
-    @Test
-    void should_autowire_mapstruct_mapper(@Autowired MapstructMapper mapstructMapper) {
-        assertThat(mapstructMapper).isNotNull();
     }
 
     @Test
