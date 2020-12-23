@@ -44,6 +44,30 @@ class MapperTest {
     }
 
     @Test
+    void should_set_time_to_zero_when_valid_until_is_null() {
+        Program program = new Program();
+        program.setValidUntil(null);
+        ProgramDto programDto = programMapper.programToProgramDto(program);
+        assertThat(programDto.getTime()).isEqualTo(0);
+    }
+
+    @Test
+    void should_set_valid_until_to_null_when_time_is_zero() {
+        ProgramDto programDto = testProgramDto();
+        programDto.setTime(0);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.getValidUntil()).isNull();
+    }
+
+    @Test
+    void should_set_valid_until_to_null_when_time_is_negative() {
+        ProgramDto programDto = testProgramDto();
+        programDto.setTime(-3);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.getValidUntil()).isNull();
+    }
+
+    @Test
     void should_mark_the_program_as_not_restricted_when_dto_has_zero_in_time_field() {
         ProgramDto programDto = testProgramDto();
         programDto.setTime(0);

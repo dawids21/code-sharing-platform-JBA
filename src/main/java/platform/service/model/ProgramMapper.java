@@ -13,18 +13,34 @@ public class ProgramMapper {
     }
 
     public ProgramDto programToProgramDto(Program program) {
-        String code = program.getCode();
-        String date = dateFormatter.toString(program.getCreated());
-        int time = calculator.secondsRemain(program.getValidUntil());
+        String code = "";
+        String date = "";
+        int time = 0;
+
+        if (program.getCode() != null) {
+            code = program.getCode();
+        }
+        if (program.getCreated() != null) {
+            date = dateFormatter.toString(program.getCreated());
+        }
+        if (program.getValidUntil() != null) {
+            time = calculator.secondsRemain(program.getValidUntil());
+        }
 
         return new ProgramDto(code, date, time);
     }
 
     public Program programDtoToProgram(ProgramDto programDto) {
-        String code = programDto.getCode();
-        LocalDateTime created = dateFormatter.toLocalDateTime(programDto.getDate());
+        String code = "";
+        LocalDateTime created = null;
         LocalDateTime validUntil = null;
         boolean restricted = false;
+        if (programDto.getCode() != null) {
+            code = programDto.getCode();
+        }
+        if (programDto.getDate() != null) {
+            created = dateFormatter.toLocalDateTime(programDto.getDate());
+        }
         if (programDto.getTime() > 0) {
             validUntil = calculator.dateAfterSeconds(programDto.getTime())
                                    .withNano(0);
