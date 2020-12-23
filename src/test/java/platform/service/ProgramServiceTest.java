@@ -16,13 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ProgramServiceTest {
 
-    private TestProgramDateSetter testProgramDateSetter;
     private ProgramService programService;
     private List<Program> programs;
 
     @BeforeEach
     void setUp() {
-        testProgramDateSetter = new TestProgramDateSetter();
+        TestProgramDateSetter testProgramDateSetter = new TestProgramDateSetter();
         programs = new ArrayList<>();
         programService = new TestServiceConfig().testProgramService(testProgramDateSetter,
                                                                     programs);
