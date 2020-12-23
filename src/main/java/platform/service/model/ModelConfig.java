@@ -1,13 +1,10 @@
-package platform.utils;
+package platform.service.model;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import platform.service.model.ProgramMapper;
 
 import java.time.Clock;
 
-@Configuration
-public class UtilsConfig {
+public class ModelConfig {
 
     @Bean
     public ProgramMapper myMapper(ProgramExpireTimeCalculator calculator) {
@@ -18,5 +15,4 @@ public class UtilsConfig {
     public ProgramExpireTimeCalculator programExpireTimeCalculator(Clock clock) {
         return new ProgramExpireTimeCalculator(clock);
     }
-
 }

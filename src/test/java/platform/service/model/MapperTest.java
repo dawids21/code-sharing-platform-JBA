@@ -1,11 +1,8 @@
-package platform.utils;
+package platform.service.model;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import platform.service.model.Program;
-import platform.service.model.ProgramDto;
-import platform.service.model.ProgramMapper;
 
 import java.time.format.DateTimeFormatter;
 
@@ -15,14 +12,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MapperTest {
 
-    private final ProgramMapper programMapper = new TestUtilsConfig().testMyMapper();
+    private final ProgramMapper programMapper = new TestModelConfig().testMyMapper();
 
     @Test
     void should_map_program_to_program_dto() {
         Program program = new Program();
         program.setCode("main()");
-        program.setCreated(TestUtilsConfig.DATE);
-        program.setValidUntil(TestUtilsConfig.DATE);
+        program.setCreated(TestModelConfig.DATE);
+        program.setValidUntil(TestModelConfig.DATE);
 
         ProgramDto programDto = programMapper.programToProgramDto(program);
 
@@ -32,7 +29,7 @@ class MapperTest {
                                                           .format(DateTimeFormatter.ofPattern(
                                                                    "yyyy-MM-dd HH:mm:ss")));
         assertThat(programDto.getTime()).isEqualTo(
-                 SECONDS.between(TestUtilsConfig.DATE, TestUtilsConfig.DATE));
+                 SECONDS.between(TestModelConfig.DATE, TestModelConfig.DATE));
     }
 
     @Test
@@ -42,7 +39,7 @@ class MapperTest {
 
         assertThat(program).isNotNull();
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
-        assertThat(program.getCreated()).isEqualTo(TestUtilsConfig.DATE);
+        assertThat(program.getCreated()).isEqualTo(TestModelConfig.DATE);
         assertThat(program.getValidUntil()).isNull();
     }
 
@@ -71,7 +68,7 @@ class MapperTest {
     }
 
     private ProgramDto testProgramDto() {
-        return new ProgramDto("main()", TestUtilsConfig.DATE.format(
+        return new ProgramDto("main()", TestModelConfig.DATE.format(
                  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0);
     }
 

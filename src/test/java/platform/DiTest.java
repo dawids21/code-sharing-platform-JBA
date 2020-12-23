@@ -12,13 +12,13 @@ import platform.service.ProgramDateSetter;
 import platform.service.ProgramService;
 import platform.service.ScheduledDatabaseRemoveRecords;
 import platform.service.ServiceConfig;
+import platform.service.model.ModelConfig;
+import platform.service.model.ProgramExpireTimeCalculator;
 import platform.service.model.ProgramMapper;
-import platform.utils.ProgramExpireTimeCalculator;
-import platform.utils.UtilsConfig;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringJUnitConfig({ServiceConfig.class, UtilsConfig.class})
+@SpringJUnitConfig({ServiceConfig.class, ModelConfig.class})
 @EnableJpaRepositories("platform.service")
 @EntityScan("platform.service.model")
 @DataJpaTest

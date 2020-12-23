@@ -1,7 +1,6 @@
 package platform.service.model;
 
 import platform.service.ProgramService;
-import platform.utils.ProgramExpireTimeCalculator;
 
 import java.time.LocalDateTime;
 

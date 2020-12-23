@@ -4,8 +4,8 @@ import org.mockito.Mockito;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import platform.service.model.Program;
+import platform.service.model.ProgramExpireTimeCalculator;
 import platform.service.model.ProgramMapper;
-import platform.utils.ProgramExpireTimeCalculator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
