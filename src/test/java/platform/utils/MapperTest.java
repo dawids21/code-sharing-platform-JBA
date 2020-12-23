@@ -3,9 +3,9 @@ package platform.utils;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import platform.service.model.MyMapper;
 import platform.service.model.Program;
 import platform.service.model.ProgramDto;
+import platform.service.model.ProgramMapper;
 
 import java.time.format.DateTimeFormatter;
 
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MapperTest {
 
-    private final MyMapper myMapper = new TestUtilsConfig().testMyMapper();
+    private final ProgramMapper programMapper = new TestUtilsConfig().testMyMapper();
 
     @Test
     void should_map_program_to_program_dto() {
@@ -24,7 +24,7 @@ class MapperTest {
         program.setCreated(TestUtilsConfig.DATE);
         program.setValidUntil(TestUtilsConfig.DATE);
 
-        ProgramDto programDto = myMapper.programToProgramDto(program);
+        ProgramDto programDto = programMapper.programToProgramDto(program);
 
         assertThat(programDto).isNotNull();
         assertThat(programDto.getCode()).isEqualTo(program.getCode());
@@ -38,7 +38,7 @@ class MapperTest {
     @Test
     void should_map_program_dto_to_program() {
         ProgramDto programDto = testProgramDto();
-        Program program = myMapper.programDtoToProgram(programDto);
+        Program program = programMapper.programDtoToProgram(programDto);
 
         assertThat(program).isNotNull();
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
@@ -50,7 +50,7 @@ class MapperTest {
     void should_mark_the_program_as_not_restricted_when_dto_has_zero_in_time_field() {
         ProgramDto programDto = testProgramDto();
         programDto.setTime(0);
-        Program program = myMapper.programDtoToProgram(programDto);
+        Program program = programMapper.programDtoToProgram(programDto);
         assertThat(program.isRestricted()).isFalse();
     }
 
@@ -58,7 +58,7 @@ class MapperTest {
     void should_mark_the_program_as_not_restricted_when_dto_has_negative_number_in_time_field() {
         ProgramDto programDto = testProgramDto();
         programDto.setTime(-4);
-        Program program = myMapper.programDtoToProgram(programDto);
+        Program program = programMapper.programDtoToProgram(programDto);
         assertThat(program.isRestricted()).isFalse();
     }
 
@@ -66,7 +66,7 @@ class MapperTest {
     void should_mark_the_program_as_restricted_when_dto_has_positive_number_in_time_field() {
         ProgramDto programDto = testProgramDto();
         programDto.setTime(23);
-        Program program = myMapper.programDtoToProgram(programDto);
+        Program program = programMapper.programDtoToProgram(programDto);
         assertThat(program.isRestricted()).isTrue();
     }
 

@@ -5,9 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import platform.model.ProgramRepository;
-import platform.service.model.MyMapper;
 import platform.service.model.Program;
 import platform.service.model.ProgramDto;
+import platform.service.model.ProgramMapper;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -19,10 +19,10 @@ public class ProgramService {
              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final ProgramDateSetter programDateSetter;
     private final ProgramRepository programRepository;
-    private final MyMapper mapper;
+    private final ProgramMapper mapper;
 
     public ProgramService(ProgramDateSetter programDateSetter,
-                          ProgramRepository programRepository, MyMapper mapper) {
+                          ProgramRepository programRepository, ProgramMapper mapper) {
         this.programRepository = programRepository;
         this.programDateSetter = programDateSetter;
         this.mapper = mapper;

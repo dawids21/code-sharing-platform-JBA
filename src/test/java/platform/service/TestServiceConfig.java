@@ -6,8 +6,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import platform.model.ProgramRepository;
 import platform.service.model.MapstructMapper;
-import platform.service.model.MyMapper;
 import platform.service.model.Program;
+import platform.service.model.ProgramMapper;
 import platform.utils.ProgramExpireTimeCalculator;
 
 import java.time.LocalDateTime;
@@ -26,8 +26,8 @@ public class TestServiceConfig extends ServiceConfig {
     public ProgramService testProgramService(ProgramDateSetter programDateSetter,
                                              List<Program> programs) {
         ProgramRepository programRepository = configureDatabaseMock(programs);
-        MyMapper mapper =
-                 new MyMapper(Mappers.getMapper(MapstructMapper.class), testCalculator());
+        ProgramMapper mapper = new ProgramMapper(Mappers.getMapper(MapstructMapper.class),
+                                                 testCalculator());
         return programService(programDateSetter, programRepository, mapper);
     }
 

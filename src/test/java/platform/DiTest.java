@@ -13,7 +13,7 @@ import platform.service.ProgramService;
 import platform.service.ScheduledDatabaseRemoveRecords;
 import platform.service.ServiceConfig;
 import platform.service.model.MapstructMapper;
-import platform.service.model.MyMapper;
+import platform.service.model.ProgramMapper;
 import platform.utils.ProgramExpireTimeCalculator;
 import platform.utils.UtilsConfig;
 
@@ -43,8 +43,8 @@ class DiTest {
     }
 
     @Test
-    void should_autowire_myMapper(@Autowired MyMapper myMapper) {
-        assertThat(myMapper).isNotNull();
+    void should_autowire_myMapper(@Autowired ProgramMapper programMapper) {
+        assertThat(programMapper).isNotNull();
     }
 
     @Test

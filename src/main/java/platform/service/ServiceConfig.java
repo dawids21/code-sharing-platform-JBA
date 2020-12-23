@@ -3,7 +3,7 @@ package platform.service;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import platform.model.ProgramRepository;
-import platform.service.model.MyMapper;
+import platform.service.model.ProgramMapper;
 
 import java.time.Clock;
 
@@ -18,7 +18,7 @@ public class ServiceConfig {
     @Bean
     public ProgramService programService(ProgramDateSetter programDateSetter,
                                          ProgramRepository programRepository,
-                                         MyMapper mapper) {
+                                         ProgramMapper mapper) {
         return new ProgramService(programDateSetter, programRepository, mapper);
     }
 

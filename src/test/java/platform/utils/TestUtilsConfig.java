@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.mapstruct.factory.Mappers;
 import platform.service.model.MapstructMapper;
-import platform.service.model.MyMapper;
+import platform.service.model.ProgramMapper;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ class TestUtilsConfig extends UtilsConfig {
         return Mappers.getMapper(MapstructMapper.class);
     }
 
-    MyMapper testMyMapper() {
+    ProgramMapper testMyMapper() {
         return myMapper(testMapstructMapper(), programExpireTimeCalculator(testClock()));
     }
 

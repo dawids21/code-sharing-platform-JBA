@@ -2,12 +2,12 @@ package platform.service.model;
 
 import platform.utils.ProgramExpireTimeCalculator;
 
-public class MyMapper {
+public class ProgramMapper {
 
     private final MapstructMapper mapper;
     private final ProgramExpireTimeCalculator calculator;
 
-    public MyMapper(MapstructMapper mapper, ProgramExpireTimeCalculator calculator) {
+    public ProgramMapper(MapstructMapper mapper, ProgramExpireTimeCalculator calculator) {
         this.mapper = mapper;
         this.calculator = calculator;
     }
