@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProgramServiceTest extends ServiceTestBaseClass {
+class ProgramServiceTest extends ServiceTestBase {
 
     private ProgramDateSetter programDateSetter;
     private ProgramRepository programRepository;

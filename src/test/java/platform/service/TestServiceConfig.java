@@ -11,7 +11,7 @@ class TestServiceConfig extends ServiceConfig {
 
     CurrentDateGetter testCurrentDateGetter() {
         return new CurrentDateGetter(Clock.fixed(
-                 ServiceTestBaseClass.DATE.atZone(ZoneId.systemDefault())
-                                          .toInstant(), ZoneId.systemDefault()));
+                 ServiceTestBase.DATE.atZone(ZoneId.systemDefault())
+                                     .toInstant(), ZoneId.systemDefault()));
     }
 }

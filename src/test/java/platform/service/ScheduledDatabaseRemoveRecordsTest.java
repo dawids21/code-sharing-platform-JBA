@@ -11,7 +11,7 @@ import java.util.UUID;
 import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ScheduledDatabaseRemoveRecordsTest extends ServiceTestBaseClass {
+class ScheduledDatabaseRemoveRecordsTest extends ServiceTestBase {
 
     private final String baseUUIDString = "e6780274-c41c-4ab4-bde6-b32c18b4c4e";
 

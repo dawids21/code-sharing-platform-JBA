@@ -6,7 +6,7 @@ import platform.service.model.ProgramDto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-class ServiceTestBaseClass {
+class ServiceTestBase {
 
     static final LocalDateTime DATE = LocalDateTime.of(2020, 12, 22, 8, 20, 21);
     static final String DATE_STRING = "2020-12-22 08:20:21";
