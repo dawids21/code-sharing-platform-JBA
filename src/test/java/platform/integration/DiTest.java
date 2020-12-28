@@ -8,10 +8,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import platform.service.ProgramDateSetter;
-import platform.service.ProgramService;
-import platform.service.ScheduledDatabaseRemoveRecords;
-import platform.service.ServiceConfig;
+import platform.service.*;
 import platform.service.model.ModelConfig;
 import platform.service.model.ProgramExpireTimeCalculator;
 import platform.service.model.ProgramMapper;
@@ -51,5 +48,11 @@ class DiTest {
     void should_autowire_scheduledDatabaseRemoveRecords(
              @Autowired ScheduledDatabaseRemoveRecords scheduledDatabaseRemoveRecords) {
         assertThat(scheduledDatabaseRemoveRecords).isNotNull();
+    }
+
+    @Test
+    void should_autowire_programUUIDSetter(
+             @Autowired ProgramUUIDSetter programUUIDSetter) {
+        assertThat(programUUIDSetter).isNotNull();
     }
 }
