@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import platform.service.model.Program;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,8 +23,8 @@ class ProgramViewsReducerTest extends ServiceTestBase {
         program.setViews(4);
         program.setRestricted(true);
 
-        Program result = programViewsReducer.reduce(Optional.of(program))
-                                            .get();
+        Program result = programViewsReducer.reduce(program);
+
         assertThat(result.getViews()).isEqualTo(3);
     }
 
@@ -37,8 +36,7 @@ class ProgramViewsReducerTest extends ServiceTestBase {
         program.setViews(views);
         program.setRestricted(true);
 
-        Program result = programViewsReducer.reduce(Optional.of(program))
-                                            .get();
+        Program result = programViewsReducer.reduce(program);
 
         assertThat(result.getViews()).isEqualTo(expected);
     }
@@ -49,8 +47,7 @@ class ProgramViewsReducerTest extends ServiceTestBase {
         program.setViews(4);
         program.setRestricted(false);
 
-        Program result = programViewsReducer.reduce(Optional.of(program))
-                                            .get();
+        Program result = programViewsReducer.reduce(program);
         assertThat(result.getViews()).isEqualTo(4);
     }
 
