@@ -25,7 +25,7 @@ class ProgramServiceTest {
     private ProgramDateSetter programDateSetter;
     private ProgramRepository programRepository;
     private ProgramMapper programMapper;
-    private RandomUUIDGenerator randomUUIDGenerator;
+    private ProgramUUIDSetter programUUIDSetter;
     private ProgramService programService;
 
     @BeforeEach
@@ -37,11 +37,12 @@ class ProgramServiceTest {
                  testProgram());
         when(programMapper.programToProgramDto(Mockito.any(Program.class))).thenReturn(
                  testProgramDto());
-        randomUUIDGenerator = mock(RandomUUIDGenerator.class);
+        RandomUUIDGenerator randomUUIDGenerator = mock(RandomUUIDGenerator.class);
         when(randomUUIDGenerator.generate()).thenReturn(testUUID());
+        programUUIDSetter = spy(new ProgramUUIDSetter(randomUUIDGenerator));
         programService =
                  new ProgramService(programDateSetter, programRepository, programMapper,
-                                    randomUUIDGenerator);
+                                    programUUIDSetter);
     }
 
     @Nested
