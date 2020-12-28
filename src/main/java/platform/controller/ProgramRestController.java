@@ -8,6 +8,7 @@ import platform.service.model.ProgramDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -21,7 +22,7 @@ public class ProgramRestController {
     }
 
     @GetMapping(path = "/code/{id}")
-    public ProgramDto getProgram(@PathVariable int id) {
+    public ProgramDto getProgram(@PathVariable UUID id) {
         return programService.getProgram(id);
     }
 
@@ -32,9 +33,9 @@ public class ProgramRestController {
 
     @PostMapping(path = "/code/new", consumes = "application/json")
     public Map<String, String> saveProgram(@RequestBody ProgramDto programDto) {
-        long id = programService.addProgram(programDto);
+        UUID id = programService.addProgram(programDto);
         Map<String, String> map = new HashMap<>();
-        map.put("id", String.valueOf(id));
+        map.put("id", id.toString());
         return map;
     }
 }
