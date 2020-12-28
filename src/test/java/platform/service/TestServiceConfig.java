@@ -24,7 +24,11 @@ class TestServiceConfig extends ServiceConfig {
 
     ProgramService testProgramService(ProgramRepository programRepository) {
         return programService(testProgramDateSetter(), programRepository,
-                              new ProgramMapper(new ProgramExpireTimeCalculator(
-                                       testCurrentDateGetter())));
+                              testProgramMapper());
+    }
+
+    private ProgramMapper testProgramMapper() {
+        return new ProgramMapper(
+                 new ProgramExpireTimeCalculator(testCurrentDateGetter()));
     }
 }
