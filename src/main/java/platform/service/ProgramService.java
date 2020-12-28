@@ -9,6 +9,7 @@ import platform.service.model.ProgramDto;
 import platform.service.model.ProgramMapper;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ProgramService {
@@ -24,14 +25,14 @@ public class ProgramService {
         this.mapper = mapper;
     }
 
-    public ProgramDto getProgram(long id) {
+    public ProgramDto getProgram(UUID id) {
         return programRepository.findById(id)
                                 .map(mapper::programToProgramDto)
                                 .orElseThrow(() -> new ResponseStatusException(
                                          HttpStatus.NOT_FOUND, "Id does not exists"));
     }
 
-    public long addProgram(ProgramDto programDto) {
+    public UUID addProgram(ProgramDto programDto) {
         programDateSetter.setDate(programDto);
         Program program = programRepository.save(mapper.programDtoToProgram(programDto));
         return program.getId();
