@@ -17,15 +17,15 @@ public class ProgramService {
     private final ProgramDateSetter programDateSetter;
     private final ProgramRepository programRepository;
     private final ProgramMapper mapper;
-    private final RandomUUIDGenerator randomUUIDGenerator;
+    private final ProgramUUIDSetter programUUIDSetter;
 
     public ProgramService(ProgramDateSetter programDateSetter,
                           ProgramRepository programRepository, ProgramMapper mapper,
-                          RandomUUIDGenerator randomUUIDGenerator) {
+                          ProgramUUIDSetter programUUIDSetter) {
         this.programRepository = programRepository;
         this.programDateSetter = programDateSetter;
         this.mapper = mapper;
-        this.randomUUIDGenerator = randomUUIDGenerator;
+        this.programUUIDSetter = programUUIDSetter;
     }
 
     public ProgramDto getProgram(UUID id) {
