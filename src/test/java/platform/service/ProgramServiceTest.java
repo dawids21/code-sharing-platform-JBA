@@ -97,6 +97,13 @@ class ProgramServiceTest extends ServiceTestBase {
         }
 
         @Test
+        void should_use_program_views_reducer_to_reduce_views() {
+            programService.getProgram(TEST_UUID);
+
+            verify(programViewsReducer, times(1)).reduce(Mockito.any(Program.class));
+        }
+
+        @Test
         void should_throw_exception_with_status_not_found_when_id_does_not_exist() {
             assertThatThrownBy(() -> programService.getProgram(UUID.fromString(
                      "e6780274-c41c-4ab4-bde6-124141241241"))).isInstanceOf(
