@@ -13,7 +13,8 @@ public class ServiceConfig {
     public ProgramService programService(ProgramDateSetter programDateSetter,
                                          ProgramRepository programRepository,
                                          ProgramMapper mapper) {
-        return new ProgramService(programDateSetter, programRepository, mapper);
+        return new ProgramService(programDateSetter, programRepository, mapper,
+                                  new ProgramViewsReducer());
     }
 
     @Bean

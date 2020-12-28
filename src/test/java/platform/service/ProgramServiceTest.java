@@ -25,6 +25,7 @@ class ProgramServiceTest extends ServiceTestBase {
     private ProgramDateSetter programDateSetter;
     private ProgramRepository programRepository;
     private ProgramMapper programMapper;
+    private ProgramViewsReducer programViewsReducer;
     private ProgramService programService;
 
     @BeforeEach
@@ -36,8 +37,10 @@ class ProgramServiceTest extends ServiceTestBase {
                  testProgram());
         when(programMapper.programToProgramDto(Mockito.any(Program.class))).thenReturn(
                  testProgramDto());
+        programViewsReducer = spy(ProgramViewsReducer.class);
         programService =
-                 new ProgramService(programDateSetter, programRepository, programMapper);
+                 new ProgramService(programDateSetter, programRepository, programMapper,
+                                    programViewsReducer);
     }
 
     @Nested

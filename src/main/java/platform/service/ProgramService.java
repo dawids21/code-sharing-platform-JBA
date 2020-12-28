@@ -17,12 +17,15 @@ public class ProgramService {
     private final ProgramDateSetter programDateSetter;
     private final ProgramRepository programRepository;
     private final ProgramMapper mapper;
+    private final ProgramViewsReducer programViewsReducer;
 
     public ProgramService(ProgramDateSetter programDateSetter,
-                          ProgramRepository programRepository, ProgramMapper mapper) {
+                          ProgramRepository programRepository, ProgramMapper mapper,
+                          ProgramViewsReducer programViewsReducer) {
         this.programRepository = programRepository;
         this.programDateSetter = programDateSetter;
         this.mapper = mapper;
+        this.programViewsReducer = programViewsReducer;
     }
 
     public ProgramDto getProgram(UUID id) {
