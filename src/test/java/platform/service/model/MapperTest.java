@@ -20,6 +20,7 @@ class MapperTest {
         program.setCode("main()");
         program.setCreated(TestModelConfig.DATE);
         program.setValidUntil(TestModelConfig.DATE);
+        program.setViews(10);
 
         ProgramDto programDto = programMapper.programToProgramDto(program);
 
@@ -30,6 +31,7 @@ class MapperTest {
                                                                    "yyyy-MM-dd HH:mm:ss")));
         assertThat(programDto.getTime()).isEqualTo(
                  SECONDS.between(TestModelConfig.DATE, TestModelConfig.DATE));
+        assertThat(programDto.getViews()).isEqualTo(10);
     }
 
     @Test
@@ -41,6 +43,7 @@ class MapperTest {
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
         assertThat(program.getCreated()).isEqualTo(TestModelConfig.DATE);
         assertThat(program.getValidUntil()).isNull();
+        assertThat(program.getViews()).isEqualTo(0);
     }
 
     @Test
@@ -84,6 +87,18 @@ class MapperTest {
     }
 
     @Test
+    void should_mark_the_program_as_not_restricted_when_dto_has_negative_number_in_views_field() {
+        //TODO implement should_mark_the_program_as_not_restricted_when_dto_has_negative_number_in_views_field
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Test
+    void should_mark_the_program_as_not_restricted_when_dto_has_zero_in_views_field() {
+        //TODO implement should_mark_the_program_as_not_restricted_when_dto_has_zero_in_views_field
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Test
     void should_mark_the_program_as_restricted_when_dto_has_positive_number_in_time_field() {
         ProgramDto programDto = testProgramDto();
         programDto.setTime(23);
@@ -91,9 +106,20 @@ class MapperTest {
         assertThat(program.isRestricted()).isTrue();
     }
 
-    private ProgramDto testProgramDto() {
-        return new ProgramDto("main()", TestModelConfig.DATE.format(
-                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0, 10);
+    @Test
+    void should_mark_program_as_restricted_when_dto_has_positive_number_in_views() {
+        //TODO implement should_mark_program_as_restricted_when_dto_has_positive_number_in_views
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
+    @Test
+    void should_mark_program_as_restricted_when_both_time_and_views_are_specified() {
+        //TODO implement should_mark_program_as_restricted_when_both_time_and_views_are_specified
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    private ProgramDto testProgramDto() {
+        return new ProgramDto("main()", TestModelConfig.DATE.format(
+                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0, 0);
+    }
 }
