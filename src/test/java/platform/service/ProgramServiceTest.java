@@ -13,6 +13,7 @@ import platform.service.model.ProgramMapper;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -52,23 +53,24 @@ class ProgramServiceTest {
 
         @Test
         void should_set_date_of_program() {
-            programService.addProgram(testProgramDto());
+            ProgramDto programDto = testProgramDto();
+            programService.addProgram(programDto);
 
-            verify(programDateSetter, times(1)).setDate(testProgramDto());
+            verify(programDateSetter, times(1)).setDate(programDto);
         }
 
         @Test
         void should_save_program_in_repository() {
             programService.addProgram(testProgramDto());
 
-            verify(programRepository, times(1)).save(testProgram());
+            verify(programRepository, times(1)).save(Mockito.any(Program.class));
         }
 
         @Test
-        void should_return_corresponding_id() {
-            long id = programService.addProgram(testProgramDto());
+        void should_return_corresponding_uuid() {
+            UUID id = programService.addProgram(testProgramDto());
 
-            assertThat(id).isEqualTo(testProgram().getId());
+            assertThat(id.toString()).isEqualTo(TestServiceConfig.TEST_UUID.toString());
         }
     }
 
@@ -77,14 +79,15 @@ class ProgramServiceTest {
 
         @Test
         void should_map_entity_to_dto_using_mapper() {
-            programService.getProgram(1L);
+            programService.getProgram(TestServiceConfig.TEST_UUID);
 
-            verify(programMapper, times(1)).programToProgramDto(testProgram());
+            verify(programMapper, times(1)).programToProgramDto(
+                     Mockito.any(Program.class));
         }
 
         @Test
         void should_search_in_database_for_program() {
-            long id = 1L;
+            UUID id = TestServiceConfig.TEST_UUID;
             programService.getProgram(id);
 
             verify(programRepository, times(1)).findById(id);
@@ -92,11 +95,12 @@ class ProgramServiceTest {
 
         @Test
         void should_throw_exception_with_status_not_found_when_id_does_not_exist() {
-            assertThatThrownBy(() -> programService.getProgram(2L)).isInstanceOf(
+            assertThatThrownBy(() -> programService.getProgram(UUID.fromString(
+                     "e6780274-c41c-4ab4-bde6-124141241241"))).isInstanceOf(
                      ResponseStatusException.class)
-                                                                   .hasFieldOrPropertyWithValue(
-                                                                            "status",
-                                                                            HttpStatus.NOT_FOUND);
+                                                              .hasFieldOrPropertyWithValue(
+                                                                       "status",
+                                                                       HttpStatus.NOT_FOUND);
 
         }
     }
@@ -120,7 +124,8 @@ class ProgramServiceTest {
         void should_map_results_using_mapper() {
             programService.getLastPrograms(1);
 
-            verify(programMapper, times(1)).programToProgramDto(testProgram());
+            verify(programMapper, times(1)).programToProgramDto(
+                     Mockito.any(Program.class));
         }
     }
 
@@ -128,12 +133,12 @@ class ProgramServiceTest {
         ProgramRepository mock = mock(ProgramRepository.class);
         when(mock.save(Mockito.any(Program.class))).then(i -> {
             Program program = i.getArgument(0, Program.class);
-            program.setId(1);
+            program.setId(TestServiceConfig.TEST_UUID);
             return program;
         });
-        when(mock.findById(Mockito.anyLong())).then(i -> {
-            long index = i.getArgument(0, Long.class);
-            if (index == 1) {
+        when(mock.findById(Mockito.any(UUID.class))).then(i -> {
+            UUID index = i.getArgument(0, UUID.class);
+            if (index.equals(TestServiceConfig.TEST_UUID)) {
                 return Optional.of(testProgram());
             } else {
                 return Optional.empty();
@@ -145,7 +150,7 @@ class ProgramServiceTest {
     }
 
     Program testProgram() {
-        return new Program(1, "main()", TestServiceConfig.DATE,
+        return new Program(TestServiceConfig.TEST_UUID, "main()", TestServiceConfig.DATE,
                            TestServiceConfig.DATE.plusSeconds(10), true);
     }
 

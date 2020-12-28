@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import platform.service.ProgramService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class ProgramController {
@@ -20,7 +21,7 @@ public class ProgramController {
     }
 
     @GetMapping(path = "/code/{id}", produces = "text/html")
-    public ModelAndView getProgram(@PathVariable int id) {
+    public ModelAndView getProgram(@PathVariable UUID id) {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("programs", List.of(programService.getProgram(id)));
         return modelAndView;

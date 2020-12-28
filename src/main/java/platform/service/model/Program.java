@@ -3,14 +3,15 @@ package platform.service.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Programs")
 public class Program {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String code;
 
@@ -23,7 +24,7 @@ public class Program {
     public Program() {
     }
 
-    public Program(long id, String code, LocalDateTime created, LocalDateTime validUntil,
+    public Program(UUID id, String code, LocalDateTime created, LocalDateTime validUntil,
                    boolean restricted) {
         this.id = id;
         this.code = code;
@@ -32,11 +33,11 @@ public class Program {
         this.restricted = restricted;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
