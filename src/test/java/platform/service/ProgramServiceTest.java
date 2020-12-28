@@ -104,20 +104,21 @@ class ProgramServiceTest {
 
         @Test
         void should_return_num_of_programs_requested_by_user() {
-            //TODO implement should_return_num_of_programs_requested_by_user
-            throw new UnsupportedOperationException("Not implemented yet");
+            List<ProgramDto> lastPrograms = programService.getLastPrograms(1);
+            assertThat(lastPrograms).hasSize(1);
         }
 
         @Test
         void should_return_all_programs_when_user_requested_more_than_in_db() {
-            //TODO implement should_return_all_programs_when_user_requested_more_than_in_db
-            throw new UnsupportedOperationException("Not implemented yet");
+            List<ProgramDto> lastPrograms = programService.getLastPrograms(3);
+            assertThat(lastPrograms).hasSize(1);
         }
 
         @Test
         void should_map_results_using_mapper() {
-            //TODO implement should_map_results_using_mapper
-            throw new UnsupportedOperationException("Not implemented yet");
+            programService.getLastPrograms(1);
+
+            verify(programMapper, times(1)).programToProgramDto(testProgram());
         }
     }
 
