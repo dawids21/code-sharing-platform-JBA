@@ -6,7 +6,7 @@ import platform.service.model.ProgramDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ProgramDateSetterTest {
+class ProgramDateSetterTest extends ServiceTestBaseClass {
 
     ProgramDateSetter programDateSetter;
 
@@ -17,7 +17,8 @@ class ProgramDateSetterTest {
 
     @Test
     void should_set_now_as_date() {
-        ProgramDto programDto = new ProgramDto("", null, 0, 10);
+        ProgramDto programDto = testProgramDto();
+        programDto.setDate(null);
         programDateSetter.setDate(programDto);
 
         assertThat(programDto.getDate()).isEqualTo(ServiceTestBaseClass.DATE_STRING);

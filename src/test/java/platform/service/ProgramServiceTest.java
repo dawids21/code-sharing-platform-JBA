@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProgramServiceTest {
+class ProgramServiceTest extends ServiceTestBaseClass {
 
     private ProgramDateSetter programDateSetter;
     private ProgramRepository programRepository;
@@ -70,8 +70,7 @@ class ProgramServiceTest {
         void should_return_corresponding_uuid() {
             UUID id = programService.addProgram(testProgramDto());
 
-            assertThat(id.toString()).isEqualTo(
-                     ServiceTestBaseClass.TEST_UUID.toString());
+            assertThat(id.toString()).isEqualTo(TEST_UUID.toString());
         }
     }
 
@@ -80,7 +79,7 @@ class ProgramServiceTest {
 
         @Test
         void should_map_entity_to_dto_using_mapper() {
-            programService.getProgram(ServiceTestBaseClass.TEST_UUID);
+            programService.getProgram(TEST_UUID);
 
             verify(programMapper, times(1)).programToProgramDto(
                      Mockito.any(Program.class));
@@ -88,7 +87,7 @@ class ProgramServiceTest {
 
         @Test
         void should_search_in_database_for_program() {
-            UUID id = ServiceTestBaseClass.TEST_UUID;
+            UUID id = TEST_UUID;
             programService.getProgram(id);
 
             verify(programRepository, times(1)).findById(id);
@@ -134,12 +133,12 @@ class ProgramServiceTest {
         ProgramRepository mock = mock(ProgramRepository.class);
         when(mock.save(Mockito.any(Program.class))).then(i -> {
             Program program = i.getArgument(0, Program.class);
-            program.setId(ServiceTestBaseClass.TEST_UUID);
+            program.setId(TEST_UUID);
             return program;
         });
         when(mock.findById(Mockito.any(UUID.class))).then(i -> {
             UUID index = i.getArgument(0, UUID.class);
-            if (index.equals(ServiceTestBaseClass.TEST_UUID)) {
+            if (index.equals(TEST_UUID)) {
                 return Optional.of(testProgram());
             } else {
                 return Optional.empty();
@@ -148,15 +147,5 @@ class ProgramServiceTest {
         Page<Program> programPage = new PageImpl<>(List.of(testProgram()));
         when(mock.findNotRestricted(Mockito.any(Pageable.class))).thenReturn(programPage);
         return mock;
-    }
-
-    Program testProgram() {
-        return new Program(ServiceTestBaseClass.TEST_UUID, "main()",
-                           ServiceTestBaseClass.DATE,
-                           ServiceTestBaseClass.DATE.plusSeconds(10), 10, true);
-    }
-
-    ProgramDto testProgramDto() {
-        return new ProgramDto("main()", ServiceTestBaseClass.DATE_STRING, 10, 10);
     }
 }
