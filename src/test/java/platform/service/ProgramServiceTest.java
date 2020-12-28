@@ -37,9 +37,7 @@ class ProgramServiceTest {
                  testProgram());
         when(programMapper.programToProgramDto(Mockito.any(Program.class))).thenReturn(
                  testProgramDto());
-        RandomUUIDGenerator randomUUIDGenerator = mock(RandomUUIDGenerator.class);
-        when(randomUUIDGenerator.generate()).thenReturn(testUUID());
-        programUUIDSetter = spy(new ProgramUUIDSetter(randomUUIDGenerator));
+        programUUIDSetter = spy(new TestServiceConfig().testProgramUUIDSetter());
         programService =
                  new ProgramService(programDateSetter, programRepository, programMapper,
                                     programUUIDSetter);
@@ -75,7 +73,7 @@ class ProgramServiceTest {
         void should_return_corresponding_uuid() {
             UUID id = programService.addProgram(testProgramDto());
 
-            assertThat(id.toString()).isEqualTo(testUUID().toString());
+            assertThat(id.toString()).isEqualTo(TestServiceConfig.TEST_UUID.toString());
         }
 
         @Test
@@ -91,7 +89,7 @@ class ProgramServiceTest {
 
         @Test
         void should_map_entity_to_dto_using_mapper() {
-            programService.getProgram(testUUID());
+            programService.getProgram(TestServiceConfig.TEST_UUID);
 
             verify(programMapper, times(1)).programToProgramDto(
                      Mockito.any(Program.class));
@@ -99,7 +97,7 @@ class ProgramServiceTest {
 
         @Test
         void should_search_in_database_for_program() {
-            UUID id = testUUID();
+            UUID id = TestServiceConfig.TEST_UUID;
             programService.getProgram(id);
 
             verify(programRepository, times(1)).findById(id);
@@ -145,12 +143,12 @@ class ProgramServiceTest {
         ProgramRepository mock = mock(ProgramRepository.class);
         when(mock.save(Mockito.any(Program.class))).then(i -> {
             Program program = i.getArgument(0, Program.class);
-            program.setId(testUUID());
+            program.setId(TestServiceConfig.TEST_UUID);
             return program;
         });
         when(mock.findById(Mockito.any(UUID.class))).then(i -> {
             UUID index = i.getArgument(0, UUID.class);
-            if (index.equals(testUUID())) {
+            if (index.equals(TestServiceConfig.TEST_UUID)) {
                 return Optional.of(testProgram());
             } else {
                 return Optional.empty();
@@ -161,12 +159,8 @@ class ProgramServiceTest {
         return mock;
     }
 
-    UUID testUUID() {
-        return UUID.fromString("e6780274-c41c-4ab4-bde6-b32c18b4c489");
-    }
-
     Program testProgram() {
-        return new Program(testUUID(), "main()", TestServiceConfig.DATE,
+        return new Program(TestServiceConfig.TEST_UUID, "main()", TestServiceConfig.DATE,
                            TestServiceConfig.DATE.plusSeconds(10), true);
     }
 
