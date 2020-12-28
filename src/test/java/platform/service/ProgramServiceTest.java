@@ -151,10 +151,10 @@ class ProgramServiceTest {
 
     Program testProgram() {
         return new Program(TestServiceConfig.TEST_UUID, "main()", TestServiceConfig.DATE,
-                           TestServiceConfig.DATE.plusSeconds(10), true);
+                           TestServiceConfig.DATE.plusSeconds(10), 10, true);
     }
 
     ProgramDto testProgramDto() {
-        return new ProgramDto("main()", TestServiceConfig.DATE_STRING, 10);
+        return new ProgramDto("main()", TestServiceConfig.DATE_STRING, 10, 10);
     }
 }

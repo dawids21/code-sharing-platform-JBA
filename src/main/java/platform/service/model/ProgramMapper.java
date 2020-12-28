@@ -16,6 +16,7 @@ public class ProgramMapper {
         String code = "";
         String date = "";
         int time = 0;
+        int views = 0;
 
         if (program.getCode() != null) {
             code = program.getCode();
@@ -26,8 +27,8 @@ public class ProgramMapper {
         if (program.getValidUntil() != null) {
             time = calculator.secondsRemain(program.getValidUntil());
         }
-
-        return new ProgramDto(code, date, time);
+        views = program.getViews();
+        return new ProgramDto(code, date, time, views);
     }
 
     public Program programDtoToProgram(ProgramDto programDto) {

@@ -17,7 +17,7 @@ class ProgramDateSetterTest {
 
     @Test
     void should_set_now_as_date() {
-        ProgramDto programDto = new ProgramDto("", null, 0);
+        ProgramDto programDto = new ProgramDto("", null, 0, 10);
         programDateSetter.setDate(programDto);
 
         assertThat(programDto.getDate()).isEqualTo(TestServiceConfig.DATE_STRING);

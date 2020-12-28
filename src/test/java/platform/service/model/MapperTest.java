@@ -93,7 +93,7 @@ class MapperTest {
 
     private ProgramDto testProgramDto() {
         return new ProgramDto("main()", TestModelConfig.DATE.format(
-                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0);
+                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0, 10);
     }
 
 }

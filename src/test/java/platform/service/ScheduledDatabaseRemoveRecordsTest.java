@@ -75,13 +75,13 @@ class ScheduledDatabaseRemoveRecordsTest {
             List<Program> programs = new ArrayList<>();
             programs.add(new Program(UUID.fromString(baseUUIDString + "1"), "",
                                      LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                                     LocalDateTime.of(2020, 1, 6, 0, 0, 0), true));
+                                     LocalDateTime.of(2020, 1, 6, 0, 0, 0), 10, true));
             programs.add(new Program(UUID.fromString(baseUUIDString + "2"), "",
                                      LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                                     LocalDateTime.of(2020, 1, 15, 0, 0, 0), false));
+                                     LocalDateTime.of(2020, 1, 15, 0, 0, 0), 0, false));
             programs.add(new Program(UUID.fromString(baseUUIDString + "3"), "",
                                      LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                                     LocalDateTime.of(2020, 1, 30, 0, 0, 0), true));
+                                     LocalDateTime.of(2020, 1, 30, 0, 0, 0), 10, true));
             return programs;
         }
     }
