@@ -33,6 +33,8 @@ class ProgramServiceTest {
         programMapper = mock(ProgramMapper.class);
         when(programMapper.programDtoToProgram(Mockito.any(ProgramDto.class))).thenReturn(
                  testProgram());
+        when(programMapper.programToProgramDto(Mockito.any(Program.class))).thenReturn(
+                 testProgramDto());
         programService =
                  new ProgramService(programDateSetter, programRepository, programMapper);
     }
