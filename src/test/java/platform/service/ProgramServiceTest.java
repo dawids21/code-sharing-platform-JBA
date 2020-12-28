@@ -77,6 +77,13 @@ class ProgramServiceTest {
 
             assertThat(id.toString()).isEqualTo(testUUID().toString());
         }
+
+        @Test
+        void should_use_uuid_setter() {
+            programService.addProgram(testProgramDto());
+
+            verify(programUUIDSetter, times(1)).setUUID(Mockito.any(Program.class));
+        }
     }
 
     @Nested
