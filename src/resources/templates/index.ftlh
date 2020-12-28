@@ -13,9 +13,16 @@
 <body>
 <#list programs as program>
     <span id="load_date">${program.date}</span>
+    <#if 0 < program.getViews()>
+        <div>
+            <span id="views_restriction">${program.views} more views allowed</span>
+        </div>
+    </#if>
     <#if 0 < program.getTime()>
-        <div><span id="time_restriction">
-        The code will be available for ${program.time} seconds</span></div></#if>
+        <div>
+            <span id="time_restriction">The code will be available for ${program.time} seconds</span>
+        </div>
+    </#if>
     <pre id="code_snippet"><code>${program.code}</code></pre>
 </#list>
 </body>
