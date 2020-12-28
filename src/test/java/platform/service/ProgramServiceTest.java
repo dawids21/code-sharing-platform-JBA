@@ -53,23 +53,24 @@ class ProgramServiceTest {
 
         @Test
         void should_set_date_of_program() {
-            programService.addProgram(testProgramDto());
+            ProgramDto programDto = testProgramDto();
+            programService.addProgram(programDto);
 
-            verify(programDateSetter, times(1)).setDate(testProgramDto());
+            verify(programDateSetter, times(1)).setDate(programDto);
         }
 
         @Test
         void should_save_program_in_repository() {
             programService.addProgram(testProgramDto());
 
-            verify(programRepository, times(1)).save(testProgram());
+            verify(programRepository, times(1)).save(Mockito.any(Program.class));
         }
 
         @Test
         void should_return_corresponding_uuid() {
             UUID id = programService.addProgram(testProgramDto());
 
-            assertThat(id).isEqualTo(testProgram().getId());
+            assertThat(id.toString()).isEqualTo(testUUID().toString());
         }
     }
 
@@ -80,14 +81,16 @@ class ProgramServiceTest {
         void should_map_entity_to_dto_using_mapper() {
             programService.getProgram(testUUID());
 
-            verify(programMapper, times(1)).programToProgramDto(testProgram());
+            verify(programMapper, times(1)).programToProgramDto(
+                     Mockito.any(Program.class));
         }
 
         @Test
         void should_search_in_database_for_program() {
-            programService.getProgram(testUUID());
+            UUID id = testUUID();
+            programService.getProgram(id);
 
-            verify(programRepository, times(1)).findById(testUUID());
+            verify(programRepository, times(1)).findById(id);
         }
 
         @Test
@@ -121,7 +124,8 @@ class ProgramServiceTest {
         void should_map_results_using_mapper() {
             programService.getLastPrograms(1);
 
-            verify(programMapper, times(1)).programToProgramDto(testProgram());
+            verify(programMapper, times(1)).programToProgramDto(
+                     Mockito.any(Program.class));
         }
     }
 
