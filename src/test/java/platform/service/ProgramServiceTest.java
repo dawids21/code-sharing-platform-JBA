@@ -13,6 +13,7 @@ import platform.service.model.ProgramMapper;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -65,8 +66,8 @@ class ProgramServiceTest {
         }
 
         @Test
-        void should_return_corresponding_id() {
-            long id = programService.addProgram(testProgramDto());
+        void should_return_corresponding_uuid() {
+            UUID id = programService.addProgram(testProgramDto());
 
             assertThat(id).isEqualTo(testProgram().getId());
         }
@@ -77,26 +78,26 @@ class ProgramServiceTest {
 
         @Test
         void should_map_entity_to_dto_using_mapper() {
-            programService.getProgram(1L);
+            programService.getProgram(testUUID());
 
             verify(programMapper, times(1)).programToProgramDto(testProgram());
         }
 
         @Test
         void should_search_in_database_for_program() {
-            long id = 1L;
-            programService.getProgram(id);
+            programService.getProgram(testUUID());
 
-            verify(programRepository, times(1)).findById(id);
+            verify(programRepository, times(1)).findById(testUUID());
         }
 
         @Test
         void should_throw_exception_with_status_not_found_when_id_does_not_exist() {
-            assertThatThrownBy(() -> programService.getProgram(2L)).isInstanceOf(
+            assertThatThrownBy(() -> programService.getProgram(UUID.fromString(
+                     "e6780274-c41c-4ab4-bde6-124141241241"))).isInstanceOf(
                      ResponseStatusException.class)
-                                                                   .hasFieldOrPropertyWithValue(
-                                                                            "status",
-                                                                            HttpStatus.NOT_FOUND);
+                                                              .hasFieldOrPropertyWithValue(
+                                                                       "status",
+                                                                       HttpStatus.NOT_FOUND);
 
         }
     }
@@ -128,12 +129,12 @@ class ProgramServiceTest {
         ProgramRepository mock = mock(ProgramRepository.class);
         when(mock.save(Mockito.any(Program.class))).then(i -> {
             Program program = i.getArgument(0, Program.class);
-            program.setId(1);
+            program.setId(testUUID());
             return program;
         });
-        when(mock.findById(Mockito.anyLong())).then(i -> {
-            long index = i.getArgument(0, Long.class);
-            if (index == 1) {
+        when(mock.findById(Mockito.any(UUID.class))).then(i -> {
+            UUID index = i.getArgument(0, UUID.class);
+            if (index.equals(testUUID())) {
                 return Optional.of(testProgram());
             } else {
                 return Optional.empty();
@@ -144,8 +145,12 @@ class ProgramServiceTest {
         return mock;
     }
 
+    UUID testUUID() {
+        return UUID.fromString("e6780274-c41c-4ab4-bde6-b32c18b4c489");
+    }
+
     Program testProgram() {
-        return new Program(1, "main()", TestServiceConfig.DATE,
+        return new Program(testUUID(), "main()", TestServiceConfig.DATE,
                            TestServiceConfig.DATE.plusSeconds(10), true);
     }
 
