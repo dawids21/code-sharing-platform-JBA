@@ -37,9 +37,7 @@ public class ProgramService {
 
     public UUID addProgram(ProgramDto programDto) {
         programDateSetter.setDate(programDto);
-        Program program = mapper.programDtoToProgram(programDto);
-        programUUIDSetter.setUUID(program);
-        programRepository.save(program);
+        Program program = programRepository.save(mapper.programDtoToProgram(programDto));
         return program.getId();
     }
 
