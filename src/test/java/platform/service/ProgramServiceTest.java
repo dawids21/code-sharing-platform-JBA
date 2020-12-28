@@ -5,6 +5,8 @@ import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import platform.service.model.Program;
 import platform.service.model.ProgramDto;
 import platform.service.model.ProgramMapper;
@@ -48,20 +50,23 @@ class ProgramServiceTest {
 
         @Test
         void should_set_date_of_program() {
-            //TODO implement should_set_date_of_program
-            throw new UnsupportedOperationException("Not implemented yet");
+            programService.addProgram(testProgramDto());
+
+            verify(programDateSetter, times(1)).setDate(testProgramDto());
         }
 
         @Test
         void should_save_program_in_repository() {
-            //TODO implement should_save_program_in_repository
-            throw new UnsupportedOperationException("Not implemented yet");
+            programService.addProgram(testProgramDto());
+
+            verify(programRepository, times(1)).save(testProgram());
         }
 
         @Test
         void should_return_corresponding_id() {
-            //TODO implement should_return_corresponding_id
-            throw new UnsupportedOperationException("Not implemented yet");
+            long id = programService.addProgram(testProgramDto());
+
+            assertThat(id).isEqualTo(testProgram().getId());
         }
     }
 
@@ -70,20 +75,27 @@ class ProgramServiceTest {
 
         @Test
         void should_map_entity_to_dto_using_mapper() {
-            //TODO implement should_map_entity_to_dto_using_mapper
-            throw new UnsupportedOperationException("Not implemented yet");
+            programService.getProgram(1L);
+
+            verify(programMapper, times(1)).programToProgramDto(testProgram());
         }
 
         @Test
         void should_search_in_database_for_program() {
-            //TODO implement should_search_in_database_for_program
-            throw new UnsupportedOperationException("Not implemented yet");
+            long id = 1L;
+            programService.getProgram(id);
+
+            verify(programRepository, times(1)).findById(id);
         }
 
         @Test
-        void should_throw_exception_when_id_does_not_exist() {
-            //TODO implement should_throw_exception_when_id_does_not_exist
-            throw new UnsupportedOperationException("Not implemented yet");
+        void should_throw_exception_with_status_not_found_when_id_does_not_exist() {
+            assertThatThrownBy(() -> programService.getProgram(2L)).isInstanceOf(
+                     ResponseStatusException.class)
+                                                                   .hasFieldOrPropertyWithValue(
+                                                                            "status",
+                                                                            HttpStatus.NOT_FOUND);
+
         }
     }
 
