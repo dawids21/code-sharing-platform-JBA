@@ -58,6 +58,7 @@ public class ProgramMapper {
         target.setCode(code);
         target.setCreated(created);
         target.setValidUntil(validUntil);
+        target.setViews(10);
         target.setRestricted(restricted);
         return target;
     }
