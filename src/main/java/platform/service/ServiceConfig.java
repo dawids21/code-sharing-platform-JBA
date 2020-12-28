@@ -13,13 +13,7 @@ public class ServiceConfig {
     public ProgramService programService(ProgramDateSetter programDateSetter,
                                          ProgramRepository programRepository,
                                          ProgramMapper mapper) {
-        return new ProgramService(programDateSetter, programRepository, mapper,
-                                  programUUIDSetter());
-    }
-
-    @Bean
-    public ProgramUUIDSetter programUUIDSetter() {
-        return new ProgramUUIDSetter(new RandomUUIDGenerator());
+        return new ProgramService(programDateSetter, programRepository, mapper);
     }
 
     @Bean

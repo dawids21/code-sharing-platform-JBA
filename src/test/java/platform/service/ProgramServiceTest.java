@@ -25,7 +25,6 @@ class ProgramServiceTest {
     private ProgramDateSetter programDateSetter;
     private ProgramRepository programRepository;
     private ProgramMapper programMapper;
-    private ProgramUUIDSetter programUUIDSetter;
     private ProgramService programService;
 
     @BeforeEach
@@ -37,10 +36,8 @@ class ProgramServiceTest {
                  testProgram());
         when(programMapper.programToProgramDto(Mockito.any(Program.class))).thenReturn(
                  testProgramDto());
-        programUUIDSetter = spy(new TestServiceConfig().testProgramUUIDSetter());
         programService =
-                 new ProgramService(programDateSetter, programRepository, programMapper,
-                                    programUUIDSetter);
+                 new ProgramService(programDateSetter, programRepository, programMapper);
     }
 
     @Nested
@@ -74,13 +71,6 @@ class ProgramServiceTest {
             UUID id = programService.addProgram(testProgramDto());
 
             assertThat(id.toString()).isEqualTo(TestServiceConfig.TEST_UUID.toString());
-        }
-
-        @Test
-        void should_use_uuid_setter() {
-            programService.addProgram(testProgramDto());
-
-            verify(programUUIDSetter, times(1)).setUUID(Mockito.any(Program.class));
         }
     }
 

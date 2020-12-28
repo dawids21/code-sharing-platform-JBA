@@ -5,9 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 class TestServiceConfig extends ServiceConfig {
 
     static final LocalDateTime DATE = LocalDateTime.of(2020, 12, 22, 8, 20, 21);
@@ -22,11 +19,5 @@ class TestServiceConfig extends ServiceConfig {
         return new CurrentDateGetter(Clock.fixed(DATE.atZone(ZoneId.systemDefault())
                                                      .toInstant(),
                                                  ZoneId.systemDefault()));
-    }
-
-    ProgramUUIDSetter testProgramUUIDSetter() {
-        RandomUUIDGenerator randomUUIDGenerator = mock(RandomUUIDGenerator.class);
-        when(randomUUIDGenerator.generate()).thenReturn(TEST_UUID);
-        return new ProgramUUIDSetter(randomUUIDGenerator);
     }
 }
