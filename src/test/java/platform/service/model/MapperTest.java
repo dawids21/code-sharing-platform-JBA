@@ -14,7 +14,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MapperTest {
+class MapperTest extends ModelTestBase {
 
     private final ProgramMapper programMapper = new TestModelConfig().testMyMapper();
 
@@ -22,8 +22,8 @@ class MapperTest {
     void should_map_program_to_program_dto() {
         Program program = new Program();
         program.setCode("main()");
-        program.setCreated(TestModelConfig.DATE);
-        program.setValidUntil(TestModelConfig.DATE.plusSeconds(10));
+        program.setCreated(DATE);
+        program.setValidUntil(DATE.plusSeconds(10));
         program.setViews(10);
 
         ProgramDto programDto = programMapper.programToProgramDto(program);
@@ -33,9 +33,8 @@ class MapperTest {
         assertThat(programDto.getDate()).isEqualTo(program.getCreated()
                                                           .format(DateTimeFormatter.ofPattern(
                                                                    "yyyy-MM-dd HH:mm:ss")));
-        assertThat(programDto.getTime()).isEqualTo(SECONDS.between(TestModelConfig.DATE,
-                                                                   TestModelConfig.DATE.plusSeconds(
-                                                                            10)));
+        assertThat(programDto.getTime()).isEqualTo(
+                 SECONDS.between(DATE, DATE.plusSeconds(10)));
         assertThat(programDto.getViews()).isEqualTo(10);
     }
 
@@ -46,9 +45,8 @@ class MapperTest {
 
         assertThat(program).isNotNull();
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
-        assertThat(program.getCreated()).isEqualTo(TestModelConfig.DATE);
-        assertThat(program.getValidUntil()).isEqualTo(
-                 TestModelConfig.DATE.plusSeconds(10));
+        assertThat(program.getCreated()).isEqualTo(DATE);
+        assertThat(program.getValidUntil()).isEqualTo(DATE.plusSeconds(10));
         assertThat(program.getViews()).isEqualTo(10);
     }
 
@@ -100,11 +98,6 @@ class MapperTest {
         Program program = programMapper.programDtoToProgram(programDto);
 
         assertThat(program.isRestricted()).isTrue();
-    }
-
-    private ProgramDto testProgramDto() {
-        return new ProgramDto("main()", TestModelConfig.DATE.format(
-                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 10, 10);
     }
 
     private static Stream<Arguments> nonRestrictedValuesProvider() {
