@@ -1,6 +1,7 @@
 package platform.service;
 
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -101,6 +102,16 @@ class ProgramServiceTest extends ServiceTestBase {
             programService.getProgram(TEST_UUID);
 
             verify(programViewsReducer, times(1)).reduce(Mockito.any(Program.class));
+        }
+
+        @Test
+        void should_save_program_with_reduced_views() {
+            programService.getProgram(TEST_UUID);
+
+            ArgumentCaptor<Program> argument = ArgumentCaptor.forClass(Program.class);
+            verify(programRepository).save(argument.capture());
+            assertThat(argument.getValue()
+                               .getViews()).isEqualTo(testProgram().getViews() - 1);
         }
 
         @Test
