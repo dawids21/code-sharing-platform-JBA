@@ -6,11 +6,14 @@ import platform.service.model.Program;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ScheduledDatabaseRemoveRecordsTest {
+
+    private final String baseUUIDString = "e6780274-c41c-4ab4-bde6-b32c18b4c4e";
 
     @Nested
     class TimeRestriction {
@@ -32,7 +35,8 @@ class ScheduledDatabaseRemoveRecordsTest {
 
             task.removeRecords();
 
-            verify(programRepository, times(1)).deleteById(1L);
+            verify(programRepository, times(1)).deleteById(
+                     UUID.fromString(baseUUIDString + "1"));
         }
 
         @Test
@@ -44,7 +48,8 @@ class ScheduledDatabaseRemoveRecordsTest {
 
             task.removeRecords();
 
-            verify(programRepository, times(1)).deleteById(1L);
+            verify(programRepository, times(1)).deleteById(
+                     UUID.fromString(baseUUIDString + "1"));
         }
 
         @Test
@@ -56,7 +61,8 @@ class ScheduledDatabaseRemoveRecordsTest {
 
             task.removeRecords();
 
-            verify(programRepository, times(0)).deleteById(2L);
+            verify(programRepository, times(0)).deleteById(
+                     UUID.fromString(baseUUIDString + "2"));
         }
 
         private CurrentDateGetter testCurrentDateGetter(LocalDateTime now) {
@@ -67,11 +73,14 @@ class ScheduledDatabaseRemoveRecordsTest {
 
         private List<Program> testPrograms() {
             List<Program> programs = new ArrayList<>();
-            programs.add(new Program(1, "", LocalDateTime.of(2020, 1, 3, 0, 0, 0),
+            programs.add(new Program(UUID.fromString(baseUUIDString + "1"), "",
+                                     LocalDateTime.of(2020, 1, 3, 0, 0, 0),
                                      LocalDateTime.of(2020, 1, 6, 0, 0, 0), true));
-            programs.add(new Program(2, "", LocalDateTime.of(2020, 1, 3, 0, 0, 0),
+            programs.add(new Program(UUID.fromString(baseUUIDString + "2"), "",
+                                     LocalDateTime.of(2020, 1, 3, 0, 0, 0),
                                      LocalDateTime.of(2020, 1, 15, 0, 0, 0), false));
-            programs.add(new Program(3, "", LocalDateTime.of(2020, 1, 3, 0, 0, 0),
+            programs.add(new Program(UUID.fromString(baseUUIDString + "3"), "",
+                                     LocalDateTime.of(2020, 1, 3, 0, 0, 0),
                                      LocalDateTime.of(2020, 1, 30, 0, 0, 0), true));
             return programs;
         }
