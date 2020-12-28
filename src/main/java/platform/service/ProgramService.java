@@ -29,10 +29,13 @@ public class ProgramService {
     }
 
     public ProgramDto getProgram(UUID id) {
-        return programRepository.findById(id)
-                                .map(mapper::programToProgramDto)
-                                .orElseThrow(() -> new ResponseStatusException(
-                                         HttpStatus.NOT_FOUND, "Id does not exists"));
+        Program program = programRepository.findById(id)
+                                           .orElseThrow(() -> new ResponseStatusException(
+                                                    HttpStatus.NOT_FOUND,
+                                                    "Id does not exists"));
+        program = programViewsReducer.reduce(program);
+        programRepository.save(program);
+        return mapper.programToProgramDto(program);
     }
 
     public UUID addProgram(ProgramDto programDto) {
