@@ -1,8 +1,5 @@
 package platform.service;
 
-import platform.service.model.ProgramExpireTimeCalculator;
-import platform.service.model.ProgramMapper;
-
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -20,15 +17,5 @@ class TestServiceConfig extends ServiceConfig {
         return new CurrentDateGetter(Clock.fixed(DATE.atZone(ZoneId.systemDefault())
                                                      .toInstant(),
                                                  ZoneId.systemDefault()));
-    }
-
-    ProgramService testProgramService(ProgramRepository programRepository) {
-        return programService(testProgramDateSetter(), programRepository,
-                              testProgramMapper());
-    }
-
-    private ProgramMapper testProgramMapper() {
-        return new ProgramMapper(
-                 new ProgramExpireTimeCalculator(testCurrentDateGetter()));
     }
 }

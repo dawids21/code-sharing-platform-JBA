@@ -12,18 +12,27 @@ import platform.service.model.ProgramMapper;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ProgramServiceTest {
 
+    private ProgramDateSetter programDateSetter;
+    private ProgramRepository programRepository;
+    private ProgramMapper programMapper;
     private ProgramService programService;
 
     @BeforeEach
     void setUp() {
-        ProgramRepository programRepository = configureDatabaseMock();
-
-        programService = new TestServiceConfig().testProgramService(programRepository);
+        programDateSetter = mock(ProgramDateSetter.class);
+        programRepository = configureDatabaseMock();
+        programMapper = mock(ProgramMapper.class);
+        when(programMapper.programDtoToProgram(Mockito.any(ProgramDto.class))).thenReturn(
+                 testProgram());
+        programService =
+                 new ProgramService(programDateSetter, programRepository, programMapper);
     }
 
     @Nested
@@ -31,16 +40,10 @@ class ProgramServiceTest {
 
         @Test
         void should_map_dto_to_entity_using_mapper() {
-            ProgramMapper mapperMock = mock(ProgramMapper.class);
-            when(mapperMock.programDtoToProgram(
-                     Mockito.any(ProgramDto.class))).thenReturn(testProgram());
-            ProgramService programService =
-                     new ProgramService(new TestServiceConfig().testProgramDateSetter(),
-                                        configureDatabaseMock(), mapperMock);
             ProgramDto programDto = testProgramDto();
             programService.addProgram(programDto);
 
-            verify(mapperMock, times(1)).programDtoToProgram(programDto);
+            verify(programMapper, times(1)).programDtoToProgram(programDto);
         }
 
         @Test
