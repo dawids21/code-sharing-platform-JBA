@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProgramViewsReducerTest {
+class ProgramViewsReducerTest extends ServiceTestBaseClass {
 
     @Test
     void should_reduce_views_by_one_if_restricted() {
