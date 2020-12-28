@@ -35,6 +35,7 @@ public class ProgramMapper {
         String code = "";
         LocalDateTime created = null;
         LocalDateTime validUntil = null;
+        int views = 0;
         boolean restricted = false;
         if (programDto.getCode() != null) {
             code = programDto.getCode();
@@ -45,6 +46,11 @@ public class ProgramMapper {
         if (programDto.getTime() > 0) {
             validUntil = calculator.dateAfterSeconds(programDto.getTime())
                                    .withNano(0);
+            restricted = true;
+        }
+
+        if (programDto.getViews() > 0) {
+            views = programDto.getViews();
             restricted = true;
         }
 
