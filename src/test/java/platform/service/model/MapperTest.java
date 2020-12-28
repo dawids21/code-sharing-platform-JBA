@@ -88,14 +88,18 @@ class MapperTest {
 
     @Test
     void should_mark_the_program_as_not_restricted_when_dto_has_negative_number_in_views_field() {
-        //TODO implement should_mark_the_program_as_not_restricted_when_dto_has_negative_number_in_views_field
-        throw new UnsupportedOperationException("Not implemented yet");
+        ProgramDto programDto = testProgramDto();
+        programDto.setViews(-4);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.isRestricted()).isFalse();
     }
 
     @Test
     void should_mark_the_program_as_not_restricted_when_dto_has_zero_in_views_field() {
-        //TODO implement should_mark_the_program_as_not_restricted_when_dto_has_zero_in_views_field
-        throw new UnsupportedOperationException("Not implemented yet");
+        ProgramDto programDto = testProgramDto();
+        programDto.setViews(0);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.isRestricted()).isFalse();
     }
 
     @Test
@@ -108,14 +112,19 @@ class MapperTest {
 
     @Test
     void should_mark_program_as_restricted_when_dto_has_positive_number_in_views() {
-        //TODO implement should_mark_program_as_restricted_when_dto_has_positive_number_in_views
-        throw new UnsupportedOperationException("Not implemented yet");
+        ProgramDto programDto = testProgramDto();
+        programDto.setViews(23);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.isRestricted()).isTrue();
     }
 
     @Test
     void should_mark_program_as_restricted_when_both_time_and_views_are_specified() {
-        //TODO implement should_mark_program_as_restricted_when_both_time_and_views_are_specified
-        throw new UnsupportedOperationException("Not implemented yet");
+        ProgramDto programDto = testProgramDto();
+        programDto.setTime(23);
+        programDto.setViews(23);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.isRestricted()).isTrue();
     }
 
     private ProgramDto testProgramDto() {
