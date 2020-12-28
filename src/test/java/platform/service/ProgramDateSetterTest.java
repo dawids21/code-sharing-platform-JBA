@@ -20,6 +20,6 @@ class ProgramDateSetterTest {
         ProgramDto programDto = new ProgramDto("", null, 0, 10);
         programDateSetter.setDate(programDto);
 
-        assertThat(programDto.getDate()).isEqualTo(TestServiceConfig.DATE_STRING);
+        assertThat(programDto.getDate()).isEqualTo(ServiceTestBaseClass.DATE_STRING);
     }
 }

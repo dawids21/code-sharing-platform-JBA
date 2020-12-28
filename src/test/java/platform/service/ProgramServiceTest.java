@@ -70,7 +70,8 @@ class ProgramServiceTest {
         void should_return_corresponding_uuid() {
             UUID id = programService.addProgram(testProgramDto());
 
-            assertThat(id.toString()).isEqualTo(TestServiceConfig.TEST_UUID.toString());
+            assertThat(id.toString()).isEqualTo(
+                     ServiceTestBaseClass.TEST_UUID.toString());
         }
     }
 
@@ -79,7 +80,7 @@ class ProgramServiceTest {
 
         @Test
         void should_map_entity_to_dto_using_mapper() {
-            programService.getProgram(TestServiceConfig.TEST_UUID);
+            programService.getProgram(ServiceTestBaseClass.TEST_UUID);
 
             verify(programMapper, times(1)).programToProgramDto(
                      Mockito.any(Program.class));
@@ -87,7 +88,7 @@ class ProgramServiceTest {
 
         @Test
         void should_search_in_database_for_program() {
-            UUID id = TestServiceConfig.TEST_UUID;
+            UUID id = ServiceTestBaseClass.TEST_UUID;
             programService.getProgram(id);
 
             verify(programRepository, times(1)).findById(id);
@@ -133,12 +134,12 @@ class ProgramServiceTest {
         ProgramRepository mock = mock(ProgramRepository.class);
         when(mock.save(Mockito.any(Program.class))).then(i -> {
             Program program = i.getArgument(0, Program.class);
-            program.setId(TestServiceConfig.TEST_UUID);
+            program.setId(ServiceTestBaseClass.TEST_UUID);
             return program;
         });
         when(mock.findById(Mockito.any(UUID.class))).then(i -> {
             UUID index = i.getArgument(0, UUID.class);
-            if (index.equals(TestServiceConfig.TEST_UUID)) {
+            if (index.equals(ServiceTestBaseClass.TEST_UUID)) {
                 return Optional.of(testProgram());
             } else {
                 return Optional.empty();
@@ -150,11 +151,12 @@ class ProgramServiceTest {
     }
 
     Program testProgram() {
-        return new Program(TestServiceConfig.TEST_UUID, "main()", TestServiceConfig.DATE,
-                           TestServiceConfig.DATE.plusSeconds(10), 10, true);
+        return new Program(ServiceTestBaseClass.TEST_UUID, "main()",
+                           ServiceTestBaseClass.DATE,
+                           ServiceTestBaseClass.DATE.plusSeconds(10), 10, true);
     }
 
     ProgramDto testProgramDto() {
-        return new ProgramDto("main()", TestServiceConfig.DATE_STRING, 10, 10);
+        return new ProgramDto("main()", ServiceTestBaseClass.DATE_STRING, 10, 10);
     }
 }
