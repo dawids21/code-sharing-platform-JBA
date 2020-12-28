@@ -13,10 +13,13 @@ public class ProgramDto {
 
     private int time;
 
-    public ProgramDto(String code, String date, int time) {
+    private int views;
+
+    public ProgramDto(String code, String date, int time, int views) {
         this.code = code;
         this.date = date;
         this.time = time;
+        this.views = views;
     }
 
     public String getCode() {
@@ -43,6 +46,14 @@ public class ProgramDto {
         this.time = time;
     }
 
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -52,18 +63,19 @@ public class ProgramDto {
             return false;
         }
         ProgramDto that = (ProgramDto) o;
-        return getTime() == that.getTime() && Objects.equals(getCode(), that.getCode()) &&
+        return getTime() == that.getTime() && getViews() == that.getViews() &&
+               Objects.equals(getCode(), that.getCode()) &&
                Objects.equals(getDate(), that.getDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCode(), getDate(), getTime());
+        return Objects.hash(getCode(), getDate(), getTime(), getViews());
     }
 
     @Override
     public String toString() {
         return "ProgramDto{" + "code='" + code + '\'' + ", date='" + date + '\'' +
-               ", remainingSeconds=" + time + '}';
+               ", time=" + time + ", views=" + views + '}';
     }
 }
