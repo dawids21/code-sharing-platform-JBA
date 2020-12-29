@@ -2,6 +2,7 @@ package platform.service;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class RestrictionCheckerTest {
+class RestrictionCheckerTest extends ServiceTestBase {
 
     private final static String baseUUIDString = "e6780274-c41c-4ab4-bde6-b32c18b4c4e";
 
@@ -56,12 +57,25 @@ class RestrictionCheckerTest {
         assertThat(result).isEqualTo(RestrictionChecker.STATUS.VALID);
     }
 
+    @Test
+    void should_pass_program_with_null_valid_until() {
+        RestrictionChecker restrictionChecker =
+                 new TestServiceConfig().testRestrictionChecker();
+        Program program = testProgram();
+        program.setValidUntil(null);
+
+        RestrictionChecker.STATUS result = restrictionChecker.check(program);
+
+        assertThat(result).isEqualTo(RestrictionChecker.STATUS.VALID);
+    }
+
     private CurrentDateGetter testCurrentDateGetter(LocalDateTime now) {
         CurrentDateGetter mock = mock(CurrentDateGetter.class);
         when(mock.now()).thenReturn(now);
         return mock;
     }
 
+    //TODO use DATE for test arguments
     private static Stream<Arguments> provideInvalidRecords() {
         return Stream.of(Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "1"), "",
