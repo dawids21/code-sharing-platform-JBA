@@ -92,19 +92,19 @@ class RestrictionCheckerTest extends ServiceTestBase {
         return Stream.of(Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "1"), "",
                              LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                             LocalDateTime.of(2020, 1, 6, 0, 0, 0), 10, true),
+                             LocalDateTime.of(2020, 1, 6, 0, 0, 0), 5, 10, true),
                  LocalDateTime.of(2020, 1, 10, 0, 0, 0)), Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "2"), "",
                              LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                             LocalDateTime.of(2020, 1, 15, 0, 0, 0), -1, true),
+                             LocalDateTime.of(2020, 1, 15, 0, 0, 0), 4, 3, true),
                  LocalDateTime.of(2020, 1, 10, 0, 0, 0)), Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "3"), "",
                              LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                             LocalDateTime.of(2020, 1, 30, 0, 0, 0), 10, true),
+                             LocalDateTime.of(2020, 1, 30, 0, 0, 0), 5, 10, true),
                  LocalDateTime.of(2020, 1, 30, 0, 0, 0)), Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "4"), "",
                              LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                             LocalDateTime.of(2020, 1, 15, 0, 0, 0), -1, true),
+                             LocalDateTime.of(2020, 1, 15, 0, 0, 0), 6, 5, true),
                  LocalDateTime.of(2020, 1, 16, 0, 0, 0)));
     }
 
@@ -112,19 +112,19 @@ class RestrictionCheckerTest extends ServiceTestBase {
         return Stream.of(Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "1"), "",
                              LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                             LocalDateTime.of(2020, 1, 6, 0, 0, 0), 10, true),
+                             LocalDateTime.of(2020, 1, 6, 0, 0, 0), 6, 10, true),
                  LocalDateTime.of(2020, 1, 5, 0, 0, 0)), Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "2"), "",
                              LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                             LocalDateTime.of(2020, 1, 15, 0, 0, 0), 0, true),
+                             LocalDateTime.of(2020, 1, 15, 0, 0, 0), 6, 0, true),
                  LocalDateTime.of(2020, 1, 10, 0, 0, 0)), Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "3"), "",
                              LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                             LocalDateTime.of(2020, 1, 30, 0, 0, 0), 10, true),
+                             LocalDateTime.of(2020, 1, 30, 0, 0, 0), 6, 10, true),
                  LocalDateTime.of(2020, 1, 29, 0, 0, 0)), Arguments.of(
                  new Program(UUID.fromString(baseUUIDString + "4"), "",
                              LocalDateTime.of(2020, 1, 3, 0, 0, 0),
-                             LocalDateTime.of(2020, 1, 15, 0, 0, 0), 7, true),
+                             LocalDateTime.of(2020, 1, 15, 0, 0, 0), 7, 7, true),
                  LocalDateTime.of(2020, 1, 14, 0, 0, 0)));
     }
 }

@@ -21,18 +21,21 @@ public class Program {
 
     private Integer countViews;
 
+    private Integer countAllowed;
+
     private boolean restricted;
 
     public Program() {
     }
 
     public Program(UUID id, String code, LocalDateTime created, LocalDateTime validUntil,
-                   int countViews, boolean restricted) {
+                   Integer countViews, Integer countAllowed, boolean restricted) {
         this.id = id;
         this.code = code;
         this.created = created;
         this.validUntil = validUntil;
         this.countViews = countViews;
+        this.countAllowed = countAllowed;
         this.restricted = restricted;
     }
 
@@ -76,6 +79,14 @@ public class Program {
         this.countViews = views;
     }
 
+    public Integer getCountAllowed() {
+        return countAllowed;
+    }
+
+    public void setCountAllowed(Integer countAllowed) {
+        this.countAllowed = countAllowed;
+    }
+
     public boolean isRestricted() {
         return restricted;
     }
@@ -93,24 +104,25 @@ public class Program {
             return false;
         }
         Program program = (Program) o;
-        return getCountViews() == program.getCountViews() &&
-               isRestricted() == program.isRestricted() &&
+        return isRestricted() == program.isRestricted() &&
                Objects.equals(getId(), program.getId()) &&
                Objects.equals(getCode(), program.getCode()) &&
                Objects.equals(getCreated(), program.getCreated()) &&
-               Objects.equals(getValidUntil(), program.getValidUntil());
+               Objects.equals(getValidUntil(), program.getValidUntil()) &&
+               Objects.equals(getCountViews(), program.getCountViews()) &&
+               Objects.equals(getCountAllowed(), program.getCountAllowed());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getCode(), getCreated(), getValidUntil(),
-                            getCountViews(), isRestricted());
+                            getCountViews(), getCountAllowed(), isRestricted());
     }
 
     @Override
     public String toString() {
         return "Program{" + "id=" + id + ", code='" + code + '\'' + ", created=" +
-               created + ", validUntil=" + validUntil + ", views=" + countViews +
-               ", restricted=" + restricted + '}';
+               created + ", validUntil=" + validUntil + ", countViews=" + countViews +
+               ", countAllowed=" + countAllowed + ", restricted=" + restricted + '}';
     }
 }

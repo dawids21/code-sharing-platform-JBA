@@ -10,7 +10,7 @@ class ModelTestBase {
     static final UUID TEST_UUID = UUID.fromString("e6780274-c41c-4ab4-bde6-b32c18b4c489");
 
     protected Program testProgram() {
-        return new Program(TEST_UUID, "main()", DATE, DATE.plusSeconds(10), 10, true);
+        return new Program(TEST_UUID, "main()", DATE, DATE.plusSeconds(10), 4, 10, true);
     }
 
     protected ProgramDto testProgramDto() {
