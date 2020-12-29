@@ -144,6 +144,11 @@ class ProgramServiceTest extends ServiceTestBase {
                                                                            .hasFieldOrPropertyWithValue(
                                                                                     "status",
                                                                                     HttpStatus.NOT_FOUND);
+        }
+
+        @Test
+        void should_delete_invalid_program_from_database() {
+            assertThatThrownBy(() -> programService.getProgram(INVALID_PROGRAM_UUID));
             verify(programRepository).deleteById(INVALID_PROGRAM_UUID);
         }
     }
