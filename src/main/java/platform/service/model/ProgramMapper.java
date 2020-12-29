@@ -16,7 +16,7 @@ public class ProgramMapper {
         String code = "";
         String date = "";
         int time = 0;
-        int views = 0;
+        int views = -1;
 
         if (program.getCode() != null) {
             code = program.getCode();

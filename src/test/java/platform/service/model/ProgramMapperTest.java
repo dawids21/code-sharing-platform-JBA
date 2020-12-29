@@ -55,11 +55,11 @@ class ProgramMapperTest extends ModelTestBase {
     }
 
     @Test
-    void should_set_views_to_zero_when_null_in_entity() {
+    void should_set_views_to_minus_one_when_null_in_entity() {
         Program program = testProgram();
         program.setViews(null);
         ProgramDto programDto = programMapper.programToProgramDto(program);
-        assertThat(programDto.getViews()).isEqualTo(0);
+        assertThat(programDto.getViews()).isEqualTo(-1);
     }
 
     @Test
