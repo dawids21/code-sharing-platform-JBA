@@ -30,7 +30,9 @@ public class ServiceConfig {
     @Bean
     public ScheduledDatabaseRemoveRecords scheduledDatabaseRemoveRecords(
              ProgramRepository programRepository, CurrentDateGetter currentDateGetter) {
-        return new ScheduledDatabaseRemoveRecords(programRepository, currentDateGetter);
+        return new ScheduledDatabaseRemoveRecords(programRepository,
+                                                  new RestrictionChecker(
+                                                           currentDateGetter));
     }
 
 }

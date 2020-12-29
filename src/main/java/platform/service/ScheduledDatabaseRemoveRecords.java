@@ -3,28 +3,25 @@ package platform.service;
 import org.springframework.scheduling.annotation.Scheduled;
 import platform.service.model.Program;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ScheduledDatabaseRemoveRecords {
 
     private final ProgramRepository programRepository;
-    private final CurrentDateGetter currentDateGetter;
+    private final RestrictionChecker restrictionChecker;
 
     public ScheduledDatabaseRemoveRecords(ProgramRepository programRepository,
-                                          CurrentDateGetter currentDateGetter) {
+                                          RestrictionChecker restrictionChecker) {
         this.programRepository = programRepository;
-        this.currentDateGetter = currentDateGetter;
+        this.restrictionChecker = restrictionChecker;
     }
 
     @Scheduled(fixedRate = 60000)
     public void removeRecords() {
-        LocalDateTime now = currentDateGetter.now();
         List<Program> programs = programRepository.findAll();
         programs.stream()
-                .filter(Program::isRestricted)
-                .filter(program -> now.isAfter(program.getValidUntil()) ||
-                                   now.isEqual(program.getValidUntil()))
+                .filter(program -> restrictionChecker.check(program) ==
+                                   RestrictionChecker.STATUS.INVALID)
                 .forEach(program -> programRepository.deleteById(program.getId()));
     }
 }
