@@ -124,7 +124,6 @@ class ProgramServiceTest extends ServiceTestBase {
                                                               .hasFieldOrPropertyWithValue(
                                                                        "status",
                                                                        HttpStatus.NOT_FOUND);
-
         }
 
         @Test
@@ -138,13 +137,6 @@ class ProgramServiceTest extends ServiceTestBase {
         }
 
         @Test
-        void should_delete_invalid_program_from_database() {
-            programService.getProgram(INVALID_PROGRAM_UUID);
-
-            verify(programRepository).deleteById(INVALID_PROGRAM_UUID);
-        }
-
-        @Test
         void should_return_404_when_program_deleted_during_get() {
             assertThatThrownBy(
                      () -> programService.getProgram(INVALID_PROGRAM_UUID)).isInstanceOf(
@@ -152,6 +144,7 @@ class ProgramServiceTest extends ServiceTestBase {
                                                                            .hasFieldOrPropertyWithValue(
                                                                                     "status",
                                                                                     HttpStatus.NOT_FOUND);
+            verify(programRepository).deleteById(INVALID_PROGRAM_UUID);
         }
     }
 
