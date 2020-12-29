@@ -30,8 +30,8 @@ class ProgramViewsReducerTest extends ServiceTestBase {
 
     @ParameterizedTest
     @MethodSource("provideViews")
-    void should_reduce_views_only_when_they_are_greater_than_zero(int views,
-                                                                  int expected) {
+    void should_reduce_views_only_when_they_are_greater_or_equal_to_zero(int views,
+                                                                         int expected) {
         Program program = testValidProgram();
         program.setViews(views);
         program.setRestricted(true);
@@ -62,6 +62,6 @@ class ProgramViewsReducerTest extends ServiceTestBase {
     }
 
     private static Stream<Arguments> provideViews() {
-        return Stream.of(Arguments.of(-1, -1), Arguments.of(0, 0), Arguments.of(1, 0));
+        return Stream.of(Arguments.of(-1, -1), Arguments.of(0, -1), Arguments.of(1, 0));
     }
 }
