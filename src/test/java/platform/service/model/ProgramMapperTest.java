@@ -60,14 +60,18 @@ class ProgramMapperTest extends ModelTestBase {
 
     @Test
     void should_set_views_to_zero_when_null_in_entity() {
-        //TODO implement should_set_views_to_zero_when_null_in_entity
-        throw new UnsupportedOperationException("Not implemented yet");
+        Program program = new Program();
+        program.setViews(null);
+        ProgramDto programDto = programMapper.programToProgramDto(program);
+        assertThat(programDto.getTime()).isEqualTo(0);
     }
 
     @Test
     void should_set_views_to_null_when_zero_in_dto() {
-        //TODO implement should_set_views_to_null_when_zero_in_dto
-        throw new UnsupportedOperationException("Not implemented yet");
+        ProgramDto programDto = testProgramDto();
+        programDto.setViews(0);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.getViews()).isNull();
     }
 
     @Test
