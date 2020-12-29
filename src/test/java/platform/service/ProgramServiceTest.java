@@ -128,6 +128,16 @@ class ProgramServiceTest extends ServiceTestBase {
         }
 
         @Test
+        void should_use_restriction_checker_for_program() {
+            programService.getProgram(VALID_PROGRAM_UUID);
+
+            ArgumentCaptor<Program> argument = ArgumentCaptor.forClass(Program.class);
+            verify(restrictionChecker).check(argument.capture());
+            assertThat(argument.getValue()
+                               .getId()).isEqualTo(VALID_PROGRAM_UUID);
+        }
+
+        @Test
         void should_delete_invalid_program_from_database() {
             programService.getProgram(INVALID_PROGRAM_UUID);
 
