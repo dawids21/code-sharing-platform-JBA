@@ -20,12 +20,12 @@ class ProgramViewsReducerTest extends ServiceTestBase {
     @Test
     void should_reduce_views_by_one_if_restricted() {
         Program program = testValidProgram();
-        program.setViews(4);
+        program.setCountViews(4);
         program.setRestricted(true);
 
         Program result = programViewsReducer.reduce(program);
 
-        assertThat(result.getViews()).isEqualTo(3);
+        assertThat(result.getCountViews()).isEqualTo(3);
     }
 
     @ParameterizedTest
@@ -33,32 +33,32 @@ class ProgramViewsReducerTest extends ServiceTestBase {
     void should_reduce_views_only_when_they_are_greater_or_equal_to_zero(int views,
                                                                          int expected) {
         Program program = testValidProgram();
-        program.setViews(views);
+        program.setCountViews(views);
         program.setRestricted(true);
 
         Program result = programViewsReducer.reduce(program);
 
-        assertThat(result.getViews()).isEqualTo(expected);
+        assertThat(result.getCountViews()).isEqualTo(expected);
     }
 
     @Test
     void should_not_reduce_views_when_program_is_not_restricted() {
         Program program = testValidProgram();
-        program.setViews(4);
+        program.setCountViews(4);
         program.setRestricted(false);
 
         Program result = programViewsReducer.reduce(program);
-        assertThat(result.getViews()).isEqualTo(4);
+        assertThat(result.getCountViews()).isEqualTo(4);
     }
 
     @Test
     void should_omit_reducing_when_views_is_null() {
         Program program = testValidProgram();
-        program.setViews(null);
+        program.setCountViews(null);
         program.setRestricted(true);
 
         Program result = programViewsReducer.reduce(program);
-        assertThat(result.getViews()).isNull();
+        assertThat(result.getCountViews()).isNull();
     }
 
     private static Stream<Arguments> provideViews() {

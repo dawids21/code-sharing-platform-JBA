@@ -43,7 +43,7 @@ class ProgramMapperTest extends ModelTestBase {
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
         assertThat(program.getCreated()).isEqualTo(DATE);
         assertThat(program.getValidUntil()).isEqualTo(DATE.plusSeconds(10));
-        assertThat(program.getViews()).isEqualTo(10);
+        assertThat(program.getCountViews()).isEqualTo(10);
     }
 
     @Test
@@ -57,7 +57,7 @@ class ProgramMapperTest extends ModelTestBase {
     @Test
     void should_set_views_to_zero_when_null_in_entity() {
         Program program = testProgram();
-        program.setViews(null);
+        program.setCountViews(null);
         ProgramDto programDto = programMapper.programToProgramDto(program);
         assertThat(programDto.getViews()).isEqualTo(0);
     }
@@ -67,7 +67,7 @@ class ProgramMapperTest extends ModelTestBase {
         ProgramDto programDto = testProgramDto();
         programDto.setViews(0);
         Program program = programMapper.programDtoToProgram(programDto);
-        assertThat(program.getViews()).isNull();
+        assertThat(program.getCountViews()).isNull();
     }
 
     @Test

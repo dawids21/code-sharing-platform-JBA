@@ -27,8 +27,8 @@ public class ProgramMapper {
         if (program.getValidUntil() != null) {
             time = calculator.secondsRemain(program.getValidUntil());
         }
-        if (program.getViews() != null) {
-            views = program.getViews();
+        if (program.getCountViews() != null) {
+            views = program.getCountViews();
         }
         return new ProgramDto(code, date, time, views);
     }
@@ -60,7 +60,7 @@ public class ProgramMapper {
         target.setCode(code);
         target.setCreated(created);
         target.setValidUntil(validUntil);
-        target.setViews(views);
+        target.setCountViews(views);
         target.setRestricted(restricted);
         return target;
     }

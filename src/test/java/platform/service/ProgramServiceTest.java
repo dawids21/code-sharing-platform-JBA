@@ -113,7 +113,8 @@ class ProgramServiceTest extends ServiceTestBase {
             ArgumentCaptor<Program> argument = ArgumentCaptor.forClass(Program.class);
             verify(programRepository).save(argument.capture());
             assertThat(argument.getValue()
-                               .getViews()).isEqualTo(testValidProgram().getViews() - 1);
+                               .getCountViews()).isEqualTo(
+                     testValidProgram().getCountViews() - 1);
         }
 
         @Test
