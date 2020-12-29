@@ -21,7 +21,7 @@ class ServiceTestBase {
     }
 
     protected Program testInvalidProgram() {
-        return new Program(INVALID_PROGRAM_UUID, "main()", DATE, DATE.plusSeconds(10), 0,
+        return new Program(INVALID_PROGRAM_UUID, "main()", DATE, DATE.plusSeconds(10), -1,
                            true);
     }
 
