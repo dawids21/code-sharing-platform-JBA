@@ -14,7 +14,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MapperTest extends ModelTestBase {
+class ProgramMapperTest extends ModelTestBase {
 
     private final ProgramMapper programMapper = new TestModelConfig().testMyMapper();
 
