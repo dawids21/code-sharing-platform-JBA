@@ -26,6 +26,6 @@ class ServiceTestBase {
     }
 
     protected ProgramDto testProgramDto() {
-        return new ProgramDto("main()", DATE_STRING, 10, 10);
+        return new ProgramDto("main()", DATE_STRING, 10, 10, true, true);
     }
 }
