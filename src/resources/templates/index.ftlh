@@ -13,7 +13,7 @@
 <body>
 <#list programs as program>
     <span id="load_date">${program.date}</span>
-    <#if 0 < program.getViews()>
+    <#if -1 < program.getViews()>
         <div>
             <span id="views_restriction">${program.views} more views allowed</span>
         </div>
