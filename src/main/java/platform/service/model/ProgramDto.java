@@ -1,5 +1,6 @@
 package platform.service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -15,11 +16,20 @@ public class ProgramDto {
 
     private int views;
 
-    public ProgramDto(String code, String date, int time, int views) {
+    @JsonIgnore
+    private boolean timeRestricted;
+
+    @JsonIgnore
+    private boolean viewsRestricted;
+
+    public ProgramDto(String code, String date, int time, int views,
+                      boolean timeRestricted, boolean viewsRestricted) {
         this.code = code;
         this.date = date;
         this.time = time;
         this.views = views;
+        this.timeRestricted = timeRestricted;
+        this.viewsRestricted = viewsRestricted;
     }
 
     public String getCode() {
@@ -54,6 +64,22 @@ public class ProgramDto {
         this.views = views;
     }
 
+    public boolean isTimeRestricted() {
+        return timeRestricted;
+    }
+
+    public void setTimeRestricted(boolean timeRestricted) {
+        this.timeRestricted = timeRestricted;
+    }
+
+    public boolean isViewsRestricted() {
+        return viewsRestricted;
+    }
+
+    public void setViewsRestricted(boolean viewsRestricted) {
+        this.viewsRestricted = viewsRestricted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -64,18 +90,22 @@ public class ProgramDto {
         }
         ProgramDto that = (ProgramDto) o;
         return getTime() == that.getTime() && getViews() == that.getViews() &&
+               isTimeRestricted() == that.isTimeRestricted() &&
+               isViewsRestricted() == that.isViewsRestricted() &&
                Objects.equals(getCode(), that.getCode()) &&
                Objects.equals(getDate(), that.getDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCode(), getDate(), getTime(), getViews());
+        return Objects.hash(getCode(), getDate(), getTime(), getViews(),
+                            isTimeRestricted(), isViewsRestricted());
     }
 
     @Override
     public String toString() {
         return "ProgramDto{" + "code='" + code + '\'' + ", date='" + date + '\'' +
-               ", time=" + time + ", views=" + views + '}';
+               ", time=" + time + ", views=" + views + ", timeRestricted=" +
+               timeRestricted + ", viewsRestricted=" + viewsRestricted + '}';
     }
 }
