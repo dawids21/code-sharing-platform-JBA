@@ -1,7 +1,7 @@
 package platform.service;
 
+import platform.service.model.Program;
 import platform.service.model.ProgramDateFormatter;
-import platform.service.model.ProgramDto;
 
 class ProgramDateSetterImpl implements ProgramDateSetter {
 
@@ -13,7 +13,7 @@ class ProgramDateSetterImpl implements ProgramDateSetter {
         programDateFormatter = new ProgramDateFormatter();
     }
 
-    public void setCreated(ProgramDto program) {
-        program.setDate(programDateFormatter.toString(currentDateGetter.now()));
+    public void setCreated(Program program) {
+        program.setCreated(currentDateGetter.now());
     }
 }
