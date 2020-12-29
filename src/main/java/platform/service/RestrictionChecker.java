@@ -36,7 +36,7 @@ public class RestrictionChecker {
     private STATUS checkTimeRestriction(Program program) {
         LocalDateTime now = currentDateGetter.now();
         LocalDateTime validUntil = program.getValidUntil();
-        if (now.isAfter(validUntil) || now.isEqual(validUntil)) {
+        if (validUntil != null && (now.isAfter(validUntil) || now.isEqual(validUntil))) {
             return STATUS.INVALID;
         }
         return STATUS.VALID;
