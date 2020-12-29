@@ -74,7 +74,7 @@ class RestrictionCheckerTest extends ServiceTestBase {
         RestrictionChecker restrictionChecker =
                  new TestServiceConfig().testRestrictionChecker();
         Program program = testValidProgram();
-        program.setCountAllowed(null);
+        program.setViewsAllowed(null);
 
         RestrictionChecker.STATUS result = restrictionChecker.check(program);
 

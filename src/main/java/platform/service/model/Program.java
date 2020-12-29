@@ -21,7 +21,7 @@ public class Program {
 
     private Integer countViews;
 
-    private Integer countAllowed;
+    private Integer viewsAllowed;
 
     private boolean restricted;
 
@@ -29,13 +29,13 @@ public class Program {
     }
 
     public Program(UUID id, String code, LocalDateTime created, LocalDateTime validUntil,
-                   Integer countViews, Integer countAllowed, boolean restricted) {
+                   Integer countViews, Integer viewsAllowed, boolean restricted) {
         this.id = id;
         this.code = code;
         this.created = created;
         this.validUntil = validUntil;
         this.countViews = countViews;
-        this.countAllowed = countAllowed;
+        this.viewsAllowed = viewsAllowed;
         this.restricted = restricted;
     }
 
@@ -79,12 +79,12 @@ public class Program {
         this.countViews = views;
     }
 
-    public Integer getCountAllowed() {
-        return countAllowed;
+    public Integer getViewsAllowed() {
+        return viewsAllowed;
     }
 
-    public void setCountAllowed(Integer countAllowed) {
-        this.countAllowed = countAllowed;
+    public void setViewsAllowed(Integer countAllowed) {
+        this.viewsAllowed = countAllowed;
     }
 
     public boolean isRestricted() {
@@ -110,19 +110,19 @@ public class Program {
                Objects.equals(getCreated(), program.getCreated()) &&
                Objects.equals(getValidUntil(), program.getValidUntil()) &&
                Objects.equals(getCountViews(), program.getCountViews()) &&
-               Objects.equals(getCountAllowed(), program.getCountAllowed());
+               Objects.equals(getViewsAllowed(), program.getViewsAllowed());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getCode(), getCreated(), getValidUntil(),
-                            getCountViews(), getCountAllowed(), isRestricted());
+                            getCountViews(), getViewsAllowed(), isRestricted());
     }
 
     @Override
     public String toString() {
         return "Program{" + "id=" + id + ", code='" + code + '\'' + ", created=" +
                created + ", validUntil=" + validUntil + ", countViews=" + countViews +
-               ", countAllowed=" + countAllowed + ", restricted=" + restricted + '}';
+               ", countAllowed=" + viewsAllowed + ", restricted=" + restricted + '}';
     }
 }
