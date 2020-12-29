@@ -2,7 +2,7 @@ package platform.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import platform.service.model.ProgramDto;
+import platform.service.model.Program;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,10 +17,10 @@ class ProgramDateSetterTest extends ServiceTestBase {
 
     @Test
     void should_set_now_as_date() {
-        ProgramDto programDto = testProgramDto();
-        programDto.setDate(null);
-        programDateSetter.setCreated(programDto);
+        Program program = testValidProgram();
+        program.setCreated(null);
+        programDateSetter.setCreated(program);
 
-        assertThat(programDto.getDate()).isEqualTo(ServiceTestBase.DATE_STRING);
+        assertThat(program.getCreated()).isEqualTo(ServiceTestBase.DATE);
     }
 }
