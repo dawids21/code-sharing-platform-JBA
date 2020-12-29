@@ -124,6 +124,18 @@ class ProgramServiceTest extends ServiceTestBase {
                                                                        HttpStatus.NOT_FOUND);
 
         }
+
+        @Test
+        void should_delete_invalid_program_from_database() {
+            //TODO implement should_delete_invalid_program_from_database
+            throw new UnsupportedOperationException("Not implemented yet");
+        }
+
+        @Test
+        void should_return_404_when_program_deleted_during_get() {
+            //TODO implement should_return_404_when_program_deleted_during_get
+            throw new UnsupportedOperationException("Not implemented yet");
+        }
     }
 
     @Nested
