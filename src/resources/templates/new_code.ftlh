@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Title</title>
+    <title>Create</title>
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
