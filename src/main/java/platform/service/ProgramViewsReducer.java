@@ -5,7 +5,8 @@ import platform.service.model.Program;
 public class ProgramViewsReducer {
 
     public Program reduce(Program program) {
-        if (program.isRestricted() && program.getViews() > 0) {
+        if (program.getViews() != null && program.isRestricted() &&
+            program.getViews() > 0) {
             program.setViews(program.getViews() - 1);
         }
         return program;

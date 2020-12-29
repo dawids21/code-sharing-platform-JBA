@@ -53,8 +53,12 @@ class ProgramViewsReducerTest extends ServiceTestBase {
 
     @Test
     void should_omit_reducing_when_views_is_null() {
-        //TODO implement should_omit_reducing_when_views_is_null
-        throw new UnsupportedOperationException("Not implemented yet");
+        Program program = testValidProgram();
+        program.setViews(null);
+        program.setRestricted(true);
+
+        Program result = programViewsReducer.reduce(program);
+        assertThat(result.getViews()).isNull();
     }
 
     private static Stream<Arguments> provideViews() {
