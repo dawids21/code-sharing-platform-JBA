@@ -145,8 +145,7 @@ class ProgramServiceTest extends ServiceTestBase {
         void should_map_results_using_mapper() {
             programService.getLastPrograms(1);
 
-            verify(programMapper, times(1)).programToProgramDto(
-                     Mockito.any(Program.class));
+            verify(programMapper).programToProgramDto(Mockito.any(Program.class));
         }
     }
 
@@ -159,8 +158,10 @@ class ProgramServiceTest extends ServiceTestBase {
         });
         when(mock.findById(Mockito.any(UUID.class))).then(i -> {
             UUID index = i.getArgument(0, UUID.class);
-            if (index.equals(VALID_PROGRAM_UUID)) {
+            if (VALID_PROGRAM_UUID.equals(index)) {
                 return Optional.of(testValidProgram());
+            } else if (INVALID_PROGRAM_UUID.equals(index)) {
+                return Optional.of(testInvalidProgram());
             } else {
                 return Optional.empty();
             }
