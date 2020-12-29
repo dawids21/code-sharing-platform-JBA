@@ -12,9 +12,11 @@ public class ServiceConfig {
     @Bean
     public ProgramService programService(ProgramDateSetter programDateSetter,
                                          ProgramRepository programRepository,
-                                         ProgramMapper mapper) {
+                                         ProgramMapper mapper,
+                                         CurrentDateGetter currentDateGetter) {
         return new ProgramService(programDateSetter, programRepository, mapper,
-                                  new ProgramViewsReducer());
+                                  new ProgramViewsReducer(),
+                                  new RestrictionChecker(currentDateGetter));
     }
 
     @Bean
