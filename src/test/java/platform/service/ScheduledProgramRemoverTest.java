@@ -13,7 +13,7 @@ import java.util.UUID;
 import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ScheduledDatabaseRemoveRecordsTest extends ServiceTestBase {
+class ScheduledProgramRemoverTest extends ServiceTestBase {
 
     private final static UUID validUUID =
              UUID.fromString("e6780274-c41c-4ab4-bde6-b32c18b4c4e1");
@@ -21,14 +21,14 @@ class ScheduledDatabaseRemoveRecordsTest extends ServiceTestBase {
              UUID.fromString("e6780274-c41c-4ab4-bde6-b32c18b4c4e2");
 
     private ProgramRepository programRepository;
-    private ScheduledDatabaseRemoveRecords task;
+    private ScheduledProgramRemover task;
 
     @BeforeEach
     void setUp() {
         programRepository = mock(ProgramRepository.class);
         when(programRepository.findAll()).thenReturn(testPrograms());
-        task = new ScheduledDatabaseRemoveRecords(programRepository,
-                                                  new TestServiceConfig().testRestrictionChecker());
+        task = new ScheduledProgramRemover(programRepository,
+                                           new TestServiceConfig().testRestrictionChecker());
     }
 
     @Test

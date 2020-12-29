@@ -5,13 +5,13 @@ import platform.service.model.Program;
 
 import java.util.List;
 
-public class ScheduledDatabaseRemoveRecords {
+public class ScheduledProgramRemover {
 
     private final ProgramRepository programRepository;
     private final RestrictionChecker restrictionChecker;
 
-    public ScheduledDatabaseRemoveRecords(ProgramRepository programRepository,
-                                          RestrictionChecker restrictionChecker) {
+    public ScheduledProgramRemover(ProgramRepository programRepository,
+                                   RestrictionChecker restrictionChecker) {
         this.programRepository = programRepository;
         this.restrictionChecker = restrictionChecker;
     }
