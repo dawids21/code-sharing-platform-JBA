@@ -127,14 +127,19 @@ class ProgramServiceTest extends ServiceTestBase {
 
         @Test
         void should_delete_invalid_program_from_database() {
-            //TODO implement should_delete_invalid_program_from_database
-            throw new UnsupportedOperationException("Not implemented yet");
+            programService.getProgram(INVALID_PROGRAM_UUID);
+
+            verify(programRepository).deleteById(INVALID_PROGRAM_UUID);
         }
 
         @Test
         void should_return_404_when_program_deleted_during_get() {
-            //TODO implement should_return_404_when_program_deleted_during_get
-            throw new UnsupportedOperationException("Not implemented yet");
+            assertThatThrownBy(
+                     () -> programService.getProgram(INVALID_PROGRAM_UUID)).isInstanceOf(
+                     ResponseStatusException.class)
+                                                                           .hasFieldOrPropertyWithValue(
+                                                                                    "status",
+                                                                                    HttpStatus.NOT_FOUND);
         }
     }
 
