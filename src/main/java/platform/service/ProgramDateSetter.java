@@ -1,8 +1,8 @@
 package platform.service;
 
-import platform.service.model.ProgramDto;
+import platform.service.model.Program;
 
 public interface ProgramDateSetter {
 
-    void setDate(ProgramDto program);
+    void setCreated(Program program);
 }

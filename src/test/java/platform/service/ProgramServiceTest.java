@@ -62,7 +62,7 @@ class ProgramServiceTest extends ServiceTestBase {
             ProgramDto programDto = testProgramDto();
             programService.addProgram(programDto);
 
-            verify(programDateSetter, times(1)).setDate(programDto);
+            verify(programDateSetter, times(1)).setCreated(Mockito.any(Program.class));
         }
 
         @Test
