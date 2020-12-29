@@ -13,7 +13,7 @@ class ProgramDateSetterImpl implements ProgramDateSetter {
         programDateFormatter = new ProgramDateFormatter();
     }
 
-    public void setDate(ProgramDto program) {
+    public void setCreated(ProgramDto program) {
         program.setDate(programDateFormatter.toString(currentDateGetter.now()));
     }
 }

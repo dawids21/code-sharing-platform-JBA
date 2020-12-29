@@ -19,7 +19,7 @@ class ProgramDateSetterTest extends ServiceTestBase {
     void should_set_now_as_date() {
         ProgramDto programDto = testProgramDto();
         programDto.setDate(null);
-        programDateSetter.setDate(programDto);
+        programDateSetter.setCreated(programDto);
 
         assertThat(programDto.getDate()).isEqualTo(ServiceTestBase.DATE_STRING);
     }

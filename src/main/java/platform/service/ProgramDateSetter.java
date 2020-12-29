@@ -4,5 +4,5 @@ import platform.service.model.ProgramDto;
 
 public interface ProgramDateSetter {
 
-    void setDate(ProgramDto program);
+    void setCreated(ProgramDto program);
 }
