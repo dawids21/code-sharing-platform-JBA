@@ -51,6 +51,16 @@ class ProgramViewsReducerTest extends ServiceTestBase {
         assertThat(result.getViews()).isEqualTo(4);
     }
 
+    @Test
+    void should_omit_reducing_when_views_is_null() {
+        Program program = testValidProgram();
+        program.setViews(null);
+        program.setRestricted(true);
+
+        Program result = programViewsReducer.reduce(program);
+        assertThat(result.getViews()).isNull();
+    }
+
     private static Stream<Arguments> provideViews() {
         return Stream.of(Arguments.of(-1, -1), Arguments.of(0, 0), Arguments.of(1, 0));
     }

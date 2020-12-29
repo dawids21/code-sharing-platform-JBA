@@ -19,7 +19,7 @@ public class Program {
 
     private LocalDateTime validUntil;
 
-    private int views;
+    private Integer views;
 
     private boolean restricted;
 
@@ -68,11 +68,11 @@ public class Program {
         this.validUntil = validUntil;
     }
 
-    public int getViews() {
+    public Integer getViews() {
         return views;
     }
 
-    public void setViews(int views) {
+    public void setViews(Integer views) {
         this.views = views;
     }
 

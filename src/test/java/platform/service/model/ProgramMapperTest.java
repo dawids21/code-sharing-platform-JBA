@@ -14,17 +14,13 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MapperTest extends ModelTestBase {
+class ProgramMapperTest extends ModelTestBase {
 
     private final ProgramMapper programMapper = new TestModelConfig().testMyMapper();
 
     @Test
     void should_map_program_to_program_dto() {
-        Program program = new Program();
-        program.setCode("main()");
-        program.setCreated(DATE);
-        program.setValidUntil(DATE.plusSeconds(10));
-        program.setViews(10);
+        Program program = testProgram();
 
         ProgramDto programDto = programMapper.programToProgramDto(program);
 
@@ -52,10 +48,26 @@ class MapperTest extends ModelTestBase {
 
     @Test
     void should_set_time_to_zero_when_valid_until_is_null() {
-        Program program = new Program();
+        Program program = testProgram();
         program.setValidUntil(null);
         ProgramDto programDto = programMapper.programToProgramDto(program);
         assertThat(programDto.getTime()).isEqualTo(0);
+    }
+
+    @Test
+    void should_set_views_to_zero_when_null_in_entity() {
+        Program program = testProgram();
+        program.setViews(null);
+        ProgramDto programDto = programMapper.programToProgramDto(program);
+        assertThat(programDto.getViews()).isEqualTo(0);
+    }
+
+    @Test
+    void should_set_views_to_null_when_zero_in_dto() {
+        ProgramDto programDto = testProgramDto();
+        programDto.setViews(0);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.getViews()).isNull();
     }
 
     @Test
