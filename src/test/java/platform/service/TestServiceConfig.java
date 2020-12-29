@@ -10,8 +10,15 @@ class TestServiceConfig extends ServiceConfig {
     }
 
     CurrentDateGetter testCurrentDateGetter() {
-        return new CurrentDateGetter(Clock.fixed(
-                 ServiceTestBase.DATE.atZone(ZoneId.systemDefault())
-                                     .toInstant(), ZoneId.systemDefault()));
+        return new CurrentDateGetter(testClock());
+    }
+
+    private Clock testClock() {
+        return Clock.fixed(ServiceTestBase.DATE.atZone(ZoneId.systemDefault())
+                                               .toInstant(), ZoneId.systemDefault());
+    }
+
+    RestrictionChecker testRestrictionChecker() {
+        return new RestrictionChecker(testCurrentDateGetter());
     }
 }
