@@ -33,6 +33,8 @@ class ProgramMapperTest extends ModelTestBase {
                  SECONDS.between(DATE, DATE.plusSeconds(10)));
         assertThat(programDto.getViews()).isEqualTo(
                  program.getViewsAllowed() - program.getCountViews());
+        assertThat(programDto.isTimeRestricted()).isTrue();
+        assertThat(programDto.isViewsRestricted()).isTrue();
     }
 
     @Test
@@ -94,6 +96,33 @@ class ProgramMapperTest extends ModelTestBase {
         programDto.setViews(-5);
         Program program = programMapper.programDtoToProgram(programDto);
         assertThat(program.getViewsAllowed()).isNull();
+    }
+
+    @Test
+    void should_mark_dto_as_time_restricted_when_entity_is_time_restricted() {
+        Program program = testProgram();
+        program.setValidUntil(DATE.plusSeconds(10));
+        ProgramDto result = programMapper.programToProgramDto(program);
+        assertThat(result.isTimeRestricted()).isTrue();
+    }
+
+    @Test
+    void should_mark_dto_as_views_restricted_when_entity_is_views_restricted() {
+        Program program = testProgram();
+        program.setViewsAllowed(program.getCountViews() + 1);
+        ProgramDto result = programMapper.programToProgramDto(program);
+        assertThat(result.isViewsRestricted()).isTrue();
+    }
+
+    @Test
+    void should_not_mark_any_restriction_on_dto_when_both_values_are_null_in_entity() {
+        Program program = testProgram();
+        program.setValidUntil(null);
+        program.setViewsAllowed(null);
+
+        ProgramDto result = programMapper.programToProgramDto(program);
+        assertThat(result.isTimeRestricted()).isFalse();
+        assertThat(result.isViewsRestricted()).isFalse();
     }
 
     @ParameterizedTest
