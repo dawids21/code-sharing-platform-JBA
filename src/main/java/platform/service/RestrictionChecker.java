@@ -27,7 +27,8 @@ public class RestrictionChecker {
     }
 
     private STATUS checkViewsRestriction(Program program) {
-        if (program.getCountViews() != null && program.getCountViews() < 0) {
+        if (program.getCountAllowed() != null &&
+            program.getCountAllowed() < program.getCountViews()) {
             return STATUS.INVALID;
         }
         return STATUS.VALID;
