@@ -19,6 +19,8 @@ public class ProgramMapper {
         String date = "";
         int time = 0;
         int views = 0;
+        boolean timeRestricted = false;
+        boolean viewsRestricted = false;
 
         if (program.getCode() != null) {
             code = program.getCode();
@@ -28,11 +30,13 @@ public class ProgramMapper {
         }
         if (program.getValidUntil() != null) {
             time = calculator.secondsRemain(program.getValidUntil());
+            timeRestricted = true;
         }
         if (program.getViewsAllowed() != null) {
             views = viewsCalculator.calculate(program);
+            viewsRestricted = true;
         }
-        return new ProgramDto(code, date, time, views);
+        return new ProgramDto(code, date, time, views, timeRestricted, viewsRestricted);
     }
 
     public Program programDtoToProgram(ProgramDto programDto) {
