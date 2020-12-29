@@ -59,6 +59,18 @@ class MapperTest extends ModelTestBase {
     }
 
     @Test
+    void should_set_views_to_zero_when_null_in_entity() {
+        //TODO implement should_set_views_to_zero_when_null_in_entity
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Test
+    void should_set_views_to_null_when_zero_in_dto() {
+        //TODO implement should_set_views_to_null_when_zero_in_dto
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Test
     void should_set_valid_until_to_null_when_time_is_zero() {
         ProgramDto programDto = testProgramDto();
         programDto.setTime(0);

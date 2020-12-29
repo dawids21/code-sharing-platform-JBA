@@ -51,6 +51,12 @@ class ProgramViewsReducerTest extends ServiceTestBase {
         assertThat(result.getViews()).isEqualTo(4);
     }
 
+    @Test
+    void should_omit_reducing_when_views_is_null() {
+        //TODO implement should_omit_reducing_when_views_is_null
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     private static Stream<Arguments> provideViews() {
         return Stream.of(Arguments.of(-1, -1), Arguments.of(0, 0), Arguments.of(1, 0));
     }

@@ -69,6 +69,12 @@ class RestrictionCheckerTest extends ServiceTestBase {
         assertThat(result).isEqualTo(RestrictionChecker.STATUS.VALID);
     }
 
+    @Test
+    void should_pass_program_with_null_views() {
+        //TODO implement should_pass_program_with_null_views
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     private CurrentDateGetter testCurrentDateGetter(LocalDateTime now) {
         CurrentDateGetter mock = mock(CurrentDateGetter.class);
         when(mock.now()).thenReturn(now);
