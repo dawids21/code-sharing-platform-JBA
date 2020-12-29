@@ -13,12 +13,12 @@
 <body>
 <#list programs as program>
     <span id="load_date">${program.date}</span>
-    <#if -1 < program.getViews()>
+    <#if program.isViewsRestricted()>
         <div>
             <span id="views_restriction">${program.views} more views allowed</span>
         </div>
     </#if>
-    <#if 0 < program.getTime()>
+    <#if program.isTimeRestricted()>
         <div>
             <span id="time_restriction">The code will be available for ${program.time} seconds</span>
         </div>
