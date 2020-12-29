@@ -36,6 +36,11 @@ public class ProgramService {
                                            .orElseThrow(() -> new ResponseStatusException(
                                                     HttpStatus.NOT_FOUND,
                                                     "Id does not exists"));
+        if (RestrictionChecker.STATUS.INVALID.equals(restrictionChecker.check(program))) {
+            programRepository.deleteById(id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                              "Requested program is no longer available");
+        }
         program = programViewsReducer.reduce(program);
         programRepository.save(program);
         return mapper.programToProgramDto(program);
