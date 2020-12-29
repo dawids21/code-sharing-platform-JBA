@@ -6,10 +6,12 @@ public class ProgramMapper {
 
     private final ProgramDateFormatter dateFormatter;
     private final ProgramExpireTimeCalculator calculator;
+    private final ProgramViewsCalculator viewsCalculator;
 
     public ProgramMapper(ProgramExpireTimeCalculator calculator) {
         this.calculator = calculator;
         dateFormatter = new ProgramDateFormatter();
+        viewsCalculator = new ProgramViewsCalculator();
     }
 
     public ProgramDto programToProgramDto(Program program) {
@@ -27,8 +29,8 @@ public class ProgramMapper {
         if (program.getValidUntil() != null) {
             time = calculator.secondsRemain(program.getValidUntil());
         }
-        if (program.getCountViews() != null) {
-            views = program.getCountViews();
+        if (program.getViewsAllowed() != null) {
+            views = viewsCalculator.calculate(program);
         }
         return new ProgramDto(code, date, time, views);
     }
@@ -37,7 +39,8 @@ public class ProgramMapper {
         String code = "";
         LocalDateTime created = null;
         LocalDateTime validUntil = null;
-        Integer views = null;
+        Integer countViews = 0;
+        Integer viewsAllowed = null;
         boolean restricted = false;
         if (programDto.getCode() != null) {
             code = programDto.getCode();
@@ -52,7 +55,7 @@ public class ProgramMapper {
         }
 
         if (programDto.getViews() > 0) {
-            views = programDto.getViews();
+            viewsAllowed = programDto.getViews();
             restricted = true;
         }
 
@@ -60,7 +63,8 @@ public class ProgramMapper {
         target.setCode(code);
         target.setCreated(created);
         target.setValidUntil(validUntil);
-        target.setCountViews(views);
+        target.setCountViews(countViews);
+        target.setViewsAllowed(viewsAllowed);
         target.setRestricted(restricted);
         return target;
     }
