@@ -36,7 +36,7 @@ public class ProgramService {
                                            .orElseThrow(() -> new ResponseStatusException(
                                                     HttpStatus.NOT_FOUND,
                                                     "Id does not exists"));
-        program = programViewsReducer.reduce(program);
+        program.setCountViews(program.getCountViews() + 1);
         if (RestrictionChecker.STATUS.INVALID.equals(restrictionChecker.check(program))) {
             programRepository.deleteById(id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
