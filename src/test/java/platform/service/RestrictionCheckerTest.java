@@ -22,38 +22,38 @@ class RestrictionCheckerTest {
 
     @ParameterizedTest
     @MethodSource("provideInvalidRecords")
-    void should_return_false_for_invalid_records(Program program, LocalDateTime now) {
+    void should_return_invalid_for_invalid_records(Program program, LocalDateTime now) {
 
         RestrictionChecker restrictionChecker =
                  new RestrictionChecker(testCurrentDateGetter(now));
 
-        boolean result = restrictionChecker.check(program);
+        RestrictionChecker.STATUS result = restrictionChecker.check(program);
 
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(RestrictionChecker.STATUS.INVALID);
     }
 
     @ParameterizedTest
     @MethodSource("provideInvalidRecords")
-    void should_return_true_for_not_restricted_records(Program program,
-                                                       LocalDateTime now) {
+    void should_return_valid_for_not_restricted_records(Program program,
+                                                        LocalDateTime now) {
         program.setRestricted(false);
         RestrictionChecker restrictionChecker =
                  new RestrictionChecker(testCurrentDateGetter(now));
 
-        boolean result = restrictionChecker.check(program);
+        RestrictionChecker.STATUS result = restrictionChecker.check(program);
 
-        assertThat(result).isTrue();
+        assertThat(result).isEqualTo(RestrictionChecker.STATUS.VALID);
     }
 
     @ParameterizedTest
     @MethodSource("provideValidRecords")
-    void should_return_true_for_valid_records(Program program, LocalDateTime now) {
+    void should_return_valid_for_valid_records(Program program, LocalDateTime now) {
         RestrictionChecker restrictionChecker =
                  new RestrictionChecker(testCurrentDateGetter(now));
 
-        boolean result = restrictionChecker.check(program);
+        RestrictionChecker.STATUS result = restrictionChecker.check(program);
 
-        assertThat(result).isTrue();
+        assertThat(result).isEqualTo(RestrictionChecker.STATUS.VALID);
     }
 
     private CurrentDateGetter testCurrentDateGetter(LocalDateTime now) {

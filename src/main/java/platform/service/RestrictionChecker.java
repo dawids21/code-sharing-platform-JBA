@@ -12,19 +12,37 @@ public class RestrictionChecker {
         this.currentDateGetter = currentDateGetter;
     }
 
-    public boolean check(Program program) {
+    public STATUS check(Program program) {
         if (!program.isRestricted()) {
-            return true;
+            return STATUS.VALID;
         }
-        return checkTimeRestriction(program) && checkViewRestriction(program);
+
+        if (STATUS.INVALID.equals(checkTimeRestriction(program))) {
+            return STATUS.INVALID;
+        }
+        if (STATUS.INVALID.equals(checkViewsRestriction(program))) {
+            return STATUS.INVALID;
+        }
+        return STATUS.VALID;
     }
 
-    private boolean checkViewRestriction(Program program) {
-        return program.getViews() > 0;
+    private STATUS checkViewsRestriction(Program program) {
+        if (program.getViews() <= 0) {
+            return STATUS.INVALID;
+        }
+        return STATUS.VALID;
     }
 
-    private boolean checkTimeRestriction(Program program) {
+    private STATUS checkTimeRestriction(Program program) {
         LocalDateTime now = currentDateGetter.now();
-        return now.isBefore(program.getValidUntil());
+        LocalDateTime validUntil = program.getValidUntil();
+        if (now.isAfter(validUntil) || now.isEqual(validUntil)) {
+            return STATUS.INVALID;
+        }
+        return STATUS.VALID;
+    }
+
+    public enum STATUS {
+        VALID, INVALID
     }
 }
