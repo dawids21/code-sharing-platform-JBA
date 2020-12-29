@@ -5,9 +5,9 @@ import platform.service.model.Program;
 public class ProgramViewsReducer {
 
     public Program reduce(Program program) {
-        if (program.getViews() != null && program.isRestricted() &&
-            program.getViews() >= 0) {
-            program.setViews(program.getViews() - 1);
+        if (program.getCountViews() != null && program.isRestricted() &&
+            program.getCountViews() >= 0) {
+            program.setCountViews(program.getCountViews() - 1);
         }
         return program;
     }

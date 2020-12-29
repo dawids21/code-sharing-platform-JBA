@@ -66,6 +66,17 @@ class ProgramServiceTest extends ServiceTestBase {
         }
 
         @Test
+        void should_set_current_views_to_zero() {
+            ProgramDto programDto = testProgramDto();
+            programService.addProgram(programDto);
+
+            ArgumentCaptor<Program> argument = ArgumentCaptor.forClass(Program.class);
+            verify(programRepository).save(argument.capture());
+            assertThat(argument.getValue()
+                               .getCountViews()).isEqualTo(0);
+        }
+
+        @Test
         void should_save_program_in_repository() {
             programService.addProgram(testProgramDto());
 
@@ -100,20 +111,14 @@ class ProgramServiceTest extends ServiceTestBase {
         }
 
         @Test
-        void should_use_program_views_reducer_to_reduce_views() {
-            programService.getProgram(VALID_PROGRAM_UUID);
-
-            verify(programViewsReducer, times(1)).reduce(Mockito.any(Program.class));
-        }
-
-        @Test
-        void should_save_program_with_reduced_views() {
+        void should_save_program_with_incremented_views() {
             programService.getProgram(VALID_PROGRAM_UUID);
 
             ArgumentCaptor<Program> argument = ArgumentCaptor.forClass(Program.class);
             verify(programRepository).save(argument.capture());
             assertThat(argument.getValue()
-                               .getViews()).isEqualTo(testValidProgram().getViews() - 1);
+                               .getCountViews()).isEqualTo(
+                     testValidProgram().getCountViews() + 1);
         }
 
         @Test

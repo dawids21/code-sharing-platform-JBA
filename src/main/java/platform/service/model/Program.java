@@ -19,7 +19,9 @@ public class Program {
 
     private LocalDateTime validUntil;
 
-    private Integer views;
+    private Integer countViews;
+
+    private Integer viewsAllowed;
 
     private boolean restricted;
 
@@ -27,12 +29,13 @@ public class Program {
     }
 
     public Program(UUID id, String code, LocalDateTime created, LocalDateTime validUntil,
-                   int views, boolean restricted) {
+                   Integer countViews, Integer viewsAllowed, boolean restricted) {
         this.id = id;
         this.code = code;
         this.created = created;
         this.validUntil = validUntil;
-        this.views = views;
+        this.countViews = countViews;
+        this.viewsAllowed = viewsAllowed;
         this.restricted = restricted;
     }
 
@@ -68,12 +71,20 @@ public class Program {
         this.validUntil = validUntil;
     }
 
-    public Integer getViews() {
-        return views;
+    public Integer getCountViews() {
+        return countViews;
     }
 
-    public void setViews(Integer views) {
-        this.views = views;
+    public void setCountViews(Integer views) {
+        this.countViews = views;
+    }
+
+    public Integer getViewsAllowed() {
+        return viewsAllowed;
+    }
+
+    public void setViewsAllowed(Integer countAllowed) {
+        this.viewsAllowed = countAllowed;
     }
 
     public boolean isRestricted() {
@@ -93,24 +104,25 @@ public class Program {
             return false;
         }
         Program program = (Program) o;
-        return getViews() == program.getViews() &&
-               isRestricted() == program.isRestricted() &&
+        return isRestricted() == program.isRestricted() &&
                Objects.equals(getId(), program.getId()) &&
                Objects.equals(getCode(), program.getCode()) &&
                Objects.equals(getCreated(), program.getCreated()) &&
-               Objects.equals(getValidUntil(), program.getValidUntil());
+               Objects.equals(getValidUntil(), program.getValidUntil()) &&
+               Objects.equals(getCountViews(), program.getCountViews()) &&
+               Objects.equals(getViewsAllowed(), program.getViewsAllowed());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode(), getCreated(), getValidUntil(), getViews(),
-                            isRestricted());
+        return Objects.hash(getId(), getCode(), getCreated(), getValidUntil(),
+                            getCountViews(), getViewsAllowed(), isRestricted());
     }
 
     @Override
     public String toString() {
         return "Program{" + "id=" + id + ", code='" + code + '\'' + ", created=" +
-               created + ", validUntil=" + validUntil + ", views=" + views +
-               ", restricted=" + restricted + '}';
+               created + ", validUntil=" + validUntil + ", countViews=" + countViews +
+               ", countAllowed=" + viewsAllowed + ", restricted=" + restricted + '}';
     }
 }

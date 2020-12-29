@@ -31,7 +31,8 @@ class ProgramMapperTest extends ModelTestBase {
                                                                    "yyyy-MM-dd HH:mm:ss")));
         assertThat(programDto.getTime()).isEqualTo(
                  SECONDS.between(DATE, DATE.plusSeconds(10)));
-        assertThat(programDto.getViews()).isEqualTo(10);
+        assertThat(programDto.getViews()).isEqualTo(
+                 program.getViewsAllowed() - program.getCountViews());
     }
 
     @Test
@@ -43,7 +44,8 @@ class ProgramMapperTest extends ModelTestBase {
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
         assertThat(program.getCreated()).isEqualTo(DATE);
         assertThat(program.getValidUntil()).isEqualTo(DATE.plusSeconds(10));
-        assertThat(program.getViews()).isEqualTo(10);
+        assertThat(program.getCountViews()).isEqualTo(0);
+        assertThat(program.getViewsAllowed()).isEqualTo(programDto.getViews());
     }
 
     @Test
@@ -55,19 +57,19 @@ class ProgramMapperTest extends ModelTestBase {
     }
 
     @Test
-    void should_set_views_to_zero_when_null_in_entity() {
+    void should_set_views_to_zero_when_views_allowed_is_null() {
         Program program = testProgram();
-        program.setViews(null);
+        program.setViewsAllowed(null);
         ProgramDto programDto = programMapper.programToProgramDto(program);
         assertThat(programDto.getViews()).isEqualTo(0);
     }
 
     @Test
-    void should_set_views_to_null_when_zero_in_dto() {
+    void should_set_views_allowed_to_null_when_views_is_zero() {
         ProgramDto programDto = testProgramDto();
         programDto.setViews(0);
         Program program = programMapper.programDtoToProgram(programDto);
-        assertThat(program.getViews()).isNull();
+        assertThat(program.getViewsAllowed()).isNull();
     }
 
     @Test
@@ -84,6 +86,14 @@ class ProgramMapperTest extends ModelTestBase {
         programDto.setTime(-3);
         Program program = programMapper.programDtoToProgram(programDto);
         assertThat(program.getValidUntil()).isNull();
+    }
+
+    @Test
+    void should_set_views_allowed_to_null_when_views_is_negative() {
+        ProgramDto programDto = testProgramDto();
+        programDto.setViews(-5);
+        Program program = programMapper.programDtoToProgram(programDto);
+        assertThat(program.getViewsAllowed()).isNull();
     }
 
     @ParameterizedTest

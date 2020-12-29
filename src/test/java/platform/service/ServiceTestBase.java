@@ -16,13 +16,13 @@ class ServiceTestBase {
              UUID.fromString("e6780274-c41c-4ab4-bde6-b32c18b23489");
 
     protected Program testValidProgram() {
-        return new Program(VALID_PROGRAM_UUID, "main()", DATE, DATE.plusSeconds(10), 10,
-                           true);
+        return new Program(VALID_PROGRAM_UUID, "main()", DATE, DATE.plusSeconds(10), 0,
+                           10, true);
     }
 
     protected Program testInvalidProgram() {
-        return new Program(INVALID_PROGRAM_UUID, "main()", DATE, DATE.plusSeconds(10), -1,
-                           true);
+        return new Program(INVALID_PROGRAM_UUID, "main()", DATE, DATE.plusSeconds(10), 2,
+                           2, true);
     }
 
     protected ProgramDto testProgramDto() {
