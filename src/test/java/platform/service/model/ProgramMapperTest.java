@@ -20,11 +20,7 @@ class ProgramMapperTest extends ModelTestBase {
 
     @Test
     void should_map_program_to_program_dto() {
-        Program program = new Program();
-        program.setCode("main()");
-        program.setCreated(DATE);
-        program.setValidUntil(DATE.plusSeconds(10));
-        program.setViews(10);
+        Program program = testProgram();
 
         ProgramDto programDto = programMapper.programToProgramDto(program);
 
@@ -52,7 +48,7 @@ class ProgramMapperTest extends ModelTestBase {
 
     @Test
     void should_set_time_to_zero_when_valid_until_is_null() {
-        Program program = new Program();
+        Program program = testProgram();
         program.setValidUntil(null);
         ProgramDto programDto = programMapper.programToProgramDto(program);
         assertThat(programDto.getTime()).isEqualTo(0);
@@ -60,10 +56,10 @@ class ProgramMapperTest extends ModelTestBase {
 
     @Test
     void should_set_views_to_zero_when_null_in_entity() {
-        Program program = new Program();
+        Program program = testProgram();
         program.setViews(null);
         ProgramDto programDto = programMapper.programToProgramDto(program);
-        assertThat(programDto.getTime()).isEqualTo(0);
+        assertThat(programDto.getViews()).isEqualTo(0);
     }
 
     @Test
