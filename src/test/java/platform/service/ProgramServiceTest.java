@@ -35,7 +35,7 @@ class ProgramServiceTest extends ServiceTestBase {
         programRepository = configureDatabaseMock();
         programMapper = mock(ProgramMapper.class);
         when(programMapper.programDtoToProgram(Mockito.any(ProgramDto.class))).thenReturn(
-                 testProgram());
+                 testValidProgram());
         when(programMapper.programToProgramDto(Mockito.any(Program.class))).thenReturn(
                  testProgramDto());
         programViewsReducer = spy(ProgramViewsReducer.class);
@@ -74,7 +74,7 @@ class ProgramServiceTest extends ServiceTestBase {
         void should_return_corresponding_uuid() {
             UUID id = programService.addProgram(testProgramDto());
 
-            assertThat(id.toString()).isEqualTo(TEST_UUID.toString());
+            assertThat(id.toString()).isEqualTo(VALID_PROGRAM_UUID.toString());
         }
     }
 
@@ -83,7 +83,7 @@ class ProgramServiceTest extends ServiceTestBase {
 
         @Test
         void should_map_entity_to_dto_using_mapper() {
-            programService.getProgram(TEST_UUID);
+            programService.getProgram(VALID_PROGRAM_UUID);
 
             verify(programMapper, times(1)).programToProgramDto(
                      Mockito.any(Program.class));
@@ -91,7 +91,7 @@ class ProgramServiceTest extends ServiceTestBase {
 
         @Test
         void should_search_in_database_for_program() {
-            UUID id = TEST_UUID;
+            UUID id = VALID_PROGRAM_UUID;
             programService.getProgram(id);
 
             verify(programRepository, times(1)).findById(id);
@@ -99,19 +99,19 @@ class ProgramServiceTest extends ServiceTestBase {
 
         @Test
         void should_use_program_views_reducer_to_reduce_views() {
-            programService.getProgram(TEST_UUID);
+            programService.getProgram(VALID_PROGRAM_UUID);
 
             verify(programViewsReducer, times(1)).reduce(Mockito.any(Program.class));
         }
 
         @Test
         void should_save_program_with_reduced_views() {
-            programService.getProgram(TEST_UUID);
+            programService.getProgram(VALID_PROGRAM_UUID);
 
             ArgumentCaptor<Program> argument = ArgumentCaptor.forClass(Program.class);
             verify(programRepository).save(argument.capture());
             assertThat(argument.getValue()
-                               .getViews()).isEqualTo(testProgram().getViews() - 1);
+                               .getViews()).isEqualTo(testValidProgram().getViews() - 1);
         }
 
         @Test
@@ -154,18 +154,18 @@ class ProgramServiceTest extends ServiceTestBase {
         ProgramRepository mock = mock(ProgramRepository.class);
         when(mock.save(Mockito.any(Program.class))).then(i -> {
             Program program = i.getArgument(0, Program.class);
-            program.setId(TEST_UUID);
+            program.setId(VALID_PROGRAM_UUID);
             return program;
         });
         when(mock.findById(Mockito.any(UUID.class))).then(i -> {
             UUID index = i.getArgument(0, UUID.class);
-            if (index.equals(TEST_UUID)) {
-                return Optional.of(testProgram());
+            if (index.equals(VALID_PROGRAM_UUID)) {
+                return Optional.of(testValidProgram());
             } else {
                 return Optional.empty();
             }
         });
-        Page<Program> programPage = new PageImpl<>(List.of(testProgram()));
+        Page<Program> programPage = new PageImpl<>(List.of(testValidProgram()));
         when(mock.findNotRestricted(Mockito.any(Pageable.class))).thenReturn(programPage);
         return mock;
     }

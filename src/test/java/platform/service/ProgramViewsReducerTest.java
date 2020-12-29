@@ -19,7 +19,7 @@ class ProgramViewsReducerTest extends ServiceTestBase {
 
     @Test
     void should_reduce_views_by_one_if_restricted() {
-        Program program = testProgram();
+        Program program = testValidProgram();
         program.setViews(4);
         program.setRestricted(true);
 
@@ -32,7 +32,7 @@ class ProgramViewsReducerTest extends ServiceTestBase {
     @MethodSource("provideViews")
     void should_reduce_views_only_when_they_are_greater_than_zero(int views,
                                                                   int expected) {
-        Program program = testProgram();
+        Program program = testValidProgram();
         program.setViews(views);
         program.setRestricted(true);
 
@@ -43,7 +43,7 @@ class ProgramViewsReducerTest extends ServiceTestBase {
 
     @Test
     void should_not_reduce_views_when_program_is_not_restricted() {
-        Program program = testProgram();
+        Program program = testValidProgram();
         program.setViews(4);
         program.setRestricted(false);
 

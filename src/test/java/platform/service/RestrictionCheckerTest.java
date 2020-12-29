@@ -61,7 +61,7 @@ class RestrictionCheckerTest extends ServiceTestBase {
     void should_pass_program_with_null_valid_until() {
         RestrictionChecker restrictionChecker =
                  new TestServiceConfig().testRestrictionChecker();
-        Program program = testProgram();
+        Program program = testValidProgram();
         program.setValidUntil(null);
 
         RestrictionChecker.STATUS result = restrictionChecker.check(program);

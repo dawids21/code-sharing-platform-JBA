@@ -40,9 +40,9 @@ class ScheduledProgramRemoverTest extends ServiceTestBase {
     }
 
     private List<Program> testPrograms() {
-        Program validProgram = testProgram();
+        Program validProgram = testValidProgram();
         validProgram.setId(validUUID);
-        Program invalidProgram = testProgram();
+        Program invalidProgram = testValidProgram();
         invalidProgram.setId(invalidUUID);
         invalidProgram.setCreated(DATE.minusSeconds(10L));
         invalidProgram.setValidUntil(DATE.minusSeconds(1L));
