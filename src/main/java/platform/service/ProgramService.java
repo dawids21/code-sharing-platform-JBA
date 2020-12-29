@@ -17,19 +17,33 @@ public class ProgramService {
     private final ProgramDateSetter programDateSetter;
     private final ProgramRepository programRepository;
     private final ProgramMapper mapper;
+    private final ProgramViewsReducer programViewsReducer;
+    private final RestrictionChecker restrictionChecker;
 
     public ProgramService(ProgramDateSetter programDateSetter,
-                          ProgramRepository programRepository, ProgramMapper mapper) {
+                          ProgramRepository programRepository, ProgramMapper mapper,
+                          ProgramViewsReducer programViewsReducer,
+                          RestrictionChecker restrictionChecker) {
         this.programRepository = programRepository;
         this.programDateSetter = programDateSetter;
         this.mapper = mapper;
+        this.programViewsReducer = programViewsReducer;
+        this.restrictionChecker = restrictionChecker;
     }
 
     public ProgramDto getProgram(UUID id) {
-        return programRepository.findById(id)
-                                .map(mapper::programToProgramDto)
-                                .orElseThrow(() -> new ResponseStatusException(
-                                         HttpStatus.NOT_FOUND, "Id does not exists"));
+        Program program = programRepository.findById(id)
+                                           .orElseThrow(() -> new ResponseStatusException(
+                                                    HttpStatus.NOT_FOUND,
+                                                    "Id does not exists"));
+        if (RestrictionChecker.STATUS.INVALID.equals(restrictionChecker.check(program))) {
+            programRepository.deleteById(id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                              "Requested program is no longer available");
+        }
+        program = programViewsReducer.reduce(program);
+        programRepository.save(program);
+        return mapper.programToProgramDto(program);
     }
 
     public UUID addProgram(ProgramDto programDto) {

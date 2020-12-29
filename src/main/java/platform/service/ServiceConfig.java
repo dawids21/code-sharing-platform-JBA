@@ -12,8 +12,11 @@ public class ServiceConfig {
     @Bean
     public ProgramService programService(ProgramDateSetter programDateSetter,
                                          ProgramRepository programRepository,
-                                         ProgramMapper mapper) {
-        return new ProgramService(programDateSetter, programRepository, mapper);
+                                         ProgramMapper mapper,
+                                         CurrentDateGetter currentDateGetter) {
+        return new ProgramService(programDateSetter, programRepository, mapper,
+                                  new ProgramViewsReducer(),
+                                  new RestrictionChecker(currentDateGetter));
     }
 
     @Bean
@@ -27,9 +30,10 @@ public class ServiceConfig {
     }
 
     @Bean
-    public ScheduledDatabaseRemoveRecords scheduledDatabaseRemoveRecords(
+    public ScheduledProgramRemover scheduledDatabaseRemoveRecords(
              ProgramRepository programRepository, CurrentDateGetter currentDateGetter) {
-        return new ScheduledDatabaseRemoveRecords(programRepository, currentDateGetter);
+        return new ScheduledProgramRemover(programRepository,
+                                           new RestrictionChecker(currentDateGetter));
     }
 
 }

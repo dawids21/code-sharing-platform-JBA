@@ -3,14 +3,18 @@ package platform.service.model;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MapperTest {
+class MapperTest extends ModelTestBase {
 
     private final ProgramMapper programMapper = new TestModelConfig().testMyMapper();
 
@@ -18,8 +22,9 @@ class MapperTest {
     void should_map_program_to_program_dto() {
         Program program = new Program();
         program.setCode("main()");
-        program.setCreated(TestModelConfig.DATE);
-        program.setValidUntil(TestModelConfig.DATE);
+        program.setCreated(DATE);
+        program.setValidUntil(DATE.plusSeconds(10));
+        program.setViews(10);
 
         ProgramDto programDto = programMapper.programToProgramDto(program);
 
@@ -29,7 +34,8 @@ class MapperTest {
                                                           .format(DateTimeFormatter.ofPattern(
                                                                    "yyyy-MM-dd HH:mm:ss")));
         assertThat(programDto.getTime()).isEqualTo(
-                 SECONDS.between(TestModelConfig.DATE, TestModelConfig.DATE));
+                 SECONDS.between(DATE, DATE.plusSeconds(10)));
+        assertThat(programDto.getViews()).isEqualTo(10);
     }
 
     @Test
@@ -39,8 +45,9 @@ class MapperTest {
 
         assertThat(program).isNotNull();
         assertThat(program.getCode()).isEqualTo(programDto.getCode());
-        assertThat(program.getCreated()).isEqualTo(TestModelConfig.DATE);
-        assertThat(program.getValidUntil()).isNull();
+        assertThat(program.getCreated()).isEqualTo(DATE);
+        assertThat(program.getValidUntil()).isEqualTo(DATE.plusSeconds(10));
+        assertThat(program.getViews()).isEqualTo(10);
     }
 
     @Test
@@ -67,33 +74,38 @@ class MapperTest {
         assertThat(program.getValidUntil()).isNull();
     }
 
-    @Test
-    void should_mark_the_program_as_not_restricted_when_dto_has_zero_in_time_field() {
+    @ParameterizedTest
+    @MethodSource("nonRestrictedValuesProvider")
+    void should_mark_program_as_not_restricted_when_both_time_or_view_are_negative_or_zero(
+             int time, int views) {
         ProgramDto programDto = testProgramDto();
-        programDto.setTime(0);
+        programDto.setTime(time);
+        programDto.setViews(views);
+
         Program program = programMapper.programDtoToProgram(programDto);
+
         assertThat(program.isRestricted()).isFalse();
     }
 
-    @Test
-    void should_mark_the_program_as_not_restricted_when_dto_has_negative_number_in_time_field() {
+    @ParameterizedTest
+    @MethodSource("restrictedValuesProvider")
+    void should_mark_program_as_restricted_when_either_time_or_view_is_positive(int time,
+                                                                                int views) {
         ProgramDto programDto = testProgramDto();
-        programDto.setTime(-4);
-        Program program = programMapper.programDtoToProgram(programDto);
-        assertThat(program.isRestricted()).isFalse();
-    }
+        programDto.setTime(time);
+        programDto.setViews(views);
 
-    @Test
-    void should_mark_the_program_as_restricted_when_dto_has_positive_number_in_time_field() {
-        ProgramDto programDto = testProgramDto();
-        programDto.setTime(23);
         Program program = programMapper.programDtoToProgram(programDto);
+
         assertThat(program.isRestricted()).isTrue();
     }
 
-    private ProgramDto testProgramDto() {
-        return new ProgramDto("main()", TestModelConfig.DATE.format(
-                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 0);
+    private static Stream<Arguments> nonRestrictedValuesProvider() {
+        return Stream.of(Arguments.of(0, -1), Arguments.of(0, 0), Arguments.of(-1, -1),
+                         Arguments.of(-1, 0));
     }
 
+    private static Stream<Arguments> restrictedValuesProvider() {
+        return Stream.of(Arguments.of(0, 1), Arguments.of(1, 1), Arguments.of(1, 0));
+    }
 }

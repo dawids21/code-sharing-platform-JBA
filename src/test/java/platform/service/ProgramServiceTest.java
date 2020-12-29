@@ -1,6 +1,7 @@
 package platform.service;
 
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,11 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProgramServiceTest {
+class ProgramServiceTest extends ServiceTestBase {
 
     private ProgramDateSetter programDateSetter;
     private ProgramRepository programRepository;
     private ProgramMapper programMapper;
+    private ProgramViewsReducer programViewsReducer;
+    private RestrictionChecker restrictionChecker;
     private ProgramService programService;
 
     @BeforeEach
@@ -33,11 +36,14 @@ class ProgramServiceTest {
         programRepository = configureDatabaseMock();
         programMapper = mock(ProgramMapper.class);
         when(programMapper.programDtoToProgram(Mockito.any(ProgramDto.class))).thenReturn(
-                 testProgram());
+                 testValidProgram());
         when(programMapper.programToProgramDto(Mockito.any(Program.class))).thenReturn(
                  testProgramDto());
+        programViewsReducer = spy(ProgramViewsReducer.class);
+        restrictionChecker = spy(new TestServiceConfig().testRestrictionChecker());
         programService =
-                 new ProgramService(programDateSetter, programRepository, programMapper);
+                 new ProgramService(programDateSetter, programRepository, programMapper,
+                                    programViewsReducer, restrictionChecker);
     }
 
     @Nested
@@ -70,7 +76,7 @@ class ProgramServiceTest {
         void should_return_corresponding_uuid() {
             UUID id = programService.addProgram(testProgramDto());
 
-            assertThat(id.toString()).isEqualTo(TestServiceConfig.TEST_UUID.toString());
+            assertThat(id.toString()).isEqualTo(VALID_PROGRAM_UUID.toString());
         }
     }
 
@@ -79,7 +85,7 @@ class ProgramServiceTest {
 
         @Test
         void should_map_entity_to_dto_using_mapper() {
-            programService.getProgram(TestServiceConfig.TEST_UUID);
+            programService.getProgram(VALID_PROGRAM_UUID);
 
             verify(programMapper, times(1)).programToProgramDto(
                      Mockito.any(Program.class));
@@ -87,10 +93,27 @@ class ProgramServiceTest {
 
         @Test
         void should_search_in_database_for_program() {
-            UUID id = TestServiceConfig.TEST_UUID;
+            UUID id = VALID_PROGRAM_UUID;
             programService.getProgram(id);
 
             verify(programRepository, times(1)).findById(id);
+        }
+
+        @Test
+        void should_use_program_views_reducer_to_reduce_views() {
+            programService.getProgram(VALID_PROGRAM_UUID);
+
+            verify(programViewsReducer, times(1)).reduce(Mockito.any(Program.class));
+        }
+
+        @Test
+        void should_save_program_with_reduced_views() {
+            programService.getProgram(VALID_PROGRAM_UUID);
+
+            ArgumentCaptor<Program> argument = ArgumentCaptor.forClass(Program.class);
+            verify(programRepository).save(argument.capture());
+            assertThat(argument.getValue()
+                               .getViews()).isEqualTo(testValidProgram().getViews() - 1);
         }
 
         @Test
@@ -101,7 +124,32 @@ class ProgramServiceTest {
                                                               .hasFieldOrPropertyWithValue(
                                                                        "status",
                                                                        HttpStatus.NOT_FOUND);
+        }
 
+        @Test
+        void should_use_restriction_checker_for_program() {
+            programService.getProgram(VALID_PROGRAM_UUID);
+
+            ArgumentCaptor<Program> argument = ArgumentCaptor.forClass(Program.class);
+            verify(restrictionChecker).check(argument.capture());
+            assertThat(argument.getValue()
+                               .getId()).isEqualTo(VALID_PROGRAM_UUID);
+        }
+
+        @Test
+        void should_return_404_when_program_deleted_during_get() {
+            assertThatThrownBy(
+                     () -> programService.getProgram(INVALID_PROGRAM_UUID)).isInstanceOf(
+                     ResponseStatusException.class)
+                                                                           .hasFieldOrPropertyWithValue(
+                                                                                    "status",
+                                                                                    HttpStatus.NOT_FOUND);
+        }
+
+        @Test
+        void should_delete_invalid_program_from_database() {
+            assertThatThrownBy(() -> programService.getProgram(INVALID_PROGRAM_UUID));
+            verify(programRepository).deleteById(INVALID_PROGRAM_UUID);
         }
     }
 
@@ -124,8 +172,7 @@ class ProgramServiceTest {
         void should_map_results_using_mapper() {
             programService.getLastPrograms(1);
 
-            verify(programMapper, times(1)).programToProgramDto(
-                     Mockito.any(Program.class));
+            verify(programMapper).programToProgramDto(Mockito.any(Program.class));
         }
     }
 
@@ -133,28 +180,21 @@ class ProgramServiceTest {
         ProgramRepository mock = mock(ProgramRepository.class);
         when(mock.save(Mockito.any(Program.class))).then(i -> {
             Program program = i.getArgument(0, Program.class);
-            program.setId(TestServiceConfig.TEST_UUID);
+            program.setId(VALID_PROGRAM_UUID);
             return program;
         });
         when(mock.findById(Mockito.any(UUID.class))).then(i -> {
             UUID index = i.getArgument(0, UUID.class);
-            if (index.equals(TestServiceConfig.TEST_UUID)) {
-                return Optional.of(testProgram());
+            if (VALID_PROGRAM_UUID.equals(index)) {
+                return Optional.of(testValidProgram());
+            } else if (INVALID_PROGRAM_UUID.equals(index)) {
+                return Optional.of(testInvalidProgram());
             } else {
                 return Optional.empty();
             }
         });
-        Page<Program> programPage = new PageImpl<>(List.of(testProgram()));
+        Page<Program> programPage = new PageImpl<>(List.of(testValidProgram()));
         when(mock.findNotRestricted(Mockito.any(Pageable.class))).thenReturn(programPage);
         return mock;
-    }
-
-    Program testProgram() {
-        return new Program(TestServiceConfig.TEST_UUID, "main()", TestServiceConfig.DATE,
-                           TestServiceConfig.DATE.plusSeconds(10), true);
-    }
-
-    ProgramDto testProgramDto() {
-        return new ProgramDto("main()", TestServiceConfig.DATE_STRING, 10);
     }
 }

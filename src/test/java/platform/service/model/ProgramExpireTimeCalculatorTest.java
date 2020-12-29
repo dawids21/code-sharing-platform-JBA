@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProgramExpireTimeCalculatorTest {
+class ProgramExpireTimeCalculatorTest extends ModelTestBase {
 
     ProgramExpireTimeCalculator calculator;
 
@@ -21,7 +21,7 @@ class ProgramExpireTimeCalculatorTest {
 
     @Test
     void should_return_how_much_seconds_remain_to_given_date() {
-        LocalDateTime date = TestModelConfig.DATE.plusSeconds(23);
+        LocalDateTime date = DATE.plusSeconds(23);
         int remainingSeconds = calculator.secondsRemain(date);
 
         assertThat(remainingSeconds).isEqualTo(23);
@@ -30,7 +30,7 @@ class ProgramExpireTimeCalculatorTest {
     @Test
     void should_return_date_after_given_seconds() {
         LocalDateTime afterTenSeconds = calculator.dateAfterSeconds(10);
-        LocalDateTime expected = TestModelConfig.DATE.plusSeconds(10);
+        LocalDateTime expected = DATE.plusSeconds(10);
 
         assertThat(afterTenSeconds).isEqualTo(expected);
     }

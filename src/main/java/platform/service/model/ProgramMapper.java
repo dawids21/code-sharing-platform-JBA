@@ -16,6 +16,7 @@ public class ProgramMapper {
         String code = "";
         String date = "";
         int time = 0;
+        int views = 0;
 
         if (program.getCode() != null) {
             code = program.getCode();
@@ -26,14 +27,15 @@ public class ProgramMapper {
         if (program.getValidUntil() != null) {
             time = calculator.secondsRemain(program.getValidUntil());
         }
-
-        return new ProgramDto(code, date, time);
+        views = program.getViews();
+        return new ProgramDto(code, date, time, views);
     }
 
     public Program programDtoToProgram(ProgramDto programDto) {
         String code = "";
         LocalDateTime created = null;
         LocalDateTime validUntil = null;
+        int views = 0;
         boolean restricted = false;
         if (programDto.getCode() != null) {
             code = programDto.getCode();
@@ -47,10 +49,16 @@ public class ProgramMapper {
             restricted = true;
         }
 
+        if (programDto.getViews() > 0) {
+            views = programDto.getViews();
+            restricted = true;
+        }
+
         Program target = new Program();
         target.setCode(code);
         target.setCreated(created);
         target.setValidUntil(validUntil);
+        target.setViews(views);
         target.setRestricted(restricted);
         return target;
     }

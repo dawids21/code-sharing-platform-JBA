@@ -1,5 +1,6 @@
 package platform.integration;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import platform.service.ProgramDateSetter;
 import platform.service.ProgramService;
-import platform.service.ScheduledDatabaseRemoveRecords;
+import platform.service.ScheduledProgramRemover;
 import platform.service.ServiceConfig;
 import platform.service.model.ModelConfig;
 import platform.service.model.ProgramExpireTimeCalculator;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @EntityScan("platform.service.model")
 @DataJpaTest
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@Disabled
 class DiTest {
 
     @Test
@@ -49,7 +51,7 @@ class DiTest {
 
     @Test
     void should_autowire_scheduledDatabaseRemoveRecords(
-             @Autowired ScheduledDatabaseRemoveRecords scheduledDatabaseRemoveRecords) {
-        assertThat(scheduledDatabaseRemoveRecords).isNotNull();
+             @Autowired ScheduledProgramRemover scheduledProgramRemover) {
+        assertThat(scheduledProgramRemover).isNotNull();
     }
 }

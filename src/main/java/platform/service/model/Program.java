@@ -19,17 +19,20 @@ public class Program {
 
     private LocalDateTime validUntil;
 
+    private int views;
+
     private boolean restricted;
 
     public Program() {
     }
 
     public Program(UUID id, String code, LocalDateTime created, LocalDateTime validUntil,
-                   boolean restricted) {
+                   int views, boolean restricted) {
         this.id = id;
         this.code = code;
         this.created = created;
         this.validUntil = validUntil;
+        this.views = views;
         this.restricted = restricted;
     }
 
@@ -65,6 +68,14 @@ public class Program {
         this.validUntil = validUntil;
     }
 
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
     public boolean isRestricted() {
         return restricted;
     }
@@ -82,7 +93,9 @@ public class Program {
             return false;
         }
         Program program = (Program) o;
-        return getId() == program.getId() && isRestricted() == program.isRestricted() &&
+        return getViews() == program.getViews() &&
+               isRestricted() == program.isRestricted() &&
+               Objects.equals(getId(), program.getId()) &&
                Objects.equals(getCode(), program.getCode()) &&
                Objects.equals(getCreated(), program.getCreated()) &&
                Objects.equals(getValidUntil(), program.getValidUntil());
@@ -90,14 +103,14 @@ public class Program {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode(), getCreated(), getValidUntil(),
+        return Objects.hash(getId(), getCode(), getCreated(), getValidUntil(), getViews(),
                             isRestricted());
     }
 
     @Override
     public String toString() {
         return "Program{" + "id=" + id + ", code='" + code + '\'' + ", created=" +
-               created + ", validUntil=" + validUntil + ", restricted=" + restricted +
-               '}';
+               created + ", validUntil=" + validUntil + ", views=" + views +
+               ", restricted=" + restricted + '}';
     }
 }

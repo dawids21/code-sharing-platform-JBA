@@ -14,6 +14,10 @@
     <input id="time_restriction" type="text"/>
 </div>
 <div>
+    <label for="views_restriction">Views restriction: </label>
+    <input id="views_restriction" type="text"/>
+</div>
+<div>
     <button id="send_snippet" type="submit" onClick="send()">Submit</button>
 </div>
 </body>
